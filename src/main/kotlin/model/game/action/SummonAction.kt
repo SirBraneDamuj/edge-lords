@@ -18,11 +18,15 @@ class SummonAction(
         if (player.mana < card.manaCost) {
             return invalidAction("Not enough mana")
         }
-        if (player.natialAtPosition(position) != null) {
+        if (player.creatureAtPosition(position) != null) {
             return invalidAction("There is already a Natial at $position")
         }
         val magicCrystal = player.magicCrystals.contains(position)
         val natial = Natials.summonFromCardToPosition(natialCard, position, magicCrystal)
-        return ValidAction(game.addNatialForPlayer(natial, playerLabel))
+        player.creatures += natial
+        player.mana -= natial.card.manaCost
+        player.hand -= natial.card
+        player.magicCrystals -= natial.position
+        return ValidAction(game)
     }
 }

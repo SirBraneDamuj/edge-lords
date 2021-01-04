@@ -3,17 +3,16 @@ package model.game
 data class Player(
     val name: String,
     val playerLabel: PlayerLabel,
-    val master: Master,
-    val natials: List<Natial>,
-    val magicCrystals: Set<Position>,
-    val hand: List<GameCard>,
-    val deck: List<GameCard>,
-    val discard: List<GameCard>,
-    val mana: Int,
-    val maxMana: Int
+    var creatures: List<Creature>,
+    var magicCrystals: Set<Position>,
+    var hand: List<GameCard>,
+    var deck: List<GameCard>,
+    var discard: List<GameCard>,
+    var mana: Int,
+    var maxMana: Int
 ) {
-    fun natialAtPosition(position: Position) =
-        natials.singleOrNull { it.position == position }
+    fun creatureAtPosition(position: Position) =
+        creatures.singleOrNull { it.position == position }
 }
 
 enum class PlayerLabel {

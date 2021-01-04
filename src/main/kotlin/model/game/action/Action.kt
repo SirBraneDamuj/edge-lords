@@ -21,6 +21,7 @@ enum class ActionType {
     SUMMON_NATIAL,
     MOVE_CREATURE,
     ACTIVATE_CREATURE,
+    ATTACK_CREATURE,
     PLAY_SPELL,
     END_TURN;
 }

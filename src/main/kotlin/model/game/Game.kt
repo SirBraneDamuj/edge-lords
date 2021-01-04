@@ -2,7 +2,7 @@ package model.game
 
 data class Game(
     val players: Map<PlayerLabel, Player>,
-    val turn: Int
+    var turn: Int
 ) {
     fun addNatialForPlayer(natial: Natial, playerLabel: PlayerLabel) =
         this.players.getValue(playerLabel).let { player ->
@@ -10,7 +10,7 @@ data class Game(
                 players = mapOf(
                     playerLabel to player.copy(
                         hand = player.hand - natial.card,
-                        natials = player.natials + natial,
+                        creatures = player.creatures + natial,
                         mana = player.mana - natial.card.manaCost,
                         magicCrystals = player.magicCrystals - natial.position
                     ),
