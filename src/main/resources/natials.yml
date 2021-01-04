@@ -1,0 +1,239 @@
+- name: "Pa-Rancell"
+  manaCost: 1
+  attack: 2
+  hp: 1
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "EARTH"
+  skillText: ""
+  abilityText: "Defends adjacent Natials"
+
+- name: "D-Arma"
+  manaCost: 2
+  attack: 1
+  hp: 3
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "EARTH"
+  skillText: "Restore 2 HP to ally Natial"
+  abilityText: "Can act twice per turn"
+
+- name: "Ae-Ferrion"
+  manaCost: 3
+  attack: 2
+  hp: 2
+  range: "RANGED"
+  speed: "NORMAL"
+  element: "EARTH"
+  skillText: ""
+  abilityText: ""
+
+- name: "Gia-Bro"
+  manaCost: 4
+  attack: 2
+  hp: 5
+  range: "RANGED"
+  speed: "NORMAL"
+  element: "EARTH"
+  skillText: "Deal 2 damage to a row of enemies"
+  abilityText: ""
+
+- name: "Da-Colm"
+  manaCost: 6
+  attack: 6
+  hp: 8
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "EARTH"
+  skillText: ""
+  abilityText: "Allies in the same row gain +1 Attack"
+
+- name: "Ba-Mado"
+  manaCost: 7
+  attack: 5
+  hp: 5
+  range: "MELEE"
+  speed: "FAST"
+  element: "EARTH"
+  skillText: "Seal target's actions for 2 turns"
+  abilityText: "Gain +1 Attack each time Ba-Mado defeats an enemy Natial"
+
+- name: "Requ"
+  manaCost: 1
+  attack: 1
+  hp: 1
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: ""
+  abilityText: "When destroyed, draw a card"
+
+- name: "Marme"
+  manaCost: 3
+  attack: 2
+  hp: 3
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: "Restore 3 HP to ally Natial"
+  abilityText: ""
+
+- name: "Zamilpen"
+  manaCost: 4
+  attack: 4
+  hp: 3
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: "Seal target Natial for 1 turn"
+  abilityText: ""
+
+- name: "Tarbyss"
+  manaCost: 5
+  attack: 3
+  hp: 3
+  range: "RANGED"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: ""
+  abilityText: "Draw a card when Tarbyss is destroyed"
+
+- name: "Neptjuno"
+  manaCost: 7
+  attack: 5
+  hp: 7
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: "Deal 2 damage to one enemy"
+  abilityText: "Defends adjacent Natials"
+
+- name: "Tentarch"
+  manaCost: 8
+  attack: 6
+  hp: 9
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "WATER"
+  skillText: "Deal 4 damage to all enemies"
+  abilityText: ""
+
+- name: "Hepetus"
+  manaCost: 2
+  attack: 2
+  hp: 2
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "FIRE"
+  skillText: ""
+  abilityText: ""
+
+- name: "Dullmdalla"
+  manaCost: 3
+  attack: 1
+  hp: 3
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "FIRE"
+  skillText: "Deal 1 damage to a row of enemies"
+  abilityText: "Increase Attack by 1 each time Dullmdalla defeats an enemy"
+
+- name: "Blyx"
+  manaCost: 4
+  attack: 2
+  hp: 3
+  range: "RANGED"
+  speed: "NORMAL"
+  element: "FIRE"
+  skillText: ""
+  abilityText: ""
+
+- name: "Oonvievle"
+  manaCost: 6
+  attack: 6
+  hp: 5
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "FIRE"
+  skillText: ""
+  abilityText: "Increase Attack by 1 each time Oonvievle defeats an enemy"
+
+- name: "Greon"
+  manaCost: 7
+  attack: 5
+  hp: 5
+  range: "MELEE"
+  speed: "FAST"
+  element: "FIRE"
+  skillText: ""
+  abilityText: "Can act twice in each turn"
+
+- name: "Zenosblead"
+  manaCost: 7
+  attack: 4
+  hp: 7
+  range: "MELEE"
+  speed: "NORMAL"
+  element: "FIRE"
+  skillText: "Deal 5 damage to one enemy"
+  abilityText: "Increase Attack by 2 each time Zenosblead defeats an enemy"
+
+- name: "Pelitt"
+  manaCost: 1
+  attack: 1
+  hp: 1
+  range: "MELEE"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: "Cancel seal on an ally Natial"
+  abilityText: ""
+
+- name: "Guene-Foss"
+  manaCost: 3
+  attack: 2
+  hp: 3
+  range: "MELEE"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: "Deal 2 damage to an enemy"
+  abilityText: ""
+
+- name: "Kyria-Bell"
+  manaCost: 4
+  attack: 5
+  hp: 3
+  range: "MELEE"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: "Deal 2 damage to a row of enemies"
+  abilityText: ""
+
+- name: "Fifenall"
+  manaCost: 4
+  attack: 2
+  hp: 6
+  range: "MELEE"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: "Restore 6 HP to ally Natial"
+  abilityText: "Draw a card when Fifenall is destroyed"
+
+- name: "Amoltamiss"
+  manaCost: 6
+  attack: 3
+  hp: 6
+  range: "RANGED"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: ""
+  abilityText: "Gain 2 Attack when Amoltamiss is in the front row"
+
+- name: "Regna-Croxe"
+  manaCost: 8
+  attack: 5
+  hp: 7
+  range: "MELEE"
+  speed: "FAST"
+  element: "HEAVEN"
+  skillText: "Deal 3 damage to a row of enemies"
+  abilityText: "Increase Attack of ally Heaven Natials by 1"

@@ -3,44 +3,16 @@ package model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Master(
+data class MasterCard(
+    val name: String,
     val mana: Int,
     val attack: Int,
     val hp: Int,
-    val maxHp: Int,
     val range: Range,
     val skillText: String,
-    val abilityText: String,
-    val abilityManaCost: Int,
-    val activationState: ActivationState
+    val skillManaCost: Int,
+    val abilityText: String
 )
-
-@Serializable
-data class Natial(
-    override val name: String,
-    override val manaCost: Int,
-    val attack: Int,
-    val hp: Int,
-    val maxHp: Int,
-    val range: Range,
-    val speed: Speed,
-    val element: Element,
-    val skillText: String,
-    val abilityText: String,
-    val abilityState: AbilityState,
-    val activationState: ActivationState
-): Card {
-    override val type = CardType.NATIAL
-}
-
-@Serializable
-data class SpellCard(
-    override val name: String,
-    override val manaCost: Int,
-    val effectText: String,
-): Card {
-    override val type = CardType.SPELL
-}
 
 interface Card {
     val name: String
@@ -50,21 +22,36 @@ interface Card {
 
 enum class CardType {
     NATIAL,
-    MASTER,
     SPELL;
 }
 
 @Serializable
-data class CombatStats(
+data class NatialCard(
+    override val name: String,
+    override val manaCost: Int,
     val attack: Int,
     val hp: Int,
     val range: Range,
-    val speed: Speed
-)
+    val speed: Speed,
+    val element: Element,
+    val skillText: String,
+    val abilityText: String,
+) : Card {
+    override val type = CardType.NATIAL
+}
+
+@Serializable
+data class SpellCard(
+    override val name: String,
+    override val manaCost: Int,
+    val effectText: String,
+) : Card {
+    override val type = CardType.SPELL
+}
 
 enum class Element {
     FIRE,
-    WIND,
+    HEAVEN,
     EARTH,
     WATER;
 }
@@ -77,17 +64,4 @@ enum class Range {
 enum class Speed {
     NORMAL,
     FAST;
-}
-
-enum class AbilityState {
-    NONE,
-    NOT_USED,
-    USED;
-}
-
-enum class ActivationState {
-    NOT_ACTIVATED,
-    MOVED,
-    SECOND_ACTIVATION_READY,
-    ACTIVATED;
 }

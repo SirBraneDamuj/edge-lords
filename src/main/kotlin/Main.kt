@@ -1,24 +1,27 @@
+import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import model.*
+import model.MasterCard
+import model.NatialCard
+import model.SpellCard
 
 fun main() {
-    val card = Natial(
-        name = "Ae-Ferrion",
-        manaCost = 3,
-        attack = 2,
-        hp = 2,
-        maxHp = 2,
-        range = Range.RANGED,
-        speed = Speed.NORMAL,
-        element = Element.EARTH,
-        skillText = "",
-        abilityText = "",
-        abilityState = AbilityState.NONE,
-        activationState = ActivationState.NOT_ACTIVATED
-    )
-    val json = Json.encodeToString(card)
-    println(json)
-    println(Json.encodeToString(Json.decodeFromString<Natial>(json)))
+    val masters = Yaml.default.decodeFromString<List<MasterCard>>(ResourceLoader.getResource("/masters.yml"))
+    masters.forEach {
+        println(Json.encodeToString(it))
+    }
+    val natials = Yaml.default.decodeFromString<List<NatialCard>>(ResourceLoader.getResource("/natials.yml"))
+    natials.forEach {
+        println(Json.encodeToString(it))
+    }
+    val spells = Yaml.default.decodeFromString<List<SpellCard>>(ResourceLoader.getResource("/spells.yml"))
+    spells.forEach {
+        println(Json.encodeToString(it))
+    }
 }
+
+object ResourceLoader {
+    fun getResource(path: String) = this::class.java.getResource(path).readText()
+}
+

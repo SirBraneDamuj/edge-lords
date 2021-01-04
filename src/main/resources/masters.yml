@@ -1,0 +1,124 @@
+- name: "Fighter"
+  mana: 1
+  attack: 2
+  hp: 20
+  range: "MELEE"
+  skillText: ""
+  skillManaCost: 0
+  abilityText: "+1 counterattack damage when attacked"
+
+- name: "Ranger"
+  mana: 2
+  attack: 1
+  hp: 18
+  range: "RANGED"
+  skillText: ""
+  skillManaCost: 0
+  abilityText: ""
+
+- name: "Sister"
+  mana: 3
+  attack: 1
+  hp: 18
+  range: "MELEE"
+  skillText: "Increase target Attack by 2"
+  skillManaCost: 2
+  abilityText: ""
+
+- name: "Knight"
+  mana: 2
+  attack: 3
+  hp: 30
+  range: "MELEE"
+  skillText: "Increase all allies Attack by 1"
+  skillManaCost: 3
+  abilityText: ""
+- name: "Thief"
+  mana: 2
+  attack: 1
+  hp: 26
+  range: "MELEE"
+  skillText: "Draw a card from the deck"
+  skillManaCost: 2
+  abilityText: "Can act twice in a row"
+
+- name: "Witch"
+  mana: 5
+  attack: 2
+  hp: 24
+  range: "MELEE"
+  skillText: "Deal 4 damage to the target"
+  skillManaCost: 3
+  abilityText: ""
+
+- name: "Paladin"
+  mana: 4
+  attack: 3
+  hp: 30
+  range: "MELEE"
+  skillText: "Revive 1 destroyed card at random"
+  skillManaCost: 4
+  abilityText: "Recovers 1 HP per turn"
+
+- name: "Beast"
+  mana: 4
+  attack: 4
+  hp: 30
+  range: "MELEE"
+  skillText: "Draw a card from the deck"
+  skillManaCost: 1
+  abilityText: "+2 counterattack damage when attacked"
+
+- name: "Swordsman"
+  mana: 4
+  attack: 3
+  hp: 27
+  range: "MELEE"
+  skillText: "Deal 1 damage to a row of enemies"
+  skillManaCost: 2
+  abilityText: "Increase Attack by 1 each time Swordsman defeats an enemy"
+
+- name: "Sorcerer"
+  mana: 4
+  attack: 1
+  hp: 25
+  range: "MELEE"
+  skillText: "Generate one Magic Crystal on the field."
+  skillManaCost: 3
+  abilityText: ""
+
+- name: "Shadow"
+  mana: 2
+  attack: 2
+  hp: 20
+  range: "RANGED"
+  skillText: "Destroy 1 enemy card"
+  skillManaCost: 4
+  abilityText: "Can counterattack against ranged attacks"
+
+- name: "Spirit"
+  mana: 3
+  attack: 2
+  hp: 20
+  range: "MELEE"
+  skillText: "Target can act again"
+  skillManaCost: 3
+  abilityText: "When HP is 10 or less, allies gain +1 Attack and +1 Max HP"
+
+- name: "Bird"
+  mana: 3
+  attack: 2
+  hp: 22
+  range: "MELEE"
+  skillText: "Target can act again"
+  skillManaCost: 3
+  abilityText: "When HP is 10 or less, allies gain +1 Attack and +1 Max HP"
+
+- name: "Tyrant"
+  mana: 4
+  attack: 5
+  hp: 30
+  range: "MELEE"
+  skillText: "Deal 3 damage to all enemies"
+  skillManaCost: 3
+  abilityText: "Neighbor cards gain +2 Attack and +2 Max HP"
