@@ -1,6 +1,7 @@
 package model.game
 
 import kotlinx.serialization.Serializable
+import model.Speed
 
 interface Creature {
     val card: GameCard
@@ -48,3 +49,19 @@ data class Natial(
     override val hp: Int,
     override val maxHp: Int,
 ) : Creature
+
+object Natials {
+    fun summonFromCardToPosition(gameCard: GameNatialCard, position: Position, magicCrystal: Boolean) =
+        Natial(
+            card = gameCard,
+            position = position,
+            activationState = when (gameCard.card.speed) {
+                Speed.NORMAL -> ActivationState.NOT_READY
+                Speed.FAST -> ActivationState.READY
+            },
+            attack = gameCard.card.attack.let { if (magicCrystal) it + 1 else it },
+            hp = gameCard.card.hp.let { if (magicCrystal) it + 1 else it },
+            maxHp = gameCard.card.hp.let { if (magicCrystal) it + 1 else it }
+        )
+}
+
