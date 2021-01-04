@@ -1,4 +1,4 @@
-package model
+package model.card
 
 data class Deck(
     val name: String,

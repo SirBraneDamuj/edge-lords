@@ -1,10 +1,24 @@
-package model
+package model.card
 
 import kotlinx.serialization.Serializable
+import model.Element
+import model.Range
+import model.Speed
+
+interface Card {
+    val name: String
+    val type: CardType
+}
+
+enum class CardType {
+    NATIAL,
+    SPELL,
+    MASTER;
+}
 
 @Serializable
 data class MasterCard(
-    val name: String,
+    override val name: String,
     val mana: Int,
     val attack: Int,
     val hp: Int,
@@ -12,23 +26,14 @@ data class MasterCard(
     val skillText: String,
     val skillManaCost: Int,
     val abilityText: String
-)
-
-interface Card {
-    val name: String
-    val type: CardType
-    val manaCost: Int
-}
-
-enum class CardType {
-    NATIAL,
-    SPELL;
+) : Card {
+    override val type = CardType.MASTER
 }
 
 @Serializable
 data class NatialCard(
     override val name: String,
-    override val manaCost: Int,
+    val manaCost: Int,
     val attack: Int,
     val hp: Int,
     val range: Range,
@@ -43,25 +48,8 @@ data class NatialCard(
 @Serializable
 data class SpellCard(
     override val name: String,
-    override val manaCost: Int,
+    val manaCost: Int,
     val effectText: String,
 ) : Card {
     override val type = CardType.SPELL
-}
-
-enum class Element {
-    FIRE,
-    HEAVEN,
-    EARTH,
-    WATER;
-}
-
-enum class Range {
-    MELEE,
-    RANGED;
-}
-
-enum class Speed {
-    NORMAL,
-    FAST;
 }

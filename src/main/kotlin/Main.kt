@@ -2,9 +2,9 @@ import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import model.MasterCard
-import model.NatialCard
-import model.SpellCard
+import model.card.MasterCard
+import model.card.NatialCard
+import model.card.SpellCard
 
 fun main() {
     val masters = Yaml.default.decodeFromString<List<MasterCard>>(ResourceLoader.getResource("/masters.yml"))
