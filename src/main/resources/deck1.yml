@@ -1,0 +1,27 @@
+name: "ToCS4 Starting Deck (I think)"
+master: "Ranger"
+cards:
+  - name: "Magic Crystal"
+    type: "SPELL"
+    count: 3
+  - name: "Medic"
+    type: "SPELL"
+    count: 3
+  - name: "Pa-Rancell"
+    type: "NATIAL"
+    count: 2
+  - name: "Ae-Ferrion"
+    type: "NATIAL"
+    count: 2
+  - name: "Zamilpen"
+    type: "NATIAL"
+    count: 3
+  - name: "Hepetus"
+    type: "NATIAL"
+    count: 3
+  - name: "Pelitt"
+    type: "NATIAL"
+    count: 2
+  - name: "Guene-Foss"
+    type: "NATIAL"
+    count: 2

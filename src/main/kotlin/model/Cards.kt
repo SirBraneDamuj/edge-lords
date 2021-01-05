@@ -1,5 +1,9 @@
+package model
+
+import ResourceLoader
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
+import model.card.CardType
 import model.card.MasterCard
 import model.card.NatialCard
 import model.card.SpellCard
@@ -20,7 +24,13 @@ object Cards {
             .let { Yaml.default.decodeFromString<List<MasterCard>>(it) }
             .associateBy(MasterCard::name)
 
-    fun getNatialByName(name: String) = natials[name]
-    fun getSpellByName(name: String) = spells[name]
-    fun getMasterByName(name: String) = masters[name]
+    fun getNatialByName(name: String) = natials[name]?.copy()
+    fun getSpellByName(name: String) = spells[name]?.copy()
+    fun getMasterByName(name: String) = masters[name]?.copy()
+    fun getCardByNameAndType(name: String, type: CardType) =
+        when (type) {
+            CardType.NATIAL -> getNatialByName(name)
+            CardType.SPELL -> getSpellByName(name)
+            CardType.MASTER -> getMasterByName(name)
+        }
 }

@@ -46,7 +46,7 @@
   speed: "NORMAL"
   element: "EARTH"
   skillText: ""
-  abilityText: "Allies in the same row gain +1 Attack"
+  abilityText: "Allies in the same row gain +1 Max HP"
 
 - name: "Ba-Mado"
   manaCost: 7

@@ -1,0 +1,39 @@
+name: "my cool deck"
+master: "Paladin"
+cards:
+  - name: "Vanish"
+    type: "SPELL"
+    count: 2
+  - name: "Magic Crystal"
+    type: "SPELL"
+    count: 2
+  - name: "Da-Colm"
+    type: "NATIAL"
+    count: 1
+  - name: "Pa-Rancell"
+    type: "NATIAL"
+    count: 1
+  - name: "Ae-Ferrion"
+    type: "NATIAL"
+    count: 2
+  - name: "Zamilpen"
+    type: "NATIAL"
+    count: 2
+  - name: "Marme"
+    type: "NATIAL"
+    count: 1
+  - name: "Neptjuno"
+    type: "NATIAL"
+    count: 1
+  - name: "Blyx"
+    type: "NATIAL"
+    count: 2
+  - name: "Greon"
+    type: "NATIAL"
+    count: 2
+  - name: "Kyria-Bell"
+    type: "NATIAL"
+    count: 2
+  - name: "Fifenall"
+    type: "NATIAL"
+    count: 2
