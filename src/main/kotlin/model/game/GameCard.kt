@@ -1,19 +1,17 @@
 package model.game
 
 import kotlinx.serialization.Serializable
-import model.card.*
 
-interface GameCard {
-    val card: Card
-    val cardType: CardType
-    var manaCost: Int
+@Serializable
+sealed class GameCard {
+    abstract val cardName: String
+    abstract var manaCost: Int
 }
 
 @Serializable
 data class GameMasterCard(
-    override val card: MasterCard
-) : GameCard {
-    override val cardType = CardType.MASTER
+    override val cardName: String
+) : GameCard() {
     override var manaCost: Int
         get() = -1
         set(_) {
@@ -23,17 +21,15 @@ data class GameMasterCard(
 
 @Serializable
 data class GameNatialCard(
-    override val card: NatialCard,
+    override val cardName: String,
     override var manaCost: Int
-) : GameCard {
-    override val cardType = CardType.NATIAL
+) : GameCard() {
 }
 
 @Serializable
 data class GameSpellCard(
-    override val card: SpellCard,
+    override val cardName: String,
     override var manaCost: Int
-) : GameCard {
-    override val cardType = CardType.SPELL
+) : GameCard() {
 }
 

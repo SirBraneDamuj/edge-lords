@@ -1,9 +1,11 @@
 package model.game
 
 import kotlinx.serialization.Serializable
+import model.Cards
 import model.Element
 import model.Speed
 
+@Serializable
 sealed class Creature {
     abstract val card: GameCard
     abstract var position: Position
@@ -37,6 +39,14 @@ enum class Position {
     BACK_ONE,
     BACK_TWO,
     BACK_THREE;
+
+    companion object {
+        private val startingMagicCrystalLocations = arrayOf(
+            FRONT_ONE, FRONT_TWO, FRONT_THREE, FRONT_FOUR, BACK_ONE, BACK_THREE
+        )
+
+        fun randomStartingMagicCrystalLocation() = startingMagicCrystalLocations.random()
+    }
 }
 
 enum class ActivationState {
@@ -75,18 +85,21 @@ data class Natial(
 ) : Creature()
 
 object Natials {
-    fun summonFromCardToPosition(gameCard: GameNatialCard, position: Position, magicCrystal: Boolean) =
-        Natial(
+    fun summonFromCardToPosition(gameCard: GameNatialCard, position: Position, magicCrystal: Boolean): Natial {
+        val card = Cards.getNatialByName(gameCard.cardName)
+            ?: error("I don't know what this Natial is ${gameCard.cardName}")
+        return Natial(
             card = gameCard,
             position = position,
-            activationState = when (gameCard.card.speed) {
+            activationState = when (card.speed) {
                 Speed.NORMAL -> ActivationState.NOT_READY
                 Speed.FAST -> ActivationState.READY
             },
-            attack = gameCard.card.attack.let { if (magicCrystal) it + 1 else it },
-            hp = gameCard.card.hp.let { if (magicCrystal) it + 1 else it },
-            maxHp = gameCard.card.hp.let { if (magicCrystal) it + 1 else it },
-            element = gameCard.card.element
+            attack = card.attack.let { if (magicCrystal) it + 1 else it },
+            hp = card.hp.let { if (magicCrystal) it + 1 else it },
+            maxHp = card.hp.let { if (magicCrystal) it + 1 else it },
+            element = card.element
         )
+    }
 }
 

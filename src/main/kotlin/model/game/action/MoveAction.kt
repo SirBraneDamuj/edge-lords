@@ -1,12 +1,14 @@
 package model.game.action
 
-import model.game.*
+import model.game.Game
+import model.game.PlayerLabel
+import model.game.Position
 
 class MoveAction(
-    private val playerLabel: PlayerLabel,
+    override val playerLabel: PlayerLabel,
     private val from: Position,
     private val to: Position
-) : Action() {
+) : Action {
     override fun perform(game: Game): ActionResult {
         val player = game.players.getValue(playerLabel)
         val creature = player.creatureAtPosition(from) ?: return invalidAction("There is no creature at $from")

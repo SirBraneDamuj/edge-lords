@@ -3,10 +3,10 @@ package model.game.action
 import model.game.*
 
 class SummonAction(
-    private val playerLabel: PlayerLabel,
+    override val playerLabel: PlayerLabel,
     private val handIndex: Int,
     private val position: Position
-) : Action() {
+) : Action {
     override fun perform(game: Game): ActionResult {
         val player = game.players.getValue(playerLabel)
         val card = player.hand.getOrNull(handIndex)
@@ -25,6 +25,9 @@ class SummonAction(
         val natial = Natials.summonFromCardToPosition(natialCard, position, magicCrystal)
         player.creatures += natial
         player.mana -= natial.card.manaCost
+        if (magicCrystal) {
+            player.incrementManaAndRestore(1)
+        }
         player.hand -= natial.card
         player.magicCrystals -= natial.position
         return ValidAction(game)

@@ -10,17 +10,17 @@ import model.card.SpellCard
 
 object Cards {
     private val natials: Map<String, NatialCard> =
-        ResourceLoader.getResource("/natials.yml")
+        ResourceLoader.getResource("/cards/natials.yml")
             .let { Yaml.default.decodeFromString<List<NatialCard>>(it) }
             .associateBy(NatialCard::name)
 
     private val spells: Map<String, SpellCard> =
-        ResourceLoader.getResource("/spells.yml")
+        ResourceLoader.getResource("/cards/spells.yml")
             .let { Yaml.default.decodeFromString<List<SpellCard>>(it) }
             .associateBy(SpellCard::name)
 
     private val masters: Map<String, MasterCard> =
-        ResourceLoader.getResource("/masters.yml")
+        ResourceLoader.getResource("/cards/masters.yml")
             .let { Yaml.default.decodeFromString<List<MasterCard>>(it) }
             .associateBy(MasterCard::name)
 

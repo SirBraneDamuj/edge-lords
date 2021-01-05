@@ -2,12 +2,14 @@ package model.game.action
 
 import Either
 import model.game.Game
+import model.game.PlayerLabel
 
-abstract class Action {
-    abstract fun perform(game: Game): ActionResult
-
-    protected fun invalidAction(error: String) = InvalidAction(ActionErrors(error))
+interface Action {
+    val playerLabel: PlayerLabel
+    fun perform(game: Game): ActionResult
 }
+
+internal fun invalidAction(error: String) = InvalidAction(ActionErrors(error))
 
 typealias ActionResult = Either<Game, ActionErrors>
 typealias ValidAction = Either.Left<Game>
@@ -18,10 +20,11 @@ data class ActionErrors(
 )
 
 enum class ActionType {
+    MULLIGAN,
+    END_TURN,
     SUMMON_NATIAL,
     MOVE_CREATURE,
     ACTIVATE_CREATURE,
     ATTACK_CREATURE,
     PLAY_SPELL,
-    END_TURN;
 }

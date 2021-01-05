@@ -1,21 +1,32 @@
 package model.game
 
+import kotlinx.serialization.Serializable
+import util.whenIts
+
+@Serializable
 data class Game(
     val players: Map<PlayerLabel, Player>,
-    var turn: Int
+    var turn: Int,
+    var winner: Winner = Winner.NONE
 ) {
-    fun addNatialForPlayer(natial: Natial, playerLabel: PlayerLabel) =
-        this.players.getValue(playerLabel).let { player ->
-            this.copy(
-                players = mapOf(
-                    playerLabel to player.copy(
-                        hand = player.hand - natial.card,
-                        creatures = player.creatures + natial,
-                        mana = player.mana - natial.card.manaCost,
-                        magicCrystals = player.magicCrystals - natial.position
-                    ),
-                    playerLabel.other to this.players.getValue(playerLabel.other)
-                )
-            )
-        }
+    val activePlayer = players[activePlayerLabel] ?: error("this isn't possible")
+    val activePlayerLabel: PlayerLabel
+        get() = turn.whenIts(
+            odd = { PlayerLabel.FIRST },
+            even = { PlayerLabel.SECOND }
+        )
+}
+
+enum class Winner {
+    FIRST,
+    SECOND,
+    NONE;
+
+    companion object {
+        fun fromPlayerLabel(playerLabel: PlayerLabel) =
+            when (playerLabel) {
+                PlayerLabel.FIRST -> FIRST
+                PlayerLabel.SECOND -> SECOND
+            }
+    }
 }

@@ -7,7 +7,7 @@ import model.Speed
 
 interface Card {
     val name: String
-    val type: CardType
+    val cardType: CardType
 }
 
 enum class CardType {
@@ -27,7 +27,7 @@ data class MasterCard(
     val skillManaCost: Int,
     val abilityText: String
 ) : Card {
-    override val type = CardType.MASTER
+    override val cardType = CardType.MASTER
 }
 
 @Serializable
@@ -42,7 +42,7 @@ data class NatialCard(
     val skillText: String,
     val abilityText: String,
 ) : Card {
-    override val type = CardType.NATIAL
+    override val cardType = CardType.NATIAL
 }
 
 @Serializable
@@ -51,5 +51,5 @@ data class SpellCard(
     val manaCost: Int,
     val effectText: String,
 ) : Card {
-    override val type = CardType.SPELL
+    override val cardType = CardType.SPELL
 }

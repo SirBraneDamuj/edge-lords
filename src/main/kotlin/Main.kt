@@ -3,6 +3,11 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import model.Cards
 import model.card.*
+import model.game.ActionExecutor
+import model.game.Game
+import model.game.PlayerLabel
+import model.game.Players
+import model.game.action.EndTurnAction
 
 @Serializable
 data class LoadedCard(
@@ -19,8 +24,31 @@ data class LoadedDeck(
 )
 
 fun main() {
-    val deck = loadDeck("deck1.yml")
-    val deck2 = loadDeck("deck2.yml")
+    val deck1= loadDeck("/decks/deck1.yml")
+    val deck2 = loadDeck("/decks/deck2.yml")
+    val game = Game(
+        players = mapOf(
+            PlayerLabel.FIRST to Players.createPlayerForDeck(
+                name = "Rean",
+                label = PlayerLabel.FIRST,
+                deck = deck1
+            ),
+            PlayerLabel.SECOND to Players.createPlayerForDeck(
+                name = "Juna",
+                label = PlayerLabel.SECOND,
+                deck = deck2
+            )
+        ),
+        turn = -1
+    )
+    repeat(5) {
+        println("${game.activePlayerLabel}'s turn")
+        ActionExecutor.performAction(
+            game,
+            EndTurnAction(game.activePlayerLabel)
+        )
+    }
+    println("${game.activePlayerLabel}'s turn")
 }
 
 fun loadDeck(filename: String): Deck {
