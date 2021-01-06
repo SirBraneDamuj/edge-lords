@@ -9,7 +9,8 @@ data class Game(
     var turn: Int,
     var winner: Winner = Winner.NONE
 ) {
-    val activePlayer = players[activePlayerLabel] ?: error("this isn't possible")
+    val activePlayer: Player
+        get() = players[activePlayerLabel] ?: error("this isn't possible")
     val activePlayerLabel: PlayerLabel
         get() = turn.whenIts(
             odd = { PlayerLabel.FIRST },

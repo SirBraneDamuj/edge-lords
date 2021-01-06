@@ -42,13 +42,13 @@ fun main() {
         turn = -1
     )
     repeat(5) {
-        println("${game.activePlayerLabel}'s turn")
+        println("${game.activePlayer.name}'s turn")
         ActionExecutor.performAction(
             game,
             EndTurnAction(game.activePlayerLabel)
         )
     }
-    println("${game.activePlayerLabel}'s turn")
+    println("${game.activePlayer.name}'s turn")
 }
 
 fun loadDeck(filename: String): Deck {
