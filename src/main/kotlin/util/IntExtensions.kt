@@ -7,8 +7,8 @@ fun <T> Int.whenIts(
     even: (Int) -> T
 ): T {
     return when (abs(this.rem(2))) {
-        0 -> odd(this)
-        1 -> even(this)
+        0 -> even(this)
+        1 -> odd(this)
         else -> error("this is impossible")
     }
 }

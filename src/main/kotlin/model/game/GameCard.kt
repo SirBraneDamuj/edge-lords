@@ -7,21 +7,12 @@ sealed class GameCard {
     abstract val cardName: String
     abstract var manaCost: Int
 
-    fun copy(): GameCard {
-        return when (this) {
+    fun toCopy(): GameCard =
+        when (this) {
             is GameNatialCard -> this.copy()
             is GameSpellCard -> this.copy()
             is GameMasterCard -> this.copy()
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return when (this) {
-            is GameNatialCard -> equals(other)
-            is GameSpellCard -> this.copy()
-            is GameMasterCard -> this.copy()
-        }
-    }
 }
 
 @Serializable

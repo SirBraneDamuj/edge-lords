@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 import model.card.Deck
 import model.card.NatialCard
 import model.card.SpellCard
-import kotlin.math.max
 
 @Serializable
 data class Player(
@@ -27,7 +26,7 @@ data class Player(
 
     fun incrementManaAndRestore(amountRestored: Int = 10) {
         maxMana = (maxMana + 1).coerceAtMost(10)
-        mana = maxMana.coerceAtMost(mana + amountRestored)
+        mana = (mana + amountRestored).coerceAtMost(maxMana)
     }
 }
 

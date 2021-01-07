@@ -14,7 +14,7 @@ data class Game(
     val activePlayer: Player
         get() = players[activePlayerLabel] ?: error("this isn't possible")
     val inactivePlayer: Player
-        get() = players[activePlayerLabel] ?: error("this isn't possible")
+        get() = players[activePlayerLabel.other] ?: error("this isn't possible")
     val activePlayerLabel: PlayerLabel
         get() = turn.whenIts(
             odd = { PlayerLabel.FIRST },
