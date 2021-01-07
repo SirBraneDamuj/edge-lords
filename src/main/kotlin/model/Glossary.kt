@@ -1,5 +1,12 @@
 package model
 
+const val DEFENDER_STRENGTH_PENALTY = 1
+const val MAGIC_CRYSTAL_ATTACK_INCREASE = 1
+const val MAGIC_CRYSTAL_HP_INCREASE = 1
+const val MAGIC_CRYSTAL_MANA_RESTORATION = 1
+const val MAX_MAX_MANA = 10
+const val ELEMENTAL_STRENGTH_MODIFIER = 2
+
 enum class Element {
     FIRE,
     HEAVEN,
@@ -9,8 +16,8 @@ enum class Element {
     fun strengthModifierAgainst(element: Element?) =
         when {
             element == null -> 0
-            (this.ordinal + 1) % 4 == element.ordinal -> 2
-            (element.ordinal + 1) % 4 == this.ordinal -> -2
+            (this.ordinal + 1) % 4 == element.ordinal -> ELEMENTAL_STRENGTH_MODIFIER
+            (element.ordinal + 1) % 4 == this.ordinal -> -ELEMENTAL_STRENGTH_MODIFIER
             else -> 0
         }
 }

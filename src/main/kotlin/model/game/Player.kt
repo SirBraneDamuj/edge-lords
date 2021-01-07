@@ -1,9 +1,12 @@
 package model.game
 
 import kotlinx.serialization.Serializable
+import model.MAX_MAX_MANA
 import model.card.Deck
 import model.card.NatialCard
 import model.card.SpellCard
+import java.util.*
+
 
 @Serializable
 data class Player(
@@ -24,8 +27,8 @@ data class Player(
             .takeUnless { it.isEmpty() }
             ?.single()
 
-    fun incrementManaAndRestore(amountRestored: Int = 10) {
-        maxMana = (maxMana + 1).coerceAtMost(10)
+    fun incrementManaAndRestore(amountRestored: Int = MAX_MAX_MANA) {
+        maxMana = (maxMana + 1).coerceAtMost(MAX_MAX_MANA)
         mana = (mana + amountRestored).coerceAtMost(maxMana)
     }
 }
@@ -50,14 +53,26 @@ object Players {
         val gameCards = deck.cards
             .map {
                 when (it) {
-                    is NatialCard -> GameNatialCard(it.name, it.manaCost)
-                    is SpellCard -> GameSpellCard(it.name, it.manaCost)
+                    is NatialCard -> GameNatialCard(
+                        id = UUID.randomUUID().toString(),
+                        cardName = it.name,
+                        manaCost = it.manaCost
+                    )
+                    is SpellCard -> GameSpellCard(
+                        id = UUID.randomUUID().toString(),
+                        cardName = it.name,
+                        manaCost = it.manaCost
+                    )
                     else -> error("a player's deck should only contain natials and spells")
                 }
             }
             .shuffled()
         val masterCreature = Master(
-            card = GameMasterCard(deck.master.name),
+            id = UUID.randomUUID().toString(),
+            card = GameMasterCard(
+                id = UUID.randomUUID().toString(),
+                cardName = deck.master.name
+            ),
             position = Position.BACK_TWO,
             activationState = ActivationState.READY,
             attack = deck.master.attack,

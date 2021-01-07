@@ -4,9 +4,11 @@ import kotlinx.serialization.Serializable
 import model.Cards
 import model.Element
 import model.Speed
+import java.util.*
 
 @Serializable
 sealed class Creature {
+    abstract val id: String
     abstract val card: GameCard
     abstract var position: Position
     abstract var activationState: ActivationState
@@ -18,9 +20,9 @@ sealed class Creature {
     abstract var guardCount: Int
 
     val sealed: Boolean
-        get() = sealCount >= 0
+        get() = sealCount > 0
     val guarded: Boolean
-        get() = guardCount >= 0
+        get() = guardCount > 0
 
     fun receiveDamage(damage: Int) {
         if (guarded) {
@@ -29,7 +31,15 @@ sealed class Creature {
             hp -= damage
         }
     }
+
+    fun toCopy() =
+        when (this) {
+            is Master -> this.copy()
+            is Natial -> this.copy()
+        }
 }
+
+val MASTER_STARTING_POSITION = Position.BACK_TWO
 
 enum class Position {
     FRONT_ONE,
@@ -59,6 +69,7 @@ enum class ActivationState {
 
 @Serializable
 data class Master(
+    override val id: String,
     override val card: GameMasterCard,
     override var position: Position,
     override var activationState: ActivationState,
@@ -73,6 +84,7 @@ data class Master(
 
 @Serializable
 data class Natial(
+    override val id: String,
     override val card: GameNatialCard,
     override var position: Position,
     override var activationState: ActivationState,
@@ -89,6 +101,7 @@ object Natials {
         val card = Cards.getNatialByName(gameCard.cardName)
             ?: error("I don't know what this Natial is ${gameCard.cardName}")
         return Natial(
+            id = UUID.randomUUID().toString(),
             card = gameCard,
             position = position,
             activationState = when (card.speed) {

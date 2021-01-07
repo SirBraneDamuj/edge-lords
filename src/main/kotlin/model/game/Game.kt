@@ -20,6 +20,9 @@ data class Game(
             odd = { PlayerLabel.FIRST },
             even = { PlayerLabel.SECOND }
         )
+
+    fun player(playerLabel: PlayerLabel) =
+        players.getValue(playerLabel)
 }
 
 enum class Winner {

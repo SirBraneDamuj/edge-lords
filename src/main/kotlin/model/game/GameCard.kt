@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class GameCard {
+    abstract val id: String
     abstract val cardName: String
     abstract var manaCost: Int
 
@@ -17,6 +18,7 @@ sealed class GameCard {
 
 @Serializable
 data class GameMasterCard(
+    override val id: String,
     override val cardName: String
 ) : GameCard() {
     override var manaCost: Int
@@ -28,6 +30,7 @@ data class GameMasterCard(
 
 @Serializable
 data class GameNatialCard(
+    override val id: String,
     override val cardName: String,
     override var manaCost: Int
 ) : GameCard() {
@@ -35,6 +38,7 @@ data class GameNatialCard(
 
 @Serializable
 data class GameSpellCard(
+    override val id: String,
     override val cardName: String,
     override var manaCost: Int
 ) : GameCard() {

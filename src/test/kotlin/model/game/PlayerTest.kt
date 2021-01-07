@@ -2,6 +2,7 @@ package model.game
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.*
 
 internal class PlayerTest {
 
@@ -10,7 +11,7 @@ internal class PlayerTest {
         val player = Games.createFakeGame().activePlayer
         val position = Position.FRONT_THREE
         val creature = Natials.summonFromCardToPosition(
-            gameCard = GameNatialCard("Ae-Ferrion", 1),
+            gameCard = GameNatialCard(UUID.randomUUID().toString(), "Ae-Ferrion", 1),
             position = position,
             magicCrystal = false
         )
@@ -31,7 +32,7 @@ internal class PlayerTest {
         val player = Games.createFakeGame().activePlayer
         val position = Position.BACK_ONE
         val creature = Natials.summonFromCardToPosition(
-            gameCard = GameNatialCard("Ae-Ferrion", 1),
+            gameCard = GameNatialCard(UUID.randomUUID().toString(), "Ae-Ferrion", 1),
             position = position,
             magicCrystal = false
         )
