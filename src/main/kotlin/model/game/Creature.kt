@@ -116,3 +116,19 @@ object Natials {
     }
 }
 
+object Masters {
+    fun masterFromCardToPosition(gameCard: GameMasterCard, position: Position): Master {
+        val card = Cards.getMasterByName(gameCard.cardName)
+            ?: error("I don't know who this Master is ${gameCard.cardName}")
+        return Master(
+            id = UUID.randomUUID().toString(),
+            card = gameCard,
+            position = position,
+            activationState = ActivationState.NOT_READY,
+            attack = card.attack,
+            hp = card.hp,
+            maxHp = card.hp
+        )
+    }
+}
+
