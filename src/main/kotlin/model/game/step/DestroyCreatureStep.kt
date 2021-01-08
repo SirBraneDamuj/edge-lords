@@ -6,8 +6,8 @@ import model.game.PlayerLabel
 import model.game.Position
 
 class DestroyCreatureStep(
-    private val playerLabel: PlayerLabel,
-    private val position: Position
+    val playerLabel: PlayerLabel,
+    val position: Position
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         val player = game.player(playerLabel)

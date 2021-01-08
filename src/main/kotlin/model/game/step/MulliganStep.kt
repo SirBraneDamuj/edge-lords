@@ -5,8 +5,8 @@ import model.game.PlayerLabel
 import util.toSingletonList
 
 class MulliganStep(
-    private val playerLabel: PlayerLabel,
-    private val changeIndices: Set<Int>
+    val playerLabel: PlayerLabel,
+    val changeIndices: Set<Int>
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         val player = game.players.getValue(playerLabel)

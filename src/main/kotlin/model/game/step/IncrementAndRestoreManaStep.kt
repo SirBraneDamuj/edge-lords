@@ -5,8 +5,8 @@ import model.game.Game
 import model.game.PlayerLabel
 
 class IncrementAndRestoreManaStep(
-    private val playerLabel: PlayerLabel,
-    private val amountRestored: Int? = null
+    val playerLabel: PlayerLabel,
+    val amountRestored: Int? = null
 ) : GameStep {
 
     override fun perform(game: Game): List<GameStep> {

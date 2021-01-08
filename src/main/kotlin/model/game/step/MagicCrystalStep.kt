@@ -9,8 +9,8 @@ import model.game.Position
 import util.toSingletonList
 
 class MagicCrystalStep(
-    private val playerLabel: PlayerLabel,
-    private val position: Position
+    val playerLabel: PlayerLabel,
+    val position: Position
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         val player = game.player(playerLabel)

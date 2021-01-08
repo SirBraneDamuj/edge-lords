@@ -21,6 +21,11 @@ data class Player(
     var mana: Int,
     var maxMana: Int
 ) {
+    fun master() =
+        creatures
+            .single { it is Master }
+            as Master
+
     fun creatureAtPosition(position: Position) =
         creatures
             .filter { it.position == position }

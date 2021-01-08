@@ -1,6 +1,6 @@
 package model.game.step
 
-import model.DEFENDER_STRENGTH_PENALTY
+import model.game.DamageCalculator
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
@@ -18,10 +18,7 @@ class CombatStep(
         val defender = defendingPlayer.creatureAtPosition(defenderPosition)
             ?: error("no creature found at defender position... was the action validated?")
 
-        var attackerStrength = attacker.attack
-        attackerStrength += attacker.element?.strengthModifierAgainst(defender.element) ?: 0
-        var defenderStrength = defender.attack - DEFENDER_STRENGTH_PENALTY
-        defenderStrength += defender.element?.strengthModifierAgainst(attacker.element) ?: 0
+        val (attackerStrength, defenderStrength) = DamageCalculator.calculateCombatDamage(attacker, defender)
 
         attacker.receiveDamage(defenderStrength)
         defender.receiveDamage(attackerStrength)
