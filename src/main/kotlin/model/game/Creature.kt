@@ -3,6 +3,7 @@ package model.game
 import kotlinx.serialization.Serializable
 import model.Cards
 import model.Element
+import model.Range
 import model.Speed
 import java.util.*
 
@@ -15,6 +16,8 @@ sealed class Creature {
     abstract var attack: Int
     abstract var hp: Int
     abstract var maxHp: Int
+    abstract val range: Range
+    abstract val speed: Speed
     abstract val element: Element?
     abstract var sealCount: Int
     abstract var guardCount: Int
@@ -41,14 +44,16 @@ sealed class Creature {
 
 val MASTER_STARTING_POSITION = Position.BACK_TWO
 
-enum class Position {
-    FRONT_ONE,
-    FRONT_TWO,
-    FRONT_THREE,
-    FRONT_FOUR,
-    BACK_ONE,
-    BACK_TWO,
-    BACK_THREE;
+enum class Position(
+    val backRow: Boolean
+) {
+    FRONT_ONE(false),
+    FRONT_TWO(false),
+    FRONT_THREE(false),
+    FRONT_FOUR(false),
+    BACK_ONE(true),
+    BACK_TWO(true),
+    BACK_THREE(true);
 
     companion object {
         private val startingMagicCrystalLocations = arrayOf(
@@ -59,12 +64,15 @@ enum class Position {
     }
 }
 
-enum class ActivationState {
-    NOT_READY,
-    READY,
-    MOVED,
-    READY_AGAIN,
-    ACTIVATED;
+enum class ActivationState(
+    val canMove: Boolean,
+    val canAct: Boolean
+) {
+    NOT_READY(false, false),
+    READY(true, true),
+    MOVED(false, true),
+    READY_AGAIN(true, true),
+    ACTIVATED(false, false);
 }
 
 @Serializable
@@ -76,10 +84,12 @@ data class Master(
     override var attack: Int,
     override var hp: Int,
     override var maxHp: Int,
+    override val range: Range,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0
 ) : Creature() {
     override val element: Element? = null
+    override val speed = Speed.NORMAL
 }
 
 @Serializable
@@ -91,6 +101,8 @@ data class Natial(
     override var attack: Int,
     override var hp: Int,
     override var maxHp: Int,
+    override val range: Range,
+    override val speed: Speed,
     override val element: Element,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0
@@ -111,6 +123,8 @@ object Natials {
             attack = card.attack.let { if (magicCrystal) it + 1 else it },
             hp = card.hp.let { if (magicCrystal) it + 1 else it },
             maxHp = card.hp.let { if (magicCrystal) it + 1 else it },
+            range = card.range,
+            speed = card.speed,
             element = card.element
         )
     }
@@ -127,7 +141,8 @@ object Masters {
             activationState = ActivationState.NOT_READY,
             attack = card.attack,
             hp = card.hp,
-            maxHp = card.hp
+            maxHp = card.hp,
+            range = card.range
         )
     }
 }

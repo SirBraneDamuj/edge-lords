@@ -20,7 +20,10 @@ class CombatStep(
 
         val (attackerStrength, defenderStrength) = DamageCalculator.calculateCombatDamage(attacker, defender)
 
-        attacker.receiveDamage(defenderStrength)
+        // TODO: this might be more complicated than this
+        if (!attacker.position.backRow) {
+            attacker.receiveDamage(defenderStrength)
+        }
         defender.receiveDamage(attackerStrength)
 
         // TODO: abilities which trigger when one Natial kills another should trigger here
