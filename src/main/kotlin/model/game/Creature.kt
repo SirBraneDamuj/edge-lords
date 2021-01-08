@@ -61,6 +61,9 @@ enum class Position(
         )
 
         fun randomStartingMagicCrystalLocation() = startingMagicCrystalLocations.random()
+
+        val frontPositions = listOf(FRONT_ONE, FRONT_TWO, FRONT_THREE, FRONT_FOUR)
+        val backPositions = listOf(BACK_ONE, BACK_TWO, BACK_THREE)
     }
 }
 

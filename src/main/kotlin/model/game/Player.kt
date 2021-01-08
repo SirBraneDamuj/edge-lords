@@ -24,7 +24,7 @@ data class Player(
     fun master() =
         creatures
             .single { it is Master }
-            as Master
+                as Master
 
     fun creatureAtPosition(position: Position) =
         creatures
@@ -82,7 +82,8 @@ object Players {
             activationState = ActivationState.READY,
             attack = deck.master.attack,
             hp = deck.master.hp,
-            maxHp = deck.master.hp
+            maxHp = deck.master.hp,
+            range = deck.master.range
         )
         return Player(
             name = name,
