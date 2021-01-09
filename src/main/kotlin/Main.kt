@@ -1,13 +1,11 @@
 import client.ConsoleClient
-import model.game.ActionExecutor
+import client.ConsolePrinter
 import model.game.Games
-import model.game.Position
-import model.game.action.EndTurnAction
 
 fun main() {
     val game = Games.createFakeGame()
-    val client = ConsoleClient()
-    client.printGame(game)
+    val client = ConsoleClient(game)
+    client.start()
 }
 
 object ResourceLoader {

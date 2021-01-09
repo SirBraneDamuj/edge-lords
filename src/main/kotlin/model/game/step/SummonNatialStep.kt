@@ -19,6 +19,7 @@ class SummonNatialStep(
         player.mana -= natial.card.manaCost
         return mutableListOf<GameStep>().apply {
             if (magicCrystal) this.add(MagicCrystalStep(playerLabel, position))
+            this.add(RemoveCardFromHandStep(playerLabel, handPosition))
         }
     }
 }
