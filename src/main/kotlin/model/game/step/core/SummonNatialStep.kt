@@ -1,6 +1,8 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.*
+import model.game.step.GameStep
+import model.game.step.spell.MagicCrystalStep
 
 class SummonNatialStep(
     private val playerLabel: PlayerLabel,
@@ -16,10 +18,9 @@ class SummonNatialStep(
         val magicCrystal = player.magicCrystals.contains(position)
         val natial = Natials.summonFromCardToPosition(natialCard, position, magicCrystal)
         player.creatures += natial
-        player.mana -= natial.card.manaCost
         return mutableListOf<GameStep>().apply {
+            this.add(PlayCardFromHandStep(playerLabel, handPosition))
             if (magicCrystal) this.add(MagicCrystalStep(playerLabel, position))
-            this.add(RemoveCardFromHandStep(playerLabel, handPosition))
         }
     }
 }

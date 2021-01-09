@@ -3,7 +3,7 @@ package model.game.action
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
-import model.game.step.MoveCreatureStep
+import model.game.step.core.MoveCreatureStep
 
 class MoveAction(
     override val playerLabel: PlayerLabel,

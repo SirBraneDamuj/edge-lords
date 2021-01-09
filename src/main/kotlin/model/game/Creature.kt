@@ -27,6 +27,15 @@ sealed class Creature {
     val guarded: Boolean
         get() = guardCount > 0
 
+    fun increaseMaxHp(amount: Int) {
+        maxHp += amount
+        heal(amount)
+    }
+
+    fun heal(amount: Int) {
+        hp = (hp + amount).coerceAtMost(maxHp)
+    }
+
     fun receiveDamage(damage: Int) {
         if (guarded) {
             guardCount--
@@ -41,19 +50,32 @@ sealed class Creature {
             is Natial -> this.copy()
         }
 }
-
+// TODO: move position stuff to Glossary
 val MASTER_STARTING_POSITION = Position.BACK_TWO
 
+enum class Row {
+    BACK,
+    FRONT;
+
+    fun positions() =
+        when (this) {
+            BACK -> Position.backPositions
+            FRONT -> Position.frontPositions
+        }
+}
+
 enum class Position(
-    val backRow: Boolean
+    val row: Row
 ) {
-    FRONT_ONE(false),
-    FRONT_TWO(false),
-    FRONT_THREE(false),
-    FRONT_FOUR(false),
-    BACK_ONE(true),
-    BACK_TWO(true),
-    BACK_THREE(true);
+    FRONT_ONE(Row.FRONT),
+    FRONT_TWO(Row.FRONT),
+    FRONT_THREE(Row.FRONT),
+    FRONT_FOUR(Row.FRONT),
+    BACK_ONE(Row.BACK),
+    BACK_TWO(Row.BACK),
+    BACK_THREE(Row.BACK);
+
+    val backRow: Boolean = row == Row.BACK
 
     companion object {
         private val startingMagicCrystalLocations = arrayOf(
@@ -62,8 +84,10 @@ enum class Position(
 
         fun randomStartingMagicCrystalLocation() = startingMagicCrystalLocations.random()
 
+        // TODO these can be a set
         val frontPositions = listOf(FRONT_ONE, FRONT_TWO, FRONT_THREE, FRONT_FOUR)
         val backPositions = listOf(BACK_ONE, BACK_TWO, BACK_THREE)
+        val allPositions = values().toSet()
     }
 }
 

@@ -1,7 +1,8 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
 import model.game.PlayerLabel
+import model.game.step.GameStep
 import util.toSingletonList
 
 class MulliganStep(
@@ -12,6 +13,7 @@ class MulliganStep(
         val player = game.players.getValue(playerLabel)
         player.mulliganed = true
         if (changeIndices.isNotEmpty()) {
+            // TODO: can this step be split up? it's certainly not atomic
             val changedCards = changeIndices.map { player.hand[it] }
             player.hand -= changedCards
             player.deck += changedCards

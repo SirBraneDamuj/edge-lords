@@ -2,7 +2,7 @@ package model.game.action
 
 import model.game.Game
 import model.game.PlayerLabel
-import model.game.step.MulliganStep
+import model.game.step.core.MulliganStep
 
 class MulliganAction(
     override val playerLabel: PlayerLabel,

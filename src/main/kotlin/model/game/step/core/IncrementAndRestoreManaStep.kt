@@ -1,8 +1,9 @@
-package model.game.step
+package model.game.step.core
 
 import model.MAX_MAX_MANA
 import model.game.Game
 import model.game.PlayerLabel
+import model.game.step.GameStep
 
 class IncrementAndRestoreManaStep(
     val playerLabel: PlayerLabel,

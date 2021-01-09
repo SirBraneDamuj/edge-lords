@@ -1,9 +1,7 @@
-package model.game.step
+package model.game.step.core
 
-import model.game.DamageCalculator
-import model.game.Game
-import model.game.PlayerLabel
-import model.game.Position
+import model.game.*
+import model.game.step.GameStep
 
 class CombatStep(
     private val attackingPlayerLabel: PlayerLabel,
@@ -25,6 +23,8 @@ class CombatStep(
             attacker.receiveDamage(defenderStrength)
         }
         defender.receiveDamage(attackerStrength)
+
+        attacker.activationState = ActivationState.ACTIVATED
 
         // TODO: abilities which trigger when one Natial kills another should trigger here
         return mutableListOf<GameStep>().apply {

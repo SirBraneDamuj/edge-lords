@@ -1,8 +1,9 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.Winner
+import model.game.step.GameStep
 
 class VictoryStep(
     private val winningPlayer: PlayerLabel

@@ -1,7 +1,8 @@
 package model.game.step
 
 import model.game.Games
-import org.junit.jupiter.api.Assertions
+import model.game.step.core.EndTurnStep
+import model.game.step.core.MulliganStep
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

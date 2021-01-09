@@ -1,10 +1,14 @@
 package model.game.step
 
-import model.MAGIC_CRYSTAL_ATTACK_INCREASE
-import model.MAGIC_CRYSTAL_HP_INCREASE
-import model.MAGIC_CRYSTAL_MANA_RESTORATION
-import model.game.*
-import org.junit.jupiter.api.Assertions.*
+import model.game.Games
+import model.game.MASTER_STARTING_POSITION
+import model.game.step.core.IncrementAndRestoreManaStep
+import model.game.step.spell.MAGIC_CRYSTAL_ATTACK_INCREASE
+import model.game.step.spell.MAGIC_CRYSTAL_HP_INCREASE
+import model.game.step.spell.MAGIC_CRYSTAL_MANA_RESTORATION
+import model.game.step.spell.MagicCrystalStep
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class MagicCrystalStepTest {

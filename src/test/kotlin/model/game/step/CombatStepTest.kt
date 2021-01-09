@@ -1,6 +1,8 @@
 package model.game.step
 
 import model.game.Games
+import model.game.step.core.CombatStep
+import model.game.step.core.DestroyCreatureStep
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

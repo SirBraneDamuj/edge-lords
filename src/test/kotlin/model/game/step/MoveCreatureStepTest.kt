@@ -1,6 +1,8 @@
 package model.game.step
 
 import model.game.*
+import model.game.step.core.MoveCreatureStep
+import model.game.step.spell.MagicCrystalStep
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

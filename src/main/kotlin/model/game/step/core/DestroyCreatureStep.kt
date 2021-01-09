@@ -1,9 +1,10 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
 import model.game.Master
 import model.game.PlayerLabel
 import model.game.Position
+import model.game.step.GameStep
 
 class DestroyCreatureStep(
     val playerLabel: PlayerLabel,

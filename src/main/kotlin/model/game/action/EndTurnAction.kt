@@ -2,7 +2,7 @@ package model.game.action
 
 import model.game.Game
 import model.game.PlayerLabel
-import model.game.step.EndTurnStep
+import model.game.step.core.EndTurnStep
 
 class EndTurnAction(
     override val playerLabel: PlayerLabel

@@ -1,15 +1,15 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
 import model.game.PlayerLabel
+import model.game.step.GameStep
 
-class RemoveCardFromHandStep(
-    val playerLabel: PlayerLabel,
-    val handIndex: Int
+class ShuffleStep(
+    val playerLabel: PlayerLabel
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         val player = game.player(playerLabel)
-        player.hand = player.hand.filterIndexed { i, _ -> i != handIndex }
+        player.deck = player.deck.shuffled()
         return emptyList()
     }
 }

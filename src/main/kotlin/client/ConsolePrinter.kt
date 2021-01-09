@@ -96,7 +96,7 @@ object ConsolePrinter {
         }
         val infix = when {
             creature.speed == Speed.FAST && creature.range == Range.RANGED -> "$"
-            creature.speed == Speed.FAST -> "W"
+            creature.speed == Speed.FAST -> "~"
             creature.range == Range.RANGED -> "B"
             else -> " "
         }
@@ -108,7 +108,22 @@ object ConsolePrinter {
 
     // 9 chars
     private fun formatCreatureStats(creature: Creature) =
-        "A ${formatCreatureStat(creature.attack)} H ${formatCreatureStat(creature.hp)}"
+        "A ${
+            formatCreatureStat(creature.attack)
+        }${
+            formatActivationState(creature.activationState)
+        }H ${
+            formatCreatureStat(
+                creature.hp
+            )
+        }"
+
+    private fun formatActivationState(activationState: ActivationState) =
+        when {
+            activationState.canMove && activationState.canAct -> "="
+            activationState.canAct -> "-"
+            else -> " "
+        }
 
     private fun formatCreatureStat(i: Int) =
         i.toString().padStart(2)
@@ -119,7 +134,7 @@ object ConsolePrinter {
     private fun formatGameCardTypeAndMana(gameCard: GameCard): String {
         val type: String = when (gameCard) {
             is GameSpellCard -> CardType.SPELL.toString()
-            is GameNatialCard ->  {
+            is GameNatialCard -> {
                 val card = Cards.getNatialByName(gameCard.cardName) ?: error("this natial don't exist")
                 card.element.toString().clamp(7)
             }

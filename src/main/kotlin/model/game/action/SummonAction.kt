@@ -1,7 +1,7 @@
 package model.game.action
 
 import model.game.*
-import model.game.step.SummonNatialStep
+import model.game.step.core.SummonNatialStep
 
 class SummonAction(
     override val playerLabel: PlayerLabel,

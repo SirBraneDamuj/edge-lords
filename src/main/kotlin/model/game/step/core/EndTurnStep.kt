@@ -1,6 +1,7 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
+import model.game.step.GameStep
 import util.toSingletonList
 
 class EndTurnStep : GameStep {

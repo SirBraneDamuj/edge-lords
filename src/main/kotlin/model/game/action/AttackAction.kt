@@ -2,7 +2,7 @@ package model.game.action
 
 import model.Range
 import model.game.*
-import model.game.step.CombatStep
+import model.game.step.core.CombatStep
 
 class AttackAction(
     override val playerLabel: PlayerLabel,
@@ -15,6 +15,10 @@ class AttackAction(
 
         val attacker = player.creatureAtPosition(attackerPosition)
             ?: return invalidAction("$playerLabel does not have a creature at $attackerPosition")
+
+        if (!attacker.activationState.canAct) {
+            return invalidAction("${attacker.card.cardName} has already acted.")
+        }
 
         if (attackerPosition.backRow && attacker.range != Range.RANGED) {
             return invalidAction("${attacker.card.cardName} cannot attack from the back row")

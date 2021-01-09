@@ -1,7 +1,8 @@
-package model.game.step
+package model.game.step.core
 
 import model.game.Game
 import model.game.PlayerLabel
+import model.game.step.GameStep
 
 class DrawCardStep(
     private val playerLabel: PlayerLabel
