@@ -1,6 +1,5 @@
 package model.game
 
-import kotlinx.serialization.Serializable
 import model.MAX_MAX_MANA
 import model.card.Deck
 import model.card.NatialCard
@@ -8,7 +7,6 @@ import model.card.SpellCard
 import java.util.*
 
 
-@Serializable
 data class Player(
     val name: String,
     val playerLabel: PlayerLabel,

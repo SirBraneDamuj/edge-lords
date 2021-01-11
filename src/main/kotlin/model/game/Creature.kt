@@ -1,14 +1,12 @@
 package model.game
 
 import client.ActionInputException
-import kotlinx.serialization.Serializable
 import model.Cards
 import model.Element
 import model.Range
 import model.Speed
 import java.util.*
 
-@Serializable
 sealed class Creature {
     abstract val id: String
     abstract val card: GameCard
@@ -51,6 +49,7 @@ sealed class Creature {
             is Natial -> this.copy()
         }
 }
+
 // TODO: move position stuff to Glossary
 val MASTER_STARTING_POSITION = Position.BACK_TWO
 
@@ -128,7 +127,6 @@ enum class ActivationState(
     ACTIVATED(false, false);
 }
 
-@Serializable
 data class Master(
     override val id: String,
     override val card: GameMasterCard,
@@ -145,7 +143,6 @@ data class Master(
     override val speed = Speed.NORMAL
 }
 
-@Serializable
 data class Natial(
     override val id: String,
     override val card: GameNatialCard,

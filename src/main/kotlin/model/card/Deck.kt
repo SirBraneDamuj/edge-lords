@@ -1,9 +1,11 @@
 package model.card
 
-import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import model.Cards
+import util.ResourceLoader
 
 data class Deck(
     val name: String,
@@ -12,8 +14,10 @@ data class Deck(
 )
 
 object Decks {
+    private val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+
     fun loadDeck(filename: String): Deck {
-        val loadedDeck = Yaml.default.decodeFromString<LoadedDeck>(ResourceLoader.getResource(filename))
+        val loadedDeck = objectMapper.readValue<LoadedDeck>(ResourceLoader.getResource(filename))
         loadedDeck.cards.sumBy(LoadedCard::count)
             .takeIf { it == 20 }
             ?: error("this deck ain't got the right number of cards dude")
@@ -36,14 +40,12 @@ object Decks {
     }
 }
 
-@Serializable
 data class LoadedCard(
     val name: String,
     val type: CardType,
     val count: Int
 )
 
-@Serializable
 data class LoadedDeck(
     val name: String,
     val master: String,

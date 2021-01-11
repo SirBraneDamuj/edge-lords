@@ -1,6 +1,5 @@
 package model.card
 
-import kotlinx.serialization.Serializable
 import model.Element
 import model.Range
 import model.Speed
@@ -17,7 +16,6 @@ enum class CardType {
     MASTER;
 }
 
-@Serializable
 data class MasterCard(
     override val name: String,
     val mana: Int,
@@ -31,7 +29,6 @@ data class MasterCard(
     override val cardType = CardType.MASTER
 }
 
-@Serializable
 data class NatialCard(
     override val name: String,
     val manaCost: Int,
@@ -46,7 +43,6 @@ data class NatialCard(
     override val cardType = CardType.NATIAL
 }
 
-@Serializable
 data class SpellCard(
     override val name: String,
     val manaCost: Int,

@@ -1,27 +1,31 @@
 package model
 
-import ResourceLoader
-import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.decodeFromString
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import model.card.CardType
 import model.card.MasterCard
 import model.card.NatialCard
 import model.card.SpellCard
+import util.ResourceLoader
 
 object Cards {
-    private val natials: Map<String, NatialCard> =
+    private val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+
+    val natials: Map<String, NatialCard> =
         ResourceLoader.getResource("/cards/natials.yml")
-            .let { Yaml.default.decodeFromString<List<NatialCard>>(it) }
+            .let { objectMapper.readValue<List<NatialCard>>(it) }
             .associateBy(NatialCard::name)
 
-    private val spells: Map<String, SpellCard> =
+    val spells: Map<String, SpellCard> =
         ResourceLoader.getResource("/cards/spells.yml")
-            .let { Yaml.default.decodeFromString<List<SpellCard>>(it) }
+            .let { objectMapper.readValue<List<SpellCard>>(it) }
             .associateBy(SpellCard::name)
 
-    private val masters: Map<String, MasterCard> =
+    val masters: Map<String, MasterCard> =
         ResourceLoader.getResource("/cards/masters.yml")
-            .let { Yaml.default.decodeFromString<List<MasterCard>>(it) }
+            .let { objectMapper.readValue<List<MasterCard>>(it) }
             .associateBy(MasterCard::name)
 
     fun getNatialByName(name: String) = natials[name]?.copy()

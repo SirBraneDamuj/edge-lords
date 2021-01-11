@@ -1,8 +1,5 @@
 package model.game
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 sealed class GameCard {
     abstract val id: String
     abstract val cardName: String
@@ -16,7 +13,6 @@ sealed class GameCard {
         }
 }
 
-@Serializable
 data class GameMasterCard(
     override val id: String,
     override val cardName: String
@@ -28,7 +24,6 @@ data class GameMasterCard(
         }
 }
 
-@Serializable
 data class GameNatialCard(
     override val id: String,
     override val cardName: String,
@@ -36,7 +31,6 @@ data class GameNatialCard(
 ) : GameCard() {
 }
 
-@Serializable
 data class GameSpellCard(
     override val id: String,
     override val cardName: String,

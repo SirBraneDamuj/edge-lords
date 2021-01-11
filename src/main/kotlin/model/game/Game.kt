@@ -1,11 +1,8 @@
 package model.game
 
-import kotlinx.serialization.Serializable
 import model.card.Decks
-import model.game.action.EndTurnAction
 import util.whenIts
 
-@Serializable
 data class Game(
     val players: Map<PlayerLabel, Player>,
     var turn: Int,

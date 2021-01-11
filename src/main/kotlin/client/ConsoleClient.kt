@@ -2,6 +2,12 @@ package client
 
 import model.game.*
 
+fun main() {
+    val game = Games.createFakeGame()
+    val client = ConsoleClient(game)
+    client.start()
+}
+
 class ConsoleClient(
     val game: Game
 ) {
