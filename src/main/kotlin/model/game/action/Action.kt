@@ -1,6 +1,6 @@
 package model.game.action
 
-import Either
+import util.Either
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.step.GameStep

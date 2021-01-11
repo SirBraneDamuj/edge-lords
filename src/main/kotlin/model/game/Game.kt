@@ -1,17 +1,20 @@
 package model.game
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import model.card.Decks
 import util.whenIts
+import java.util.*
 
 data class Game(
+    val id: String,
     val players: Map<PlayerLabel, Player>,
     var turn: Int,
     var winner: Winner = Winner.NONE
 ) {
     val activePlayer: Player
-        get() = players[activePlayerLabel] ?: error("this isn't possible")
+        @JsonIgnore get() = players[activePlayerLabel] ?: error("this isn't possible")
     val inactivePlayer: Player
-        get() = players[activePlayerLabel.other] ?: error("this isn't possible")
+        @JsonIgnore get() = players[activePlayerLabel.other] ?: error("this isn't possible")
     val activePlayerLabel: PlayerLabel
         get() = turn.whenIts(
             odd = { PlayerLabel.FIRST },
@@ -41,6 +44,7 @@ object Games {
         val deck1 = Decks.loadDeck("/decks/deck1.yml")
         val deck2 = Decks.loadDeck("/decks/deck2.yml")
         return Game(
+            id = UUID.randomUUID().toString(),
             players = mapOf(
                 PlayerLabel.FIRST to Players.createPlayerForDeck(
                     name = "Rean",

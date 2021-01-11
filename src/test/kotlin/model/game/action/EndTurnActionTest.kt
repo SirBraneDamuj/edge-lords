@@ -18,7 +18,7 @@ internal class EndTurnActionTest {
             deck = newPlayer.deck.map(GameCard::toCopy)
         )
 
-        val result = action.perform(game)
+        val result = action.validate(game)
         assertTrue(result is ValidAction)
 
         assertEquals(startTurn + 1, game.turn)

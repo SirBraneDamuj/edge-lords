@@ -8,6 +8,7 @@ import java.util.*
 
 
 data class Player(
+    val id: String,
     val name: String,
     val playerLabel: PlayerLabel,
     var mulliganed: Boolean,
@@ -84,6 +85,7 @@ object Players {
             range = deck.master.range
         )
         return Player(
+            id = UUID.randomUUID().toString(),
             name = name,
             playerLabel = label,
             mulliganed = false,
