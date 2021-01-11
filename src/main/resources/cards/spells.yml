@@ -1,39 +1,49 @@
 - name: "Magic Crystal"
   manaCost: 0
   effectText: "Increase target's Attack and Max HP by 1. Increase the player's Max Mana by 1. If the target is a Natial, it may use its ability again."
+  targetingMode: "SINGLE"
 
 - name: "Medic"
   manaCost: 1
   effectText: "Restore 2 HP to the target. Remove Seal from the target. If the target's element is Heaven, increase its Attack by 1."
+  targetingMode: "SINGLE"
 
 - name: "Conjurate"
   manaCost: 4
   effectText: "If your Master is Witch, seal the target for 3 turns. Otherwise, seal the target for 2 turns."
+  targetingMode: "SINGLE"
 
 - name: "Vanish"
   manaCost: 4
   effectText: "If your Master is Paladin, deal 7 damage to the target. Otherwise, deal 6 damage to the target."
+  targetingMode: "SINGLE"
 
 - name: "Uptide"
   manaCost: 3
   effectText: "Increase Attack and HP for all Water Natials by 2. Deal 2 damage to enemy Earth, Fire, and Heaven Natials."
+  targetingMode: "ALL"
 
 - name: "Blaze"
   manaCost: 2
   effectText: "If the target is a Fire Natial, increase its Attack by 3. Otherwise, increase the target's Attack by 2."
+  targetingMode: "SINGLE"
 
 - name: "Wall"
   manaCost: 2
   effectText: "The target suffers no damage from its next combat. If the target is an Earth Natial, restore 3 HP to it."
+  targetingMode: "SINGLE"
 
 - name: "Expel"
   manaCost: 3
   effectText: "Return 1 enemy Natial to your opponent's deck."
+  targetingMode: "SINGLE"
 
 - name: "Reduce"
   manaCost: 1
   effectText: "Halve the mana cost of a card in your hand (rounded up)."
+  targetingMode: "HAND"
 
 - name: "Disaster"
   manaCost: 5
   effectText: "Deal 4 damage to a row of enemies."
+  targetingMode: "ROW"

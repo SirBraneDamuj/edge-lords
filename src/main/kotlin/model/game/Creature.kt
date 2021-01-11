@@ -1,5 +1,6 @@
 package model.game
 
+import client.ActionInputException
 import kotlinx.serialization.Serializable
 import model.Cards
 import model.Element
@@ -62,6 +63,7 @@ enum class Row {
             BACK -> Position.backPositions
             FRONT -> Position.frontPositions
         }
+
 }
 
 enum class Position(
@@ -88,6 +90,30 @@ enum class Position(
         val frontPositions = listOf(FRONT_ONE, FRONT_TWO, FRONT_THREE, FRONT_FOUR)
         val backPositions = listOf(BACK_ONE, BACK_TWO, BACK_THREE)
         val allPositions = values().toSet()
+
+        // TODO: make this return null and throw the error elsewhere
+        fun stringToPosition(s: String): Position {
+            return when (s[0].toUpperCase()) {
+                'B' -> {
+                    when (s[1]) {
+                        '1' -> BACK_ONE
+                        '2' -> BACK_TWO
+                        '3' -> BACK_THREE
+                        else -> throw ActionInputException("invalid position")
+                    }
+                }
+                'F' -> {
+                    when (s[1]) {
+                        '1' -> FRONT_ONE
+                        '2' -> FRONT_TWO
+                        '3' -> FRONT_THREE
+                        '4' -> FRONT_FOUR
+                        else -> throw ActionInputException("invalid position")
+                    }
+                }
+                else -> throw ActionInputException("position not valid")
+            }
+        }
     }
 }
 

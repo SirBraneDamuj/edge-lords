@@ -1,9 +1,6 @@
 package model.game
 
-import model.game.action.Action
-import model.game.action.ActionErrors
-import model.game.action.InvalidAction
-import model.game.action.ValidAction
+import model.game.action.*
 
 class ActionValidationError(
     val errors: ActionErrors
@@ -19,6 +16,12 @@ object ActionExecutor {
         if (game.activePlayerLabel != action.playerLabel) {
             throw ActionValidationError(
                 ActionErrors("It is not ${action.playerLabel}'s turn")
+            )
+        }
+
+        if (!game.activePlayer.mulliganed && action !is MulliganAction) {
+            throw ActionValidationError(
+                ActionErrors("${game.activePlayer.name} has not mulliganed yet")
             )
         }
 

@@ -11,14 +11,11 @@ class MoveAction(
     private val to: Position
 ) : Action {
     override fun validate(game: Game): ActionResult {
-        val player = game.players.getValue(playerLabel)
+        val player = game.player(playerLabel)
         val creature = player.creatureAtPosition(from) ?: return invalidAction("There is no creature at $from")
         if (!creature.activationState.canMove) {
             return invalidAction("The creature can't move right now.")
         }
-        val destinationCreature = player.creatureAtPosition(to)
-        creature.position = to
-        destinationCreature?.position = from
         return ValidAction(
             MoveCreatureStep(playerLabel, from, to)
         )

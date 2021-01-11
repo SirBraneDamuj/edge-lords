@@ -21,7 +21,6 @@ class MagicCrystalStep(
             ?: error("no creature at that position... was the action validated?")
         creature.attack += MAGIC_CRYSTAL_ATTACK_INCREASE
         creature.increaseMaxHp(MAGIC_CRYSTAL_HP_INCREASE)
-        creature.hp += MAGIC_CRYSTAL_HP_INCREASE
         player.magicCrystals = player.magicCrystals - position
         return IncrementAndRestoreManaStep(
             playerLabel = playerLabel,

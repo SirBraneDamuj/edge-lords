@@ -1,6 +1,7 @@
 package model.game.step.spell
 
 import model.Element
+import model.game.EffectTarget
 import model.game.Game
 import model.game.step.core.DetectDeadCreaturesStep
 import model.game.step.GameStep

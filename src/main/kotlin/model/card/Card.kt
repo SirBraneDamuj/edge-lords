@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import model.Element
 import model.Range
 import model.Speed
+import model.game.EffectTargetingMode
 
 interface Card {
     val name: String
@@ -50,6 +51,7 @@ data class SpellCard(
     override val name: String,
     val manaCost: Int,
     val effectText: String,
+    val targetingMode: EffectTargetingMode
 ) : Card {
     override val cardType = CardType.SPELL
 }
