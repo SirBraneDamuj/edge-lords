@@ -1,7 +1,8 @@
 package model.game
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import model.card.Decks
+import model.card.Deck
+import model.card.SampleDecks
 import util.whenIts
 import java.util.*
 
@@ -40,9 +41,10 @@ enum class Winner {
 }
 
 object Games {
-    fun createFakeGame(): Game {
-        val deck1 = Decks.loadDeck("/decks/deck1.yml")
-        val deck2 = Decks.loadDeck("/decks/deck2.yml")
+    fun createGame(
+        deck1: Deck,
+        deck2: Deck
+    ): Game {
         return Game(
             id = UUID.randomUUID().toString(),
             players = mapOf(
@@ -59,5 +61,11 @@ object Games {
             ),
             turn = 1
         )
+    }
+
+    fun createFakeGame(): Game {
+        val deck1 = SampleDecks.loadDeck("/decks/deck1.yml")
+        val deck2 = SampleDecks.loadDeck("/decks/deck2.yml")
+        return createGame(deck1, deck2)
     }
 }

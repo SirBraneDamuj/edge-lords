@@ -13,8 +13,12 @@ data class Deck(
     val cards: List<Card>
 )
 
-object Decks {
+object SampleDecks {
     private val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+
+    fun loadDeckCards(filename: String): LoadedDeck =
+        objectMapper.readValue<LoadedDeck>(ResourceLoader.getResource(filename))
+
 
     fun loadDeck(filename: String): Deck {
         val loadedDeck = objectMapper.readValue<LoadedDeck>(ResourceLoader.getResource(filename))

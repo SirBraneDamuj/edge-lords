@@ -31,6 +31,10 @@ object Cards {
     fun getNatialByName(name: String) = natials[name]?.copy()
     fun getSpellByName(name: String) = spells[name]?.copy()
     fun getMasterByName(name: String) = masters[name]?.copy()
+    fun getCard(name: String) =
+        masters[name]
+            ?: spells[name]
+            ?: natials[name]
     fun getCardByNameAndType(name: String, type: CardType) =
         when (type) {
             CardType.NATIAL -> getNatialByName(name)
