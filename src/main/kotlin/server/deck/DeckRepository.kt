@@ -1,12 +1,9 @@
-package server.repository
+package server.deck
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import server.config.Db
-import server.dto.DeckDto
 import server.error.RecordNotFoundError
-import server.model.Deck
-import server.model.DeckCard
-import server.model.User
+import server.user.User
 import javax.inject.Inject
 
 class DeckRepository @Inject constructor(

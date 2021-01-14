@@ -1,12 +1,9 @@
-package server.router
+package server.session
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.http.Context
-import server.dto.LoginRequest
-import server.repository.SessionRepository
-import server.service.LoginService
 import javax.inject.Inject
 
 class LoginController @Inject constructor(

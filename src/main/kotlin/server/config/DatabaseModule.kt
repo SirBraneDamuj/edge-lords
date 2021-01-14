@@ -5,7 +5,14 @@ import dagger.Provides
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import server.model.*
+import server.deck.Deck
+import server.deck.DeckCard
+import server.deck.DeckCards
+import server.deck.Decks
+import server.game.Games
+import server.session.Sessions
+import server.user.User
+import server.user.Users
 import javax.inject.Singleton
 
 class Db private constructor() {

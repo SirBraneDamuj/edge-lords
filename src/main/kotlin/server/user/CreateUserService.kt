@@ -1,8 +1,6 @@
-package server.service
+package server.user
 
-import server.dto.CreateUserRequest
-import server.dto.UserDto
-import server.repository.UserRepository
+import server.session.PasswordService
 import javax.inject.Inject
 
 class CreateUserService @Inject constructor(

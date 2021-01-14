@@ -1,11 +1,10 @@
-package server.router
+package server.deck
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.http.Context
-import server.dto.CreateDeckRequest
-import server.repository.DeckRepository
+import server.session.AuthHandler
 import javax.inject.Inject
 
 class DeckController @Inject constructor(

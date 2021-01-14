@@ -1,4 +1,4 @@
-package server.router
+package server.card
 
 import io.javalin.Javalin
 import io.javalin.http.Context

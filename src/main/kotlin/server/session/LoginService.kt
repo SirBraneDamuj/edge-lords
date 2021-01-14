@@ -1,10 +1,7 @@
-package server.service
+package server.session
 
-import server.dto.LoginRequest
-import server.dto.SessionDto
 import server.error.UnauthenticatedError
-import server.repository.SessionRepository
-import server.repository.UserRepository
+import server.user.UserRepository
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*

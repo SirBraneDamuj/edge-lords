@@ -1,4 +1,4 @@
-package server.service
+package server.game
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import javax.inject.Inject

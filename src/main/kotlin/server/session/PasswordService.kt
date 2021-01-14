@@ -1,4 +1,4 @@
-package server.service
+package server.session
 
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject

@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Component
 import io.javalin.Javalin
 import io.javalin.plugin.json.JavalinJackson
+import server.card.CardController
 import server.config.DatabaseModule
 import server.config.ObjectMapperModule
-import server.router.*
+import server.deck.DeckController
+import server.game.GameController
+import server.session.LoginController
+import server.user.UserController
 import javax.inject.Inject
 import javax.inject.Singleton
 

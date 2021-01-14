@@ -1,14 +1,10 @@
-package server.router
+package server.user
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.Context
-import io.javalin.http.Handler
-import server.dto.CreateUserRequest
-import server.dto.UserDto
 import server.error.UnauthenticatedError
-import server.service.CreateUserService
-import server.service.FetchUserService
+import server.session.AuthHandler
 import javax.inject.Inject
 
 class UserController @Inject constructor(

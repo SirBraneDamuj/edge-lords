@@ -1,9 +1,8 @@
-package server.repository
+package server.game
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.jetbrains.exposed.sql.transactions.transaction
-import server.model.Deck
-import server.model.Game
+import server.deck.Deck
 import javax.inject.Inject
 
 class GameRepository @Inject constructor(

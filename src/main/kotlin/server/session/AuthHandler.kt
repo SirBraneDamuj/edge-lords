@@ -1,9 +1,8 @@
-package server.router
+package server.session
 
 import io.javalin.http.Context
 import io.javalin.http.Handler
 import server.error.InvalidSessionError
-import server.service.LoginService
 import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject

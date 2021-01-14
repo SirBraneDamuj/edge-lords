@@ -1,13 +1,10 @@
-package server.repository
+package server.user
 
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.transactions.transaction
 import server.config.Db
-import server.dto.Credentials
-import server.dto.UserDto
-import server.model.Deck
-import server.model.User
-import server.model.Users
+import server.deck.Deck
+import server.session.Credentials
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(

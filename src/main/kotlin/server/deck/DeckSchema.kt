@@ -1,22 +1,11 @@
-package server.model
+package server.deck
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
-
-object Users : IntIdTable() {
-    val name = varchar("name", 20).uniqueIndex()
-    val passwordHash = varchar("password_hash", 64)
-}
-
-class User(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<User>(Users)
-
-    var name by Users.name
-    var passwordHash by Users.passwordHash
-    val decks by Deck referrersOn Decks.user
-}
+import server.user.User
+import server.user.Users
 
 object Decks : IntIdTable() {
     val name = varchar("name", 30)

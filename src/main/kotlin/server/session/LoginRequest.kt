@@ -1,4 +1,4 @@
-package server.dto
+package server.session
 
 data class LoginRequest(
     val name: String,

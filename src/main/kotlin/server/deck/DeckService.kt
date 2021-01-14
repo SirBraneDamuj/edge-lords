@@ -1,9 +1,8 @@
-package server.service
+package server.deck
 
 import model.Cards
 import model.card.CardType
 import server.error.InvalidCardError
-import server.model.Deck
 import javax.inject.Inject
 
 class DeckService @Inject constructor() {

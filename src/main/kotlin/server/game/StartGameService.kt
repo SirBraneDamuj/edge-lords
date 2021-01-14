@@ -1,11 +1,10 @@
-package server.service
+package server.game
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import model.game.Games
-import server.dto.CreatedGame
+import server.deck.Deck
+import server.deck.DeckService
 import server.error.RecordNotFoundError
-import server.model.Deck
-import server.model.Game
 import javax.inject.Inject
 
 class StartGameService @Inject constructor(

@@ -1,13 +1,10 @@
-package server.repository
+package server.session
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import server.config.Db
-import server.dto.SessionDto
 import server.error.InvalidSessionError
 import server.error.UnauthenticatedError
-import server.model.Session
-import server.model.Sessions
-import server.model.User
+import server.user.User
 import java.time.LocalDateTime
 import javax.inject.Inject
 

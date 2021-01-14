@@ -1,16 +1,11 @@
-package server.router
+package server.game
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.http.Context
-import io.javalin.http.Handler
-import model.game.Games
-import server.dto.CreateGameRequest
-import server.dto.StartGameRequest
-import server.repository.GameRepository
-import server.service.StartGameService
+import server.session.AuthHandler
 import javax.inject.Inject
 
 class GameController @Inject constructor(

@@ -1,10 +1,12 @@
-package server.model
+package server.session
 
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.`java-time`.datetime
+import server.user.User
+import server.user.Users
 import java.util.*
 
 object Sessions : UUIDTable() {

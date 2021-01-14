@@ -1,6 +1,5 @@
-package server.service
+package server.user
 
-import server.repository.UserRepository
 import javax.inject.Inject
 
 class FetchUserService @Inject constructor(
