@@ -1,5 +1,8 @@
 package model.game
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
 sealed class GameCard {
     abstract val id: String
     abstract val cardName: String
@@ -17,11 +20,7 @@ data class GameMasterCard(
     override val id: String,
     override val cardName: String
 ) : GameCard() {
-    override var manaCost: Int
-        get() = -1
-        set(_) {
-            error("you weren't supposed to do that")
-        }
+    override var manaCost: Int = -1
 }
 
 data class GameNatialCard(

@@ -6,7 +6,6 @@ import model.card.NatialCard
 import model.card.SpellCard
 import java.util.*
 
-
 data class Player(
     val id: String,
     val name: String,
@@ -51,6 +50,7 @@ enum class PlayerLabel {
 object Players {
     fun createPlayerForDeck(
         name: String,
+        id: String,
         label: PlayerLabel,
         deck: Deck
     ): Player {
@@ -85,7 +85,7 @@ object Players {
             range = deck.master.range
         )
         return Player(
-            id = UUID.randomUUID().toString(),
+            id = id,
             name = name,
             playerLabel = label,
             mulliganed = false,

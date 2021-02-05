@@ -7,16 +7,18 @@ import javax.inject.Inject
 
 class DeckService @Inject constructor() {
     fun constructDeck(
-        deck: Deck
+        deck: DeckDto,
     ): model.card.Deck =
         model.card.Deck(
             name = deck.name,
+            playerId = deck.playerId,
+            playerName = deck.playerName,
             master = Cards.getMasterByName(deck.master)
                 ?: throw InvalidCardError(CardType.MASTER, deck.master),
-            cards = deck.cards.flatMap { deckCard ->
-                (1..deckCard.count).map {
-                    Cards.getCard(deckCard.name)
-                        ?: throw InvalidCardError(null, deckCard.name)
+            cards = deck.cards.flatMap { (name, count) ->
+                (1..count).map {
+                    Cards.getCard(name)
+                        ?: throw InvalidCardError(null, name)
                 }
             }
         )
