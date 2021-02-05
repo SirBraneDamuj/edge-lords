@@ -31,4 +31,11 @@ class DeckRepository @Inject constructor(
         }
         DeckDto.fromDeck(deck)
     }
+
+    fun findById(id: Int) = transaction {
+        Deck.findById(id)
+            ?.let {
+                DeckDto.fromDeck(it)
+            }
+    }
 }
