@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GameController @Inject constructor(
     private val startGameService: StartGameService,
-    private val gameRepository: GameRepository,
+    private val fetchGameService: FetchGameService,
     private val authHandler: AuthHandler
 ) {
     fun initRoutes(app: Javalin) {
@@ -35,11 +35,10 @@ class GameController @Inject constructor(
 
     fun getGame(context: Context) {
         val gameId = context.pathParam("gameId").toInt()
-        val game = gameRepository.findGame(gameId)
-        if (game == null) {
-            context.status(404)
-        } else {
-            context.json(game)
-        }
+        val gamePerspective = fetchGameService.getGamePerspectiveForUser(
+            id = gameId,
+            playerId = context.attribute<Int>("userId")!!
+        )
+        context.json(gamePerspective)
     }
 }
