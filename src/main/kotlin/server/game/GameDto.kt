@@ -16,9 +16,9 @@ data class GameDto(
     val deckOneId: Int,
     val deckTwoId: Int,
     val playerOneId: Int,
-    val playerOneName: Int,
+    val playerOneName: String,
     val playerTwoId: Int,
-    val playerTwoName: Int,
+    val playerTwoName: String,
     val state: String
 )
 

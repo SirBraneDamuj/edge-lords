@@ -6,9 +6,12 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import model.Cards
 import util.ResourceLoader
+import java.util.*
 
 data class Deck(
     val name: String,
+    val playerId: String,
+    val playerName: String,
     val master: MasterCard,
     val cards: List<Card>
 )
@@ -38,6 +41,8 @@ object SampleDecks {
             ?: error("that master don't exist dude")
         return Deck(
             name = loadedDeck.name,
+            playerId = UUID.randomUUID().toString(),
+            playerName = "Some Guy",
             master = master,
             cards = cards
         )

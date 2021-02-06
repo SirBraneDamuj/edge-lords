@@ -1,12 +1,18 @@
 package model.game
 
 import client.ActionInputException
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import model.Cards
 import model.Element
 import model.Range
 import model.Speed
+import java.lang.reflect.Parameter
 import java.util.*
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
 sealed class Creature {
     abstract val id: String
     abstract val card: GameCard
@@ -22,9 +28,9 @@ sealed class Creature {
     abstract var guardCount: Int
 
     val sealed: Boolean
-        get() = sealCount > 0
+        @JsonIgnore get() = sealCount > 0
     val guarded: Boolean
-        get() = guardCount > 0
+        @JsonIgnore get() = guardCount > 0
 
     fun increaseMaxHp(amount: Int) {
         maxHp += amount
@@ -48,6 +54,19 @@ sealed class Creature {
             is Master -> this.copy()
             is Natial -> this.copy()
         }
+
+    companion object {
+        @JsonCreator
+        @JvmStatic
+        private fun creator(name: String): Creature? {
+            return Creature::class
+                .sealedSubclasses
+                .firstOrNull {
+                    it.simpleName == name
+                }
+                ?.objectInstance
+        }
+    }
 }
 
 // TODO: move position stuff to Glossary

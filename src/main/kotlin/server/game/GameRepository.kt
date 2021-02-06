@@ -14,7 +14,9 @@ class GameRepository @Inject constructor() {
                     deckOneId = it.deckOne.id.value,
                     deckTwoId = it.deckTwo.id.value,
                     playerOneId = it.deckOne.user.id.value,
+                    playerOneName = it.deckOne.user.name,
                     playerTwoId = it.deckTwo.user.id.value,
+                    playerTwoName = it.deckTwo.user.name,
                     state = it.state
                 )
             }

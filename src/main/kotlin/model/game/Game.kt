@@ -17,7 +17,7 @@ data class Game(
     val inactivePlayer: Player
         @JsonIgnore get() = players[activePlayerLabel.other] ?: error("this isn't possible")
     val activePlayerLabel: PlayerLabel
-        get() = turn.whenIts(
+        @JsonIgnore get() = turn.whenIts(
             odd = { PlayerLabel.FIRST },
             even = { PlayerLabel.SECOND }
         )
@@ -49,12 +49,14 @@ object Games {
             id = UUID.randomUUID().toString(),
             players = mapOf(
                 PlayerLabel.FIRST to Players.createPlayerForDeck(
-                    name = "Rean",
+                    name = deck1.playerName,
+                    id = deck1.playerId,
                     label = PlayerLabel.FIRST,
                     deck = deck1
                 ),
                 PlayerLabel.SECOND to Players.createPlayerForDeck(
-                    name = "Juna",
+                    name = deck2.playerName,
+                    id = deck2.playerId,
                     label = PlayerLabel.SECOND,
                     deck = deck2
                 )
