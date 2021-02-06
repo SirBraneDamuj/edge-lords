@@ -2,8 +2,7 @@ package server.game
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
-import io.javalin.apibuilder.ApiBuilder.path
-import io.javalin.apibuilder.ApiBuilder.post
+import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.Context
 import server.session.AuthHandler
 import javax.inject.Inject
@@ -19,7 +18,8 @@ class GameController @Inject constructor(
             path("games") {
                 post(this::createGame)
                 path(":gameId") {
-                    ApiBuilder.get(this::getGame)
+                    get(this::getGame)
+                    put(this::doAction)
                 }
             }
         }
@@ -40,5 +40,9 @@ class GameController @Inject constructor(
             playerId = context.attribute<Int>("userId")!!
         )
         context.json(gamePerspective)
+    }
+
+    fun doAction(context: Context) {
+        val gameId = context.pathParam("gameId").toInt()
     }
 }
