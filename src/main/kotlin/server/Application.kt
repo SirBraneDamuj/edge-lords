@@ -8,6 +8,7 @@ import server.card.CardController
 import server.config.DatabaseModule
 import server.config.ObjectMapperModule
 import server.deck.DeckController
+import server.error.*
 import server.game.GameController
 import server.session.LoginController
 import server.user.UserController
@@ -36,6 +37,25 @@ class Application @Inject constructor(
     fun start() {
         JavalinJackson.configure(objectMapper)
         val app = Javalin.create().start(7000)
+        app.exception(RecordNotFoundError::class.java) { _, context ->
+            context.status(404)
+        }
+        app.exception(InvalidRequestError::class.java) { _, context ->
+            context.status(400)
+        }
+        // todo this error doesn't belong at this level
+        app.exception(InvalidCardError::class.java) { e, context ->
+            context.status(400)
+            context.json(
+                mapOf("error" to e.message)
+            )
+        }
+        app.exception(InvalidSessionError::class.java) { _, context ->
+            context.status(403)
+        }
+        app.exception(UnauthenticatedError::class.java) { _, context ->
+            context.status(401)
+        }
         gameController.initRoutes(app)
         cardController.initRoutes(app)
         userController.initRoutes(app)
