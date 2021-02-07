@@ -13,11 +13,7 @@ export default function CardDetail({ card }: Props): JSX.Element {
   return (
     <>
       <div className={'card-container'}>
-        <CardHeader
-          element={card.element}
-          name={card.name}
-          manaCost={card.manaCost}
-        />
+        <CardHeader card={card} />
         <CardMid
           attack={card.attack}
           hp={card.hp}

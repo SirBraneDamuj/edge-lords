@@ -5,14 +5,18 @@ interface Props {
   label: 'ATK' | 'HP';
 }
 
+const mapping = {
+  'ATK': '⚔️',
+  'HP': '🛡️',
+};
+
 export default function CardCombatStat({
   stat,
   label,
 }: Props): JSX.Element {
   return (
     <div className={'card-combat-stat'}>
-      <div>{label}</div>
-      <div>{stat}</div>
+      {`${stat} ${label && mapping[label]}`}
     </div>
   );
 }

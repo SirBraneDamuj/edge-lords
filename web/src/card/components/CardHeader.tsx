@@ -1,22 +1,29 @@
 import React from 'react';
-import { Element } from '../types';
+import { Card, Element } from '../types';
 import CardElement from './CardElement';
+import CardIcons from './CardIcons';
 import CardManaCost from './CardManaCost';
 
 interface Props {
-  element?: Element;
-  name: string;
-  manaCost: number;
+  card: Card
 }
 
 export default function CardHeader({
-  element,
-  name,
-  manaCost,
+  card: {
+    element,
+    range,
+    speed,
+    name,
+    manaCost,
+  }
 }: Props): JSX.Element {
   return (
     <div className={'card-header'}>
-      <CardElement element={element} />
+      <CardIcons
+        element={element}
+        range={range}
+        speed={speed}
+      />
       <div className={'card-name'}>{name}</div>
       <CardManaCost manaCost={manaCost} />
     </div>
