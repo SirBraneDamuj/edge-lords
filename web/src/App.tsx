@@ -10,7 +10,7 @@ import {
 import { CardsContextProvider } from './card/context';
 import CardList from './card/components/CardList';
 import Header from './Header';
-import Auth from './user/components/Auth';
+import Auth from './user/components/auth/Auth';
 
 function App(): JSX.Element {
   return (

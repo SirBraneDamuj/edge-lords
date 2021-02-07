@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default function LogoutButton() {
+export default function LogoutButton(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Link,
 } from 'react-router-dom';
-import LogoutButton from './user/components/LogoutButton';
+import LogoutButton from './user/components/auth/LogoutButton';
 import './Header.css';
 
 export default function Header(): JSX.Element {
