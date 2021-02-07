@@ -9,6 +9,7 @@ export interface Card {
   skillText: string;
   skillManaCost?: number;
   abilityText: string;
+  effectText: string;
   cardType: CardType;
 }
 

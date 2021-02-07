@@ -22,6 +22,7 @@ export default function CardDetail({ card }: Props): JSX.Element {
         <CardFooter
           skillText={card.skillText}
           abilityText={card.abilityText}
+          effectText={card.effectText}
         />
       </div>
     </>

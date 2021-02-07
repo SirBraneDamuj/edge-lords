@@ -15,15 +15,15 @@ export default function CardMid({
 }: Props): JSX.Element {
   return (
     <div className={'card-mid'}>
-      <CardCombatStat
+      {attack && <CardCombatStat
         stat={attack}
         label={'ATK'}
-      />
+      />}
       <div>{cardType}</div>
-      <CardCombatStat
+      {hp && <CardCombatStat
         stat={hp}
         label={'HP'}
-      />
+      />}
     </div>
   );
 }

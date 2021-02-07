@@ -17,6 +17,10 @@ export default function CardList(): JSX.Element {
   for (const natial of Object.keys(natials)) {
     natialCards.push(<CardDetail key={natial} card={natials[natial]} />);
   }
+  const spellCards: Array<ReactElement> = [];
+  for (const spell of Object.keys(spells)) {
+    spellCards.push(<CardDetail key={spell} card={spells[spell]} />);
+  }
 
   return (
     <>
@@ -27,6 +31,10 @@ export default function CardList(): JSX.Element {
       <h2>Natials</h2>
       <div className={'card-grid'}>
         {natialCards}
+      </div>
+      <h2>Spells</h2>
+      <div className={'card-grid'}>
+        {spellCards}
       </div>
     </>
   );

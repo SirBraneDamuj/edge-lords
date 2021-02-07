@@ -16,8 +16,8 @@
 .card-mid {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items:center;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .card-combat-stat {
