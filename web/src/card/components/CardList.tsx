@@ -2,8 +2,11 @@ import React, { ReactElement, useContext } from 'react';
 import CardDetail from './CardDetail';
 import { CardsContext } from '../context';
 import './CardList.css';
+import { useAuth } from '../../user/hooks';
 
 export default function CardList(): JSX.Element {
+  useAuth();
+
   const { masters, natials, spells } = useContext(CardsContext);
 
   const masterCards: Array<ReactElement> = [];

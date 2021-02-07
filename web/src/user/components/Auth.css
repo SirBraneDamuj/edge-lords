@@ -1,0 +1,4 @@
+.auth-forms {
+  display: flex;
+  flex-direction: row;
+}

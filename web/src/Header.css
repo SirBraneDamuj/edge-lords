@@ -1,0 +1,8 @@
+nav {
+  display: flex;
+  align-items: baseline;
+}
+
+nav > * {
+  margin: 1.5rem;
+}
