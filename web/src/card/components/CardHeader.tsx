@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, Element } from '../types';
-import CardElement from './CardElement';
+import { Card } from '../types';
 import CardIcons from './CardIcons';
 import CardManaCost from './CardManaCost';
 
