@@ -1,5 +1,5 @@
 import React from 'react';
-import { AttackRange } from '../types';
+import { AttackRange } from '../../types';
 
 interface Props {
   range: AttackRange;

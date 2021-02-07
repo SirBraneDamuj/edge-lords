@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionSpeed, AttackRange, Element } from '../types';
+import { ActionSpeed, AttackRange, Element } from '../../types';
 import CardElement from './CardElement';
 import RangeIcon from './RangeIcon';
 import SpeedIcon from './SpeedIcon';

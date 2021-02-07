@@ -1,5 +1,5 @@
 import React from 'react';
-import { Element } from '../types';
+import { Element } from '../../types';
 
 interface Props {
   element?: Element

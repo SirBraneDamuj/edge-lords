@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardType } from '../types';
-import CardCombatStat from './CardCombatStat';
+import CardCombatStat from './detail/CardCombatStat';
 
 interface Props {
   attack: number;

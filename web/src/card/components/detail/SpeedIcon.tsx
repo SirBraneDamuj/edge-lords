@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionSpeed } from '../types';
+import { ActionSpeed } from '../../types';
 
 interface Props {
   speed: ActionSpeed;

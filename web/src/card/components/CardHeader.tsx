@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../types';
-import CardIcons from './CardIcons';
-import CardManaCost from './CardManaCost';
+import CardIcons from './detail/CardIcons';
+import CardManaCost from './detail/CardManaCost';
 
 interface Props {
   card: Card
