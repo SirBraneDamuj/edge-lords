@@ -20,7 +20,7 @@ export default function LoginForm({
     e.preventDefault();
     if (loading) return;
     setLoading(true);
-    const request = new Request('http://localhost:7000/login', {
+    const request = new Request('/login', {
       method: 'POST',
       body: JSON.stringify({
         name: username,
@@ -37,8 +37,8 @@ export default function LoginForm({
   };
   return (
     <>
-      {error !== '' && <div>Error: {error}</div>}
       <form className={'login-form'} onSubmit={doLogin}>
+        {error !== '' && <div>Error: {error}</div>}
         <label htmlFor={'username'}>Username:</label>
         <input type={'text'} value={username} onChange={(e) => setUsername(e.target.value)} />
         <label htmlFor={'password'}>Password:</label>

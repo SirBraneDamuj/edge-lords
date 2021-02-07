@@ -21,7 +21,7 @@ export default function RegisterForm({
     if (loading) return;
     if (password !== passwordConfirm) { setError('Passwords don\'t match'); }
     setLoading(true);
-    const request = new Request('http://localhost:7000/users', {
+    const request = new Request('/users', {
       method: 'POST',
       body: JSON.stringify({
         name: username,

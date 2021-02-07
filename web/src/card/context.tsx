@@ -26,7 +26,7 @@ export function CardsContextProvider({ children }: Props): JSX.Element {
     spells: {},
   });
   useEffect(() => {
-    fetch( new Request('http://localhost:7000/cards'))
+    fetch( new Request('/cards'))
       .then((response) => response.json())
       .then((cardsMap) => setCards(cardsMap));
   }, [setCards]);
