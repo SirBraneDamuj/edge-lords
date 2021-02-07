@@ -8,7 +8,7 @@ export default function LogoutButton(): JSX.Element {
   const doLogout = async (e: SyntheticEvent) => {
     e.preventDefault();
     setLoading(true);
-    const request = new Request('http://localhost:7000/logout', {
+    const request = new Request('/logout', {
       method: 'POST',
     });
     await fetch(request);

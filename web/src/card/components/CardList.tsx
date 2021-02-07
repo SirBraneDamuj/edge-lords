@@ -1,41 +1,21 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
+import { Card } from '../types';
 import CardDetail from './CardDetail';
-import { CardsContext } from '../context';
-import './CardList.css';
-import { useAuth } from '../../user/hooks';
 
-export default function CardList(): JSX.Element {
-  useAuth();
+interface Props {
+  cards: Array<Card>
+}
 
-  const { masters, natials, spells } = useContext(CardsContext);
-
-  const masterCards: Array<ReactElement> = [];
-  for (const master of Object.keys(masters)) {
-    masterCards.push(<CardDetail key={master} card={masters[master]} />);
+export default function CardList({
+  cards
+}: Props): JSX.Element {
+  const cardDetails: Array<ReactElement> = [];
+  for (const index in cards) {
+    cardDetails[index] = <CardDetail card={cards[index]} key={index} />;
   }
-  const natialCards: Array<ReactElement> = [];
-  for (const natial of Object.keys(natials)) {
-    natialCards.push(<CardDetail key={natial} card={natials[natial]} />);
-  }
-  const spellCards: Array<ReactElement> = [];
-  for (const spell of Object.keys(spells)) {
-    spellCards.push(<CardDetail key={spell} card={spells[spell]} />);
-  }
-
   return (
-    <>
-      <h2>Masters</h2>
-      <div className={'card-grid'}>
-        {masterCards}
-      </div>
-      <h2>Natials</h2>
-      <div className={'card-grid'}>
-        {natialCards}
-      </div>
-      <h2>Spells</h2>
-      <div className={'card-grid'}>
-        {spellCards}
-      </div>
-    </>
+    <div className={'card-grid'}>
+      {cardDetails}
+    </div>
   );
 }
