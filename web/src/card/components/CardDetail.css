@@ -1,0 +1,30 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  width: 300px;
+  margin: 5px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-mid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.card-combat-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: column;
+}
