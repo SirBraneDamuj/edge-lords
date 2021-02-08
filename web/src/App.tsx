@@ -12,6 +12,7 @@ import AllCardsList from './card/components/AllCardsList';
 import Header from './Header';
 import Auth from './user/components/auth/Auth';
 import DeckList from './deck/components/list/DeckList';
+import DeckDetail from './deck/components/detail/DeckDetail';
 
 function App(): JSX.Element {
   return (
@@ -26,11 +27,14 @@ function App(): JSX.Element {
             <Route path={'/cards'}>
               <AllCardsList />
             </Route>
+            <Route path={'/deck/:deckId'}>
+              <DeckDetail />
+            </Route>
             <Route path={'/decks'}>
               <DeckList />
             </Route>
             <Route path={'/'}>
-              <Redirect to={'/login'} />
+              <Redirect to={'/decks'} />
             </Route>
           </Switch>
         </Router>

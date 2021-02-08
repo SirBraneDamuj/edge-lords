@@ -1,0 +1,13 @@
+.deck-detail-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.deck-detail-container > .deck-breakdown {
+  margin-right: 25%;
+}
+
+.deck-detail-container > .card-grid {
+  border-right: 1px black solid;
+}

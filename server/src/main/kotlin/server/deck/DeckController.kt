@@ -1,9 +1,11 @@
 package server.deck
 
 import io.javalin.Javalin
+import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.http.Context
+import server.error.RecordNotFoundError
 import server.session.AuthHandler
 import javax.inject.Inject
 
@@ -17,6 +19,7 @@ class DeckController @Inject constructor(
         app.routes {
             path("decks") {
                 post(this::createDeck)
+                get(":id", this::getDeck)
             }
         }
     }
@@ -30,6 +33,12 @@ class DeckController @Inject constructor(
             ownerId = context.attribute("userId")!!
         )
         context.status(201)
+        context.json(deck)
+    }
+
+    fun getDeck(context: Context) {
+        val deck = deckRepository.findById(context.pathParam("id").toInt())
+            ?: throw RecordNotFoundError()
         context.json(deck)
     }
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Deck } from '../../types';
-import NatialsBreakdown from './NatialsBreakdown';
-import SpellsBreakdown from './SpellsBreakdown';
 import './DeckSummary.css';
+import DeckBreakdown from './DeckBreakdown';
 
 interface Props {
   deck: Deck
@@ -17,10 +16,7 @@ export default function DeckSummary({
         <div>Name: {deck.name}</div>
         <div>Master: {deck.master}</div>
       </div>
-      <div className={'deck-breakdown'}>
-        <NatialsBreakdown deck={deck} />
-        <SpellsBreakdown deck={deck} />
-      </div>
+      <DeckBreakdown deck={deck} />
     </div>
   );
 }

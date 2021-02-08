@@ -5,12 +5,14 @@ interface CardsMap {
   masters: { [key:string]: Card }
   natials: { [key:string]: Card }
   spells: { [key:string]: Card }
+  cardsReady: boolean
 }
 
 const defaultValue = (): CardsMap => ({
   masters: {},
   natials: {},
   spells: {},
+  cardsReady: false,
 });
 
 export const CardsContext = React.createContext(defaultValue());
@@ -24,11 +26,12 @@ export function CardsContextProvider({ children }: Props): JSX.Element {
     masters: {},
     natials: {},
     spells: {},
+    cardsReady: false,
   });
   useEffect(() => {
     fetch( new Request('/cards'))
       .then((response) => response.json())
-      .then((cardsMap) => setCards(cardsMap));
+      .then((cardsMap) => setCards({ ...cardsMap, cardsReady: true }));
   }, [setCards]);
   return (
     <CardsContext.Provider value={cards}>
