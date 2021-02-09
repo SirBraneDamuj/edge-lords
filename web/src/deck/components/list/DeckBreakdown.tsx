@@ -10,8 +10,14 @@ interface Props {
 export default function DeckBreakdown({
   deck
 }: Props): JSX.Element {
+  const styles = {
+    display: 'flex',
+    flexDirection: 'row' as const,
+    justifyContent: 'space-around',
+    padding: '0.5rem',
+  };
   return (
-    <div className={'deck-breakdown'}>
+    <div style={styles}>
       <NatialsBreakdown deck={deck} />
       <SpellsBreakdown deck={deck} />
     </div>
