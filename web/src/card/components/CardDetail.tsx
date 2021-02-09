@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card } from '../types';
 import CardHeader from './CardHeader';
-import './CardDetail.css';
 import CardMid from './CardMid';
 import CardFooter from './CardFooter';
 
@@ -10,21 +9,27 @@ interface Props {
 }
 
 export default function CardDetail({ card }: Props): JSX.Element {
+  const styles = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    border: '1px black solid',
+    width: 300,
+    margin: '1rem',
+    padding: '1rem',
+  };
   return (
-    <>
-      <div className={'card-container'}>
-        <CardHeader card={card} />
-        <CardMid
-          attack={card.attack}
-          hp={card.hp}
-          cardType={card.cardType}
-        />
-        <CardFooter
-          skillText={card.skillText}
-          abilityText={card.abilityText}
-          effectText={card.effectText}
-        />
-      </div>
-    </>
+    <div style={styles}>
+      <CardHeader card={card} />
+      <CardMid
+        attack={card.attack}
+        hp={card.hp}
+        cardType={card.cardType}
+      />
+      <CardFooter
+        skillText={card.skillText}
+        abilityText={card.abilityText}
+        effectText={card.effectText}
+      />
+    </div>
   );
 }

@@ -16,8 +16,15 @@ export default function CardHeader({
     manaCost,
   }
 }: Props): JSX.Element {
+  const styles = {
+    header: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      justifyContent: 'space-between',
+    },
+  };
   return (
-    <div className={'card-header'}>
+    <div style={styles.header}>
       <CardIcons
         element={element}
         range={range}

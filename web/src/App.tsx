@@ -1,6 +1,5 @@
 import React from 'react';
 import './card/components/AllCardsList';
-import './App.css';
 import {
   BrowserRouter as Router,
   Switch,

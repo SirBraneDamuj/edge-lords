@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from 'react';
-import './LoginForm.css';
+import styles from './styles';
 
 interface Props {
   loading: boolean
@@ -42,14 +42,14 @@ export default function RegisterForm({
     <>
       {error !== '' && <div>Error: {error}</div>}
       {success !== '' && <div>OK: {success}</div>}
-      <form className={'login-form'} onSubmit={doRegister}>
-        <label htmlFor={'username'}>Username:</label>
-        <input name={'username'} type={'text'} value={username} onChange={(e) => setUsername(e.target.value)} />
-        <label htmlFor={'password'}>Password:</label>
-        <input name={'password'} type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
-        <label htmlFor={'passwordConfirm'}>Confirm:</label>
-        <input name={'passwordConfirm'} type={'password'} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
-        <button disabled={loading} type={'submit'} onClick={doRegister}>Register</button>
+      <form onSubmit={doRegister} style={styles.form}>
+        <label htmlFor={'username'} style={styles.item}>Username:</label>
+        <input name={'username'} type={'text'} value={username} onChange={(e) => setUsername(e.target.value)} style={styles.item} />
+        <label htmlFor={'password'} style={styles.item}>Password:</label>
+        <input name={'password'} type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} style={styles.item} />
+        <label htmlFor={'passwordConfirm'} style={styles.item}>Confirm:</label>
+        <input name={'passwordConfirm'} type={'password'} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} style={styles.item} />
+        <button disabled={loading} type={'submit'} onClick={doRegister} style={styles.item}>Register</button>
       </form>
     </>
   );

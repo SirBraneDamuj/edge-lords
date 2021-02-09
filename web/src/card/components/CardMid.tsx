@@ -13,8 +13,16 @@ export default function CardMid({
   hp,
   cardType
 }: Props): JSX.Element {
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    },
+  };
   return (
-    <div className={'card-mid'}>
+    <div style={styles.container}>
       {attack && <CardCombatStat
         stat={attack}
         label={'ATK'}

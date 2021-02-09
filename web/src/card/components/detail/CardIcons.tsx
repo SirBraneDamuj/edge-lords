@@ -15,10 +15,20 @@ export default function CardIcons({
   speed,
   range
 }: Props): JSX.Element {
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+    },
+    iconsContainer: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+    }
+  };
   return (
-    <div className={'card-icons'}>
+    <div style={styles.container}>
       <CardElement element={element} />
-      <div className={'card-icons-2'}>
+      <div style={styles.iconsContainer}>
         <RangeIcon range={range} />
         <SpeedIcon speed={speed} />
       </div>

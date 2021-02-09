@@ -1,3 +1,4 @@
+import { findByLabelText } from '@testing-library/react';
 import React from 'react';
 
 interface Props {
@@ -14,8 +15,12 @@ export default function CardCombatStat({
   stat,
   label,
 }: Props): JSX.Element {
+  const styles = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  };
   return (
-    <div className={'card-combat-stat'}>
+    <div style={styles}>
       {`${stat} ${label && mapping[label]}`}
     </div>
   );

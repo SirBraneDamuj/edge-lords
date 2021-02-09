@@ -13,8 +13,13 @@ export default function CardList({
   for (const index in cards) {
     cardDetails[index] = <CardDetail card={cards[index]} key={index} />;
   }
+  const styles = {
+    display: 'flex',
+    flexDirection: 'row' as const,
+    flexFlow: 'wrap',
+  };
   return (
-    <div className={'card-grid'}>
+    <div style={styles}>
       {cardDetails}
     </div>
   );

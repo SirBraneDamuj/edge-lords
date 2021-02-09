@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import './Auth.css';
 
 export default function Auth(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
+  const styles = {
+    display: 'flex',
+    flexDirection: 'row' as const,
+  };
   return (
-    <div className={'auth-forms'}>
+    <div style={styles}>
       <LoginForm loading={loading} setLoading={setLoading} />
       <RegisterForm loading={loading} setLoading={setLoading} />
     </div>

@@ -1,7 +1,5 @@
-import React, { ReactElement, useContext } from 'react';
-import CardDetail from './CardDetail';
+import React, { useContext } from 'react';
 import { CardsContext } from '../context';
-import './CardList.css';
 import { useAuth } from '../../user/hooks';
 import { Card } from '../types';
 import CardList from './CardList';

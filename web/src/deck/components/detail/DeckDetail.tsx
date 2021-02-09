@@ -63,12 +63,29 @@ export default function DeckDetail(): JSX.Element {
         return ((a.element && elementMapping[a.element]) || 99) - ((b.element && elementMapping[b.element]) || 99);
       }
     });
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      alignItems: 'flex-start',
+    },
+    breakdown: {
+      marginRight: '25%',
+    },
+    cards: {
+      borderRight: '1px black solid',
+    }
+  };
   return (
     <div>
       <h2>Deck: {deck.name}</h2>
-      <div className={'deck-detail-container'}>
-        <CardList cards={cards} />
-        <DeckBreakdown deck={deck} />
+      <div style={styles.container}>
+        <div style={styles.cards}>
+          <CardList cards={cards} />
+        </div>
+        <div style={styles.breakdown}>
+          <DeckBreakdown deck={deck} />
+        </div>
       </div>
     </div>
   );

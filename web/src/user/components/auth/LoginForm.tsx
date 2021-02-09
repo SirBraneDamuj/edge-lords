@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './LoginForm.css';
+import styles from './styles';
 
 interface Props {
   loading: boolean
@@ -36,15 +36,13 @@ export default function LoginForm({
     }
   };
   return (
-    <>
-      <form className={'login-form'} onSubmit={doLogin}>
-        {error !== '' && <div>Error: {error}</div>}
-        <label htmlFor={'username'}>Username:</label>
-        <input type={'text'} value={username} onChange={(e) => setUsername(e.target.value)} />
-        <label htmlFor={'password'}>Password:</label>
-        <input type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button disabled={loading} type={'submit'} onClick={doLogin}>Login</button>
-      </form>
-    </>
+    <form style={styles.form} onSubmit={doLogin}>
+      {error !== '' && <div style={styles.item}>Error: {error}</div>}
+      <label htmlFor={'username'} style={styles.item}>Username:</label>
+      <input type={'text'} value={username} onChange={(e) => setUsername(e.target.value)} style={styles.item} />
+      <label htmlFor={'password'} style={styles.item}>Password:</label>
+      <input type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} style={styles.item} />
+      <button disabled={loading} type={'submit'} onClick={doLogin} style={styles.item}>Login</button>
+    </form>
   );
 }
