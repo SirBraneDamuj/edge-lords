@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import CardElement from '../../../card/components/detail/CardElement';
 import { CardsContext } from '../../../card/context';
 import { Element } from '../../../card/types';
-import { Deck } from '../../types';
 
 interface Props {
   cards: Record<string, number>
