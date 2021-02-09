@@ -15,7 +15,6 @@ export default function DeckSummary({
       display: 'flex',
       flexDirection: 'column' as const,
       border: '1px black solid',
-      margin: '1rem',
     },
     description: {
       display: 'flex',
@@ -28,10 +27,10 @@ export default function DeckSummary({
   return (
     <div style={styles.summary}>
       <div style={styles.description}>
-        <div><Link to={`/deck/${deck.id}`}>Name: {deck.name}</Link></div>
+        <div><Link to={`/decks/${deck.id}`}>Name: {deck.name}</Link></div>
         <div>Master: {deck.master}</div>
       </div>
-      <DeckBreakdown deck={deck} />
+      <DeckBreakdown cards={deck.cards} />
     </div>
   );
 }

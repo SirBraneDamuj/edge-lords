@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import { CardsContext } from '../../../card/context';
-import { Deck } from '../../types';
 
 interface Props {
-  deck: Deck
+  cards: Record<string, number>
 }
 
 export default function NatialsBreakdown({
-  deck
+  cards
 }: Props): JSX.Element {
   const { spells } = useContext(CardsContext);
-  const spellCards = Object.keys(deck.cards)
+  const spellCards = Object.keys(cards)
     .filter((card) => !!spells[card])
     .map((card) => spells[card]);
-  const numberSpells = spellCards.reduce((sum, card) => sum + deck.cards[card.name], 0);
+  const numberSpells = spellCards.reduce((sum, card) => sum + cards[card.name], 0);
   const totalCost = spellCards.reduce((sum, card) => sum + card.manaCost, 0);
   const averageCost = (totalCost / numberSpells).toFixed(1);
   return (

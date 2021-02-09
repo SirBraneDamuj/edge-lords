@@ -14,7 +14,6 @@ export default function CardDetail({ card }: Props): JSX.Element {
     flexDirection: 'column' as const,
     border: '1px black solid',
     width: 300,
-    margin: '1rem',
     padding: '1rem',
   };
   return (

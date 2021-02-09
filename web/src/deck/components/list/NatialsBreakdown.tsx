@@ -5,19 +5,20 @@ import { Element } from '../../../card/types';
 import { Deck } from '../../types';
 
 interface Props {
-  deck: Deck
+  cards: Record<string, number>
 }
 
 export default function NatialsBreakdown({
-  deck
-}: Props): JSX.Element {
-  const { natials } = useContext(CardsContext);
-  const natialCards = Object.keys(deck.cards)
+  cards
+}: Props): JSX.Element | null {
+  const { natials, cardsReady } = useContext(CardsContext);
+  if (!cardsReady) return null;
+  const natialCards = Object.keys(cards)
     .filter((card) => !!natials[card])
     .map((card) => natials[card]);
   const elementBreakdown = natialCards.reduce((acc, card) => {
     if (card.element) {
-      acc[card.element] += 1;
+      acc[card.element] += cards[card.name];
     }
     return acc;
   }, {

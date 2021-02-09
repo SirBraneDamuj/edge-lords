@@ -1,14 +1,13 @@
 import React from 'react';
-import { Deck } from '../../types';
 import NatialsBreakdown from './NatialsBreakdown';
 import SpellsBreakdown from './SpellsBreakdown';
 
 interface Props {
-  deck: Deck
+  cards: Record<string, number>
 }
 
 export default function DeckBreakdown({
-  deck
+  cards
 }: Props): JSX.Element {
   const styles = {
     display: 'flex',
@@ -18,8 +17,8 @@ export default function DeckBreakdown({
   };
   return (
     <div style={styles}>
-      <NatialsBreakdown deck={deck} />
-      <SpellsBreakdown deck={deck} />
+      <NatialsBreakdown cards={cards} />
+      <SpellsBreakdown cards={cards} />
     </div>
   );
 }

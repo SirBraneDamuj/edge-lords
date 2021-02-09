@@ -24,26 +24,22 @@ const cardTypeMapping = {
   [CardType.SPELL]: 2,
 };
 
-export default function DeckDetail(): JSX.Element {
-  const { deckId } = useParams<DeckDetailParams>();
+interface Props {
+  cards: Record<string, number>
+}
+
+export function DeckDetail({
+  cards
+}: Props): JSX.Element {
   const { natials, spells, cardsReady } = useContext(CardsContext);
-  const [deck, setDeck] = useState<Deck | null>(null);
 
-  useEffect(() => {
-    if (!cardsReady) return;
-    const request = new Request(`/decks/${deckId}`);
-    fetch(request)
-      .then((response) => response.json())
-      .then((deck) => setDeck(deck));
-  }, [natials, spells, setDeck]);
-
-  if (!deck) {
+  if (!cardsReady) {
     return (
       <div>Loading...</div>
     );
   }
 
-  const cards = Object.entries(deck.cards)
+  const contents = Object.entries(cards)
     .reduce((list, [cardName, cardCount]) => {
       for (let i=0; i<cardCount; i++) {
         const card = natials[cardName] ?? spells[cardName];
@@ -77,15 +73,37 @@ export default function DeckDetail(): JSX.Element {
   };
   return (
     <div>
-      <h2>Deck: {deck.name}</h2>
       <div style={styles.container}>
         <div style={styles.cards}>
-          <CardList cards={cards} />
+          <CardList cards={contents} />
         </div>
         <div style={styles.breakdown}>
-          <DeckBreakdown deck={deck} />
+          <DeckBreakdown cards={cards} />
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DeckDetailForDeckId(): JSX.Element {
+  const { deckId } = useParams<DeckDetailParams>();
+  const { natials, spells, cardsReady } = useContext(CardsContext);
+  const [deck, setDeck] = useState<Deck | null>(null);
+
+  useEffect(() => {
+    if (!cardsReady) return;
+    const request = new Request(`/decks/${deckId}`);
+    fetch(request)
+      .then((response) => response.json())
+      .then((deck) => setDeck(deck));
+  }, [natials, spells, setDeck]);
+
+  if (!deck) { return <div>Loading...</div>; }
+
+  return (
+    <>
+      <h2>Deck: {deck?.name}</h2>
+      <DeckDetail cards={deck.cards} />
+    </>
   );
 }

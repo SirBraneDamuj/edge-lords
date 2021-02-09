@@ -11,11 +11,12 @@ import AllCardsList from './card/components/AllCardsList';
 import Header from './Header';
 import Auth from './user/components/auth/Auth';
 import DeckList from './deck/components/list/DeckList';
-import DeckDetail from './deck/components/detail/DeckDetail';
+import DeckDetailForId from './deck/components/detail/DeckDetail';
+import DeckBuilder from './deck/components/builder/DeckBuilder';
 
 function App(): JSX.Element {
   return (
-    <>
+    <div style={{ maxWidth: 960, margin: 'auto' }}>
       <CardsContextProvider>
         <Router>
           <Header />
@@ -26,8 +27,11 @@ function App(): JSX.Element {
             <Route path={'/cards'}>
               <AllCardsList />
             </Route>
-            <Route path={'/deck/:deckId'}>
-              <DeckDetail />
+            <Route path={'/decks/new'}>
+              <DeckBuilder />
+            </Route>
+            <Route path={'/decks/:deckId'}>
+              <DeckDetailForId />
             </Route>
             <Route path={'/decks'}>
               <DeckList />
@@ -38,7 +42,7 @@ function App(): JSX.Element {
           </Switch>
         </Router>
       </CardsContextProvider>
-    </>
+    </div>
   );
 }
 
