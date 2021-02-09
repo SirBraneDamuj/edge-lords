@@ -1,6 +1,7 @@
 import React from 'react';
 import { Deck } from '../../types';
 import './DeckSummary.css';
+import  { Link } from 'react-router-dom';
 import DeckBreakdown from './DeckBreakdown';
 
 interface Props {
@@ -13,7 +14,7 @@ export default function DeckSummary({
   return (
     <div className={'deck-summary'}>
       <div className={'deck-description'}>
-        <div>Name: {deck.name}</div>
+        <div><Link to={`/deck/${deck.id}`}>Name: {deck.name}</Link></div>
         <div>Master: {deck.master}</div>
       </div>
       <DeckBreakdown deck={deck} />

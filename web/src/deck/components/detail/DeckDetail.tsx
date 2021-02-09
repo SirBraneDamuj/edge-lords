@@ -6,7 +6,6 @@ import { CardType, Element } from '../../../card/types';
 import { Card } from '../../../card/types';
 import { Deck } from '../../types';
 import DeckBreakdown from '../list/DeckBreakdown';
-import DeckSummary from '../list/DeckSummary';
 import './DeckDetail.css';
 
 interface DeckDetailParams {
