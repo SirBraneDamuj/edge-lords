@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../user/hooks';
 import { Deck } from '../../types';
 import DeckSummary from './DeckSummary';
 
 export default function DeckList(): JSX.Element {
   const [decks, setDecks] = useState<Array<Deck>>([]);
   const history = useHistory();
+  useAuth();
   useEffect(() => {
     const request = new Request('/users/me');
     fetch(request)

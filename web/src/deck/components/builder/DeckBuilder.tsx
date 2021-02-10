@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
 import { Card } from '../../../card/types';
+import { useAuth } from '../../../user/hooks';
 import DeckBreakdown from '../list/DeckBreakdown';
 import MasterSelect from './MasterSelect';
 
@@ -13,6 +14,7 @@ export default function DeckBuilder(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
+  useAuth();
 
   const { natials, spells, cardsReady } = useContext(CardsContext);
 

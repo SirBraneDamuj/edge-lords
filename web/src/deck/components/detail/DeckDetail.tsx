@@ -4,6 +4,7 @@ import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
 import { CardType, Element } from '../../../card/types';
 import { Card } from '../../../card/types';
+import { useAuth } from '../../../user/hooks';
 import { Deck } from '../../types';
 import DeckBreakdown from '../list/DeckBreakdown';
 
@@ -87,7 +88,7 @@ export function DeckDetail({
 
 export default function DeckDetailForDeckId(): JSX.Element {
   const { deckId } = useParams<DeckDetailParams>();
-  const { natials, spells, cardsReady } = useContext(CardsContext);
+  const { cardsReady } = useContext(CardsContext);
   const [deck, setDeck] = useState<Deck | null>(null);
 
   useEffect(() => {
@@ -96,9 +97,10 @@ export default function DeckDetailForDeckId(): JSX.Element {
     fetch(request)
       .then((response) => response.json())
       .then((deck) => setDeck(deck));
-  }, [natials, spells, setDeck]);
+  }, [setDeck]);
 
   if (!deck) { return <div>Loading...</div>; }
+  useAuth();
 
   return (
     <>
