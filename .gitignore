@@ -3,6 +3,5 @@ input
 build
 .gradle
 out
-gradle
 *.db
 node_modules
