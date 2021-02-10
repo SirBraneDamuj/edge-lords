@@ -90,6 +90,7 @@ export default function DeckDetailForDeckId(): JSX.Element {
   const { deckId } = useParams<DeckDetailParams>();
   const { cardsReady } = useContext(CardsContext);
   const [deck, setDeck] = useState<Deck | null>(null);
+  useAuth();
 
   useEffect(() => {
     if (!cardsReady) return;
@@ -100,7 +101,6 @@ export default function DeckDetailForDeckId(): JSX.Element {
   }, [setDeck]);
 
   if (!deck) { return <div>Loading...</div>; }
-  useAuth();
 
   return (
     <>

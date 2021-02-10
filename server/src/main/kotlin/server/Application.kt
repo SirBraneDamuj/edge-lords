@@ -37,7 +37,7 @@ class Application @Inject constructor(
     fun start() {
         JavalinJackson.configure(objectMapper)
         val app = Javalin.create {
-            it.enableCorsForAllOrigins()
+            it.addStaticFiles("/public")
         }.start(7000)
         app.exception(RecordNotFoundError::class.java) { _, context ->
             context.status(404)
