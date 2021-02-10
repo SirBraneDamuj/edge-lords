@@ -13,6 +13,7 @@ import server.game.Games
 import server.session.Sessions
 import server.user.User
 import server.user.Users
+import java.net.URI
 import javax.inject.Singleton
 
 class Db private constructor() {
@@ -22,7 +23,19 @@ class Db private constructor() {
 
     companion object {
         fun connect(): Db {
-            Database.connect("jdbc:sqlite:edge-lords.db")
+            val databaseUrl = System.getenv("DATABASE_URL")
+                ?: "sqlite:edge-lords.db"
+            val jdbcUrl = if (databaseUrl.startsWith("postgres")) {
+                val uri = URI(databaseUrl)
+                val (username, password) = uri.userInfo.split(":")
+                val host = uri.host
+                val port = uri.port
+                val path = uri.path
+                "jdbc:postgresql://$host:$port$path?user=$username&password=$password"
+            } else {
+                "jdbc:$databaseUrl"
+            }
+            Database.connect(jdbcUrl)
             transaction {
                 SchemaUtils.createMissingTablesAndColumns(
                     Users,

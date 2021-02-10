@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.28.1")
     implementation("org.jetbrains.exposed:exposed-java-time:0.28.1")
     implementation("org.xerial:sqlite-jdbc:3.34.0")
+    implementation("org.postgresql:postgresql:42.2.16")
     implementation("org.mindrot:jbcrypt:0.4")
     kapt("com.google.dagger:dagger-compiler:2.30.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
