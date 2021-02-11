@@ -1,20 +1,37 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
 import { Card } from '../../../card/types';
 import { useAuth } from '../../../user/hooks';
+import { Deck } from '../../types';
 import DeckBreakdown from '../list/DeckBreakdown';
 import MasterSelect from './MasterSelect';
+import { sortedCardList } from '../../model';
 
-export default function DeckBuilder(): JSX.Element {
-  const [name, setName] = useState('');
-  const [master, setMaster] = useState('');
-  const [cards, setCards] = useState<Record<string, number>>({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const history = useHistory();
-  useAuth();
+interface Props {
+  name: string
+  setName: (s: string) => void,
+  master: string
+  setMaster: (s: string) => void
+  cards: Record<string, number>
+  setCards: (c: Record<string, number>) => void
+  loading: boolean
+  error: string
+  onSubmit: () => void | Promise<void>
+}
+
+function DeckBuilder({
+  name,
+  setName,
+  master,
+  setMaster,
+  cards,
+  setCards,
+  error,
+  loading,
+  onSubmit
+}: Props): JSX.Element {
 
   const { natials, spells, cardsReady } = useContext(CardsContext);
 
@@ -40,35 +57,16 @@ export default function DeckBuilder(): JSX.Element {
       [cardName]: cards[cardName] - 1,
     });
   }
-
-  async function submitDeck(): Promise<void> {
-    if (loading) { return; }
-    setLoading(true);
-    const request = new Request('/decks', {
-      method: 'POST',
-      body: JSON.stringify({
-        name,
-        master,
-        cards,
-      }),
-    });
-    const response = await fetch(request);
-    if (!response.ok) {
-      setLoading(false);
-      setError('Failed to save deck');
-    } else {
-      history.push('/decks');
-    }
-  }
-
-  const deckContents = Object.entries(cards)
-    .reduce((list, [cardName, cardCount]) => {
-      for (let i=0; i<cardCount; i++) {
-        const card = natials[cardName] ?? spells[cardName];
-        list.push(card as Card);
-      }
-      return list;
-    }, new Array<Card>());
+  const deckContents = sortedCardList(
+    Object.entries(cards)
+      .reduce((list, [cardName, cardCount]) => {
+        for (let i=0; i<cardCount; i++) {
+          const card = natials[cardName] ?? spells[cardName];
+          list.push(card as Card);
+        }
+        return list;
+      }, new Array<Card>())
+  );
 
   const eligibleCards = [
     ...Object.values(natials).filter((c) => !cards[c.name] || cards[c.name] < 3),
@@ -125,7 +123,113 @@ export default function DeckBuilder(): JSX.Element {
         <CardList cards={eligibleCards} wrap={false} selectable={true} onCardSelect={(c) => addCard(c.name)} />
       </div>
       {error && <div>error</div>}
-      <button disabled={loading} onClick={submitDeck}>Save Deck</button>
+      <button disabled={loading} onClick={onSubmit}>Save Deck</button>
     </div>
+  );
+}
+
+export function NewDeckBuilder(): JSX.Element {
+  const [name, setName] = useState('');
+  const [master, setMaster] = useState('');
+  const [cards, setCards] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const history = useHistory();
+  useAuth();
+
+  async function submitDeck(): Promise<void> {
+    if (loading) { return; }
+    setLoading(true);
+    const request = new Request('/decks', {
+      method: 'POST',
+      body: JSON.stringify({
+        name,
+        master,
+        cards,
+      }),
+    });
+    const response = await fetch(request);
+    if (!response.ok) {
+      setLoading(false);
+      setError('Failed to save deck');
+    } else {
+      history.push('/decks');
+    }
+  }
+
+
+  return (
+    <DeckBuilder
+      name={name}
+      setName={setName}
+      master={master}
+      setMaster={setMaster}
+      cards={cards}
+      setCards={setCards}
+      loading={loading}
+      error={error}
+      onSubmit={submitDeck}
+    />
+  );
+}
+
+interface EditDeckParams {
+  deckId: string
+}
+
+export function EditDeckBuilder(): JSX.Element {
+  const [name, setName] = useState('');
+  const [master, setMaster] = useState('');
+  const [cards, setCards] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const history = useHistory();
+  const { deckId } = useParams<EditDeckParams>();
+
+  useAuth();
+  useEffect(() => {
+    fetch(new Request(`/decks/${deckId}`))
+      .then((response) => response.json())
+      .then((json: Deck) => {
+        setName(json.name);
+        setMaster(json.master);
+        setCards(json.cards);
+      });
+  }, [setName, setMaster, setCards]);
+
+  async function submitDeck(): Promise<void> {
+    if (loading) { return; }
+    setLoading(true);
+    const request = new Request(`/decks/${deckId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name,
+        master,
+        cards,
+      }),
+    });
+    const response = await fetch(request);
+    if (!response.ok) {
+      setLoading(false);
+      setError('Failed to save deck');
+    } else {
+      history.push('/decks');
+    }
+  }
+
+  if (name === '') return <div>Loading...</div>;
+
+  return (
+    <DeckBuilder
+      name={name}
+      setName={setName}
+      master={master}
+      setMaster={setMaster}
+      cards={cards}
+      setCards={setCards}
+      loading={loading}
+      error={error}
+      onSubmit={submitDeck}
+    />
   );
 }

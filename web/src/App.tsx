@@ -12,7 +12,7 @@ import Header from './Header';
 import Auth from './user/components/auth/Auth';
 import DeckList from './deck/components/list/DeckList';
 import DeckDetailForId from './deck/components/detail/DeckDetail';
-import DeckBuilder from './deck/components/builder/DeckBuilder';
+import { NewDeckBuilder, EditDeckBuilder } from './deck/components/builder/DeckBuilder';
 
 function App(): JSX.Element {
   return (
@@ -28,7 +28,10 @@ function App(): JSX.Element {
               <AllCardsList />
             </Route>
             <Route path={'/decks/new'}>
-              <DeckBuilder />
+              <NewDeckBuilder />
+            </Route>
+            <Route path={'/decks/edit/:deckId'}>
+              <EditDeckBuilder />
             </Route>
             <Route path={'/decks/:deckId'}>
               <DeckDetailForId />

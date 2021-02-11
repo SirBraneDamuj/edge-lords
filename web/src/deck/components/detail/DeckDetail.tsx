@@ -1,29 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
-import { CardType, Element } from '../../../card/types';
 import { Card } from '../../../card/types';
 import { useAuth } from '../../../user/hooks';
+import { sortedCardList } from '../../model';
 import { Deck } from '../../types';
 import DeckBreakdown from '../list/DeckBreakdown';
 
 interface DeckDetailParams {
   deckId: string
 }
-
-const elementMapping = {
-  [Element.FIRE]: 1,
-  [Element.HEAVEN]: 2,
-  [Element.EARTH]: 3,
-  [Element.WATER]: 4,
-};
-
-const cardTypeMapping = {
-  [CardType.MASTER]: 0,
-  [CardType.NATIAL]: 1,
-  [CardType.SPELL]: 2,
-};
 
 interface Props {
   cards: Record<string, number>
@@ -40,25 +27,19 @@ export function DeckDetail({
     );
   }
 
-  const contents = Object.entries(cards)
-    .reduce((list, [cardName, cardCount]) => {
-      for (let i=0; i<cardCount; i++) {
-        const card = natials[cardName] ?? spells[cardName];
-        if (!card) {
-          throw new Error();
+  const contents = sortedCardList(
+    Object.entries(cards)
+      .reduce((list, [cardName, cardCount]) => {
+        for (let i=0; i<cardCount; i++) {
+          const card = natials[cardName] ?? spells[cardName];
+          if (!card) {
+            throw new Error();
+          }
+          list.push(card);
         }
-        list.push(card);
-      }
-      return list;
-    }, new Array<Card>())
-    .sort((a, b) => {
-      const cardTypeSort = cardTypeMapping[a.cardType] - cardTypeMapping[b.cardType];
-      if (cardTypeSort !== 0) {
-        return cardTypeSort;
-      } else {
-        return ((a.element && elementMapping[a.element]) || 99) - ((b.element && elementMapping[b.element]) || 99);
-      }
-    });
+        return list;
+      }, new Array<Card>())
+  );
   const styles = {
     container: {
       display: 'flex',
@@ -104,7 +85,7 @@ export default function DeckDetailForDeckId(): JSX.Element {
 
   return (
     <>
-      <h2>Deck: {deck?.name}</h2>
+      <h2>Deck: {deck?.name} - <Link to={`/decks/edit/${deckId}`}>Edit</Link></h2>
       <DeckDetail cards={deck.cards} />
     </>
   );

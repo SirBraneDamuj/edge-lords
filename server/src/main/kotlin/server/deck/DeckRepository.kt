@@ -2,6 +2,7 @@ package server.deck
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import server.config.Db
+import server.error.UnauthorizedError
 import server.error.RecordNotFoundError
 import server.user.User
 import javax.inject.Inject
@@ -22,6 +23,30 @@ class DeckRepository @Inject constructor(
             this.master = master
             this.user = user
         }
+        cards.forEach { (cardName, count) ->
+            DeckCard.new {
+                this.name = cardName
+                this.count = count
+                this.deck = deck
+            }
+        }
+        DeckDto.fromDeck(deck)
+    }
+
+    fun updateDeck(
+        id: Int,
+        name: String,
+        master: String,
+        cards: Map<String, Int>,
+        ownerId: Int
+    ): DeckDto = transaction {
+        val deck = Deck.findById(id) ?: throw RecordNotFoundError()
+        if (deck.user.id.value != ownerId) {
+            throw UnauthorizedError()
+        }
+        deck.name = name
+        deck.master = master
+        deck.cards.forEach { it.delete() }
         cards.forEach { (cardName, count) ->
             DeckCard.new {
                 this.name = cardName
