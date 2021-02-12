@@ -11,12 +11,15 @@ class GameController @Inject constructor(
     private val startGameService: StartGameService,
     private val fetchGameService: FetchGameService,
     private val gameActionService: GameActionService,
+    private val gameListService: GameListService,
     private val authHandler: AuthHandler
 ) {
     fun initRoutes(app: Javalin) {
+        app.before("/games", authHandler)
         app.before("/games/*", authHandler)
         app.routes {
             path("games") {
+                get(this::listGames)
                 post(this::createGame)
                 path(":gameId") {
                     get(this::getGame)
@@ -32,6 +35,11 @@ class GameController @Inject constructor(
         val createdGame = startGameService.startGame(deckIds)
         context.status(201)
         context.json(createdGame)
+    }
+
+    fun listGames(context: Context) {
+        val userId = context.attribute<Int>("userId")!!
+        context.json(gameListService.listGamesForUser(userId))
     }
 
     fun getGame(context: Context) {

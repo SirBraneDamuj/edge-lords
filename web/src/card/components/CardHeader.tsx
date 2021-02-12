@@ -1,20 +1,22 @@
 import React from 'react';
-import { Card } from '../types';
+import { ActionSpeed, AttackRange, Element } from '../types';
 import CardIcons from './detail/CardIcons';
 import CardManaCost from './detail/CardManaCost';
 
 interface Props {
-  card: Card
+  element?: Element
+  range: AttackRange
+  speed: ActionSpeed
+  name: string
+  manaCost: number
 }
 
 export default function CardHeader({
-  card: {
-    element,
-    range,
-    speed,
-    name,
-    manaCost,
-  }
+  element,
+  range,
+  speed,
+  name,
+  manaCost,
 }: Props): JSX.Element {
   const styles = {
     header: {

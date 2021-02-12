@@ -1,14 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Deck } from '../../types';
-import DeckBreakdown from './DeckBreakdown';
+import { GameListEntry } from '../types';
 
 interface Props {
-  deck: Deck
+  game: GameListEntry
 }
 
-export default function DeckSummary({
-  deck
+export default function GameSummary({
+  game: {
+    id,
+    deckId,
+    deckName,
+    opponentName,
+    state,
+  }
 }: Props): JSX.Element {
   const styles = {
     summary: {
@@ -22,15 +27,15 @@ export default function DeckSummary({
       justifyContent: 'space-around',
       borderBottom: '1px black solid',
       padding: '0.5rem',
-    },
+    }
   };
   return (
     <div style={styles.summary}>
       <div style={styles.description}>
-        <div><Link to={`/decks/${deck.id}`}>Name: {deck.name}</Link></div>
-        <div>Master: {deck.master}</div>
+        <div><Link to={`/games/${id}`}>Opponent: {opponentName}</Link></div>
+        <div><Link to={`/decks/${deckId}`}>Deck: {deckName}</Link></div>
+        <div>State: {state}</div>
       </div>
-      <DeckBreakdown cards={deck.cards} />
     </div>
   );
 }

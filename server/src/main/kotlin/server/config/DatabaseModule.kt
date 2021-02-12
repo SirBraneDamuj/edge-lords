@@ -9,6 +9,7 @@ import server.deck.Deck
 import server.deck.DeckCard
 import server.deck.DeckCards
 import server.deck.Decks
+import server.game.GameDecks
 import server.game.Games
 import server.session.Sessions
 import server.user.User
@@ -42,7 +43,8 @@ class Db private constructor() {
                     Decks,
                     DeckCards,
                     Sessions,
-                    Games
+                    Games,
+                    GameDecks,
                 )
             }
             return Db()

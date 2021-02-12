@@ -11,6 +11,24 @@ data class CreatedGame(
     val id: Int
 )
 
+data class GameList(
+    val games: List<GameListEntry>
+)
+
+enum class GameProgressState {
+    WON,
+    LOST,
+    IN_PROGRESS,
+}
+
+data class GameListEntry(
+    val id: Int,
+    val deckId: Int,
+    val deckName: String,
+    val opponentName: String,
+    val state: GameProgressState
+)
+
 data class GameDto(
     val id: Int,
     val deckOneId: Int,

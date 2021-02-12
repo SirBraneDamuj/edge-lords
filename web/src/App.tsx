@@ -1,18 +1,20 @@
 import React from 'react';
-import './card/components/AllCardsList';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
+
+
+  Redirect, Route, Switch
 } from 'react-router-dom';
-import { CardsContextProvider } from './card/context';
+import './card/components/AllCardsList';
 import AllCardsList from './card/components/AllCardsList';
+import { CardsContextProvider } from './card/context';
+import { EditDeckBuilder, NewDeckBuilder } from './deck/components/builder/DeckBuilder';
+import DeckDetailForId from './deck/components/detail/DeckDetail';
+import DeckList from './deck/components/list/DeckList';
+import GameDetailForGameIdParam from './game/components/detail/GameDetail';
+import GameList from './game/components/GameList';
 import Header from './Header';
 import Auth from './user/components/auth/Auth';
-import DeckList from './deck/components/list/DeckList';
-import DeckDetailForId from './deck/components/detail/DeckDetail';
-import { NewDeckBuilder, EditDeckBuilder } from './deck/components/builder/DeckBuilder';
 
 function App(): JSX.Element {
   return (
@@ -38,6 +40,12 @@ function App(): JSX.Element {
             </Route>
             <Route path={'/decks'}>
               <DeckList />
+            </Route>
+            <Route path={'/games/:gameId'}>
+              <GameDetailForGameIdParam />
+            </Route>
+            <Route path={'/games'}>
+              <GameList />
             </Route>
             <Route path={'/'}>
               <Redirect to={'/decks'} />

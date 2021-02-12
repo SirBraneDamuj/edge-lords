@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Link,
+  Link
 } from 'react-router-dom';
 import LogoutButton from './user/components/auth/LogoutButton';
 
@@ -22,6 +22,9 @@ export default function Header(): JSX.Element {
       </div>
       <div style={styles.item}>
         <Link to={'/decks'}>Decks</Link>
+      </div>
+      <div style={styles.item}>
+        <Link to={'/games'}>Games</Link>
       </div>
       <div style={styles.item}>
         <LogoutButton />

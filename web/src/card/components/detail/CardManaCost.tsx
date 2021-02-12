@@ -7,7 +7,8 @@ interface Props {
 export default function CardManaCost({
   manaCost
 }: Props): JSX.Element {
+  const emoji = manaCost > 0 ? `${manaCost} 💎` : '👑';
   return (
-    <div className={'card-mana'}>{(manaCost || manaCost === 0) && `${manaCost} 💎`}</div>
+    <div className={'card-mana'}>{emoji}</div>
   );
 }
