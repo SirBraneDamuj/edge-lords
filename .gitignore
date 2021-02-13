@@ -5,3 +5,4 @@ build
 out
 *.db
 node_modules
+server/src/main/resources/public/

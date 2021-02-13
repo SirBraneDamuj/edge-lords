@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { GameListEntry } from '../types';
+import { GameListEntry } from '../../types';
 import GameSummary from './GameSummary';
 
 export default function GameList(): JSX.Element {
@@ -28,7 +28,7 @@ export default function GameList(): JSX.Element {
   return (
     <div>
       <h2>Games</h2>
-      <div style={styles.newGame} onClick={() => history.push('/decks/new')}>
+      <div style={styles.newGame} onClick={() => history.push('/games/new')}>
         New Game
       </div>
       <div className={'deck-list'}>
