@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class CardController @Inject constructor() {
     fun initRoutes(app: Javalin) {
-        app.get("/cards", this::getAllCards)
+        app.get("/api/cards", this::getAllCards)
     }
 
     fun getAllCards(context: Context) {

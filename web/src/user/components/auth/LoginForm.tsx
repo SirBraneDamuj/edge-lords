@@ -20,7 +20,7 @@ export default function LoginForm({
     e.preventDefault();
     if (loading) return;
     setLoading(true);
-    const request = new Request('/login', {
+    const request = new Request('/api/login', {
       method: 'POST',
       body: JSON.stringify({
         name: username,

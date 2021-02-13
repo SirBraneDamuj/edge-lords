@@ -4,10 +4,10 @@ import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
 import { Card } from '../../../card/types';
 import { useAuth } from '../../../user/hooks';
+import { sortedCardList } from '../../model';
 import { Deck } from '../../types';
 import DeckBreakdown from '../list/DeckBreakdown';
 import MasterSelect from './MasterSelect';
-import { sortedCardList } from '../../model';
 
 interface Props {
   name: string
@@ -140,7 +140,7 @@ export function NewDeckBuilder(): JSX.Element {
   async function submitDeck(): Promise<void> {
     if (loading) { return; }
     setLoading(true);
-    const request = new Request('/decks', {
+    const request = new Request('/api/decks', {
       method: 'POST',
       body: JSON.stringify({
         name,
@@ -188,19 +188,21 @@ export function EditDeckBuilder(): JSX.Element {
 
   useAuth();
   useEffect(() => {
-    fetch(new Request(`/decks/${deckId}`))
+    setLoading(true);
+    fetch(new Request(`/api/decks/${deckId}`))
       .then((response) => response.json())
       .then((json: Deck) => {
         setName(json.name);
         setMaster(json.master);
         setCards(json.cards);
+        setLoading(false);
       });
-  }, [setName, setMaster, setCards]);
+  }, [setLoading, setName, setMaster, setCards]);
 
   async function submitDeck(): Promise<void> {
     if (loading) { return; }
     setLoading(true);
-    const request = new Request(`/decks/${deckId}`, {
+    const request = new Request(`/api/decks/${deckId}`, {
       method: 'PUT',
       body: JSON.stringify({
         name,
@@ -217,7 +219,7 @@ export function EditDeckBuilder(): JSX.Element {
     }
   }
 
-  if (name === '') return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <DeckBuilder

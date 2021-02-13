@@ -13,9 +13,9 @@ class UserController @Inject constructor(
     private val authHandler: AuthHandler
 ) {
     fun initRoutes(app: Javalin) {
-        app.before("/users/me", authHandler)
+        app.before("/api/users/me", authHandler)
         app.routes {
-            path("users") {
+            path("api/users") {
                 get("me", this::getUser)
                 post(this::createUser)
             }

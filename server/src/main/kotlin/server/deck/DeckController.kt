@@ -13,10 +13,10 @@ class DeckController @Inject constructor(
     private val authHandler: AuthHandler
 ) {
     fun initRoutes(app: Javalin) {
-        app.before("/decks", authHandler)
-        app.before("/decks/*", authHandler)
+        app.before("/api/decks", authHandler)
+        app.before("/api/decks/*", authHandler)
         app.routes {
-            path("decks") {
+            path("api/decks") {
                 post(this::createDeck)
                 put(":id", this::updateDeck)
                 get(":id", this::getDeck)

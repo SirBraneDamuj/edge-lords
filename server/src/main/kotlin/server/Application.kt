@@ -38,6 +38,8 @@ class Application @Inject constructor(
         JavalinJackson.configure(objectMapper)
         val app = Javalin.create {
             it.addStaticFiles("/public")
+            it.addSinglePageRoot("/", "/public/index.html")
+            it.enableDevLogging()
         }.start(System.getenv("PORT")?.toInt() ?: 7000)
         app.exception(RecordNotFoundError::class.java) { _, context ->
             context.status(404)

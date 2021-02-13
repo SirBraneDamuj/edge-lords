@@ -15,10 +15,10 @@ class GameController @Inject constructor(
     private val authHandler: AuthHandler
 ) {
     fun initRoutes(app: Javalin) {
-        app.before("/games", authHandler)
-        app.before("/games/*", authHandler)
+        app.before("/api/games", authHandler)
+        app.before("/api/games/*", authHandler)
         app.routes {
-            path("games") {
+            path("api/games") {
                 get(this::listGames)
                 post(this::createGame)
                 path(":gameId") {

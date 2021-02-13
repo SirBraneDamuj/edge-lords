@@ -11,11 +11,9 @@ class LoginController @Inject constructor(
 ) {
     fun initRoutes(app: Javalin) {
         app.routes {
-            path("login") {
-                post(this::login)
-            }
-            path("logout") {
-                post(this::logout)
+            path("api") {
+                post("login", this::login)
+                post("logout", this::logout)
             }
         }
     }

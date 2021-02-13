@@ -75,11 +75,11 @@ export default function DeckDetailForDeckId(): JSX.Element {
 
   useEffect(() => {
     if (!cardsReady) return;
-    const request = new Request(`/decks/${deckId}`);
+    const request = new Request(`/api/decks/${deckId}`);
     fetch(request)
       .then((response) => response.json())
       .then((deck) => setDeck(deck));
-  }, [setDeck]);
+  }, [cardsReady, setDeck]);
 
   if (!deck) { return <div>Loading...</div>; }
 

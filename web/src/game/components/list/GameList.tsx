@@ -8,7 +8,7 @@ export default function GameList(): JSX.Element {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(new Request('/games'))
+    fetch(new Request('/api/games'))
       .then((response) => response.json())
       .then(({ games }) => setGames(games));
   }, [setGames]);

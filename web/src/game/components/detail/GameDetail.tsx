@@ -31,7 +31,7 @@ export default function GameDetailForGameIdParam(): JSX.Element {
   const { gameId } = useParams<GameDetailParams>();
 
   useEffect(() => {
-    fetch(new Request(`/games/${gameId}`))
+    fetch(new Request(`/api/games/${gameId}`))
       .then((response) => response.json())
       .then((body) => setGame(body));
   }, [gameId, setGame]);

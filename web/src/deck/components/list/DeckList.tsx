@@ -9,7 +9,7 @@ export default function DeckList(): JSX.Element {
   const history = useHistory();
   useAuth();
   useEffect(() => {
-    const request = new Request('/users/me');
+    const request = new Request('/api/users/me');
     fetch(request)
       .then(response => response.json())
       .then(({ decks }) => setDecks(decks));

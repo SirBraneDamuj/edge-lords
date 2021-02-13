@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from './types';
 
 interface CardsMap {
@@ -29,7 +29,7 @@ export function CardsContextProvider({ children }: Props): JSX.Element {
     cardsReady: false,
   });
   useEffect(() => {
-    fetch( new Request('/cards'))
+    fetch( new Request('/api/cards'))
       .then((response) => response.json())
       .then((cardsMap) => setCards({ ...cardsMap, cardsReady: true }));
   }, [setCards]);
