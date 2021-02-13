@@ -49,11 +49,11 @@ export enum CreaturePosition {
 }
 
 export enum ActivationState {
-  NOT_READY,
-  READY,
-  MOVED,
-  READY_AGAIN,
-  ACTIVATED,
+  NOT_READY = 'NOT_READY',
+  READY = 'READY',
+  MOVED = 'MOVED',
+  READY_AGAIN = 'READY_AGAIN',
+  ACTIVATED = 'ACTIVATED',
 }
 
 export interface Creature {

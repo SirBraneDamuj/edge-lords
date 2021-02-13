@@ -1,28 +1,44 @@
-import React from 'react';
-import { Creature, CreaturePosition } from '../../types';
-import CreatureDetail from './CreatureDetail';
+import React, { useContext } from 'react';
+import { CreatureSide, GameContext } from '../../context';
+import { CreaturePosition } from '../../types';
+import CreatureGridCell from './CreatureGridCell';
 
-function EmptyGridSpace() {
+interface EmptyProps {
+  onClick: () => void
+}
+
+function EmptyGridSpace({
+  onClick,
+}: EmptyProps) {
   const styles = {
-    width: 200,
+    width: 125,
     height: 105,
     border: '1px black solid',
     margin: 2,
   };
   return (
-    <div style={styles}></div>
+    <div onClick={onClick} style={styles}></div>
   );
 }
 
 interface Props {
-  creatures: Creature[]
-  flip: boolean
+  side: CreatureSide
 }
 
 export default function CreaturesGrid({
-  creatures,
-  flip,
-}: Props): JSX.Element {
+  side
+}: Props): JSX.Element | null {
+  const context = useContext(GameContext);
+  if (!context) return null;
+  const { state: { game }, dispatch } = context;
+
+  const onCellClick = (position: CreaturePosition) => () => dispatch({
+    type: 'select_grid_cell',
+    side,
+    position,
+  });
+
+  const flip = side === 'opponent';
   const styles = {
     container: {
       display: 'flex',
@@ -35,9 +51,8 @@ export default function CreaturesGrid({
       justifyContent: 'space-around',
     }
   };
-  const positions = creatures.reduce<Record<CreaturePosition, (JSX.Element | null)>>((p, creature) => {
-    console.log(creature.position);
-    p[creature.position] = <CreatureDetail creature={creature} />;
+  const positions = game[side].creatures.reduce<Record<CreaturePosition, (JSX.Element | null)>>((p, creature) => {
+    p[creature.position] = <CreatureGridCell key={creature.position} onClick={onCellClick(creature.position)} creature={creature} />;
     return p;
   }, {
     [CreaturePosition.BACK_ONE]: null,
@@ -48,22 +63,19 @@ export default function CreaturesGrid({
     [CreaturePosition.FRONT_THREE]: null,
     [CreaturePosition.FRONT_FOUR]: null,
   });
-  console.log(positions);
-  const frontRow = (
-    <div style={styles.row}>
-      {positions[CreaturePosition.FRONT_ONE] ?? <EmptyGridSpace />}
-      {positions[CreaturePosition.FRONT_TWO] ?? <EmptyGridSpace />}
-      {positions[CreaturePosition.FRONT_THREE] ?? <EmptyGridSpace />}
-      {positions[CreaturePosition.FRONT_FOUR] ?? <EmptyGridSpace />}
-    </div>
-  );
-  const backRow = (
-    <div style={styles.row}>
-      {positions[CreaturePosition.BACK_ONE] ?? <EmptyGridSpace />}
-      {positions[CreaturePosition.BACK_TWO] ?? <EmptyGridSpace />}
-      {positions[CreaturePosition.BACK_THREE] ?? <EmptyGridSpace />}
-    </div>
-  );
+  const frontCells = [
+    CreaturePosition.FRONT_ONE,
+    CreaturePosition.FRONT_TWO,
+    CreaturePosition.FRONT_THREE,
+    CreaturePosition.FRONT_FOUR,
+  ].map((p) => positions[p] ?? <EmptyGridSpace key={p} onClick={onCellClick(p)} />);
+  const frontRow = <div style={styles.row}>{frontCells}</div>;
+  const backCells = [
+    CreaturePosition.BACK_ONE,
+    CreaturePosition.BACK_TWO,
+    CreaturePosition.BACK_THREE,
+  ].map((p) => positions[p] ?? <EmptyGridSpace key={p} onClick={onCellClick(p)} />);
+  const backRow = <div style={styles.row}>{backCells}</div>;
   return (
     <div style={styles.container}>
       {frontRow}

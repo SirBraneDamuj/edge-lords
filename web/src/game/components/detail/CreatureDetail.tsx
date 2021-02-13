@@ -1,58 +1,52 @@
 import React from 'react';
-import CardHeader from '../../../card/components/CardHeader';
-import CardMid from '../../../card/components/CardMid';
-import { CardType } from '../../../card/types';
-import { Creature } from '../../types';
+import CardDetail from '../../../card/components/CardDetail';
+import { Card } from '../../../card/types';
+import { ActivationState, Creature } from '../../types';
 
 interface Props {
   creature: Creature
+  card: Card
+}
+
+function availableActions(activationState: ActivationState): JSX.Element[] {
+  if (activationState === ActivationState.MOVED) {
+    return [
+      <button key={0}>Attack</button>,
+    ];
+  } else if (activationState === ActivationState.READY || ActivationState.READY_AGAIN) {
+    return [
+      <button key={0}>Move</button>,
+      <button key={1}>Attack</button>,
+    ];
+  } else {
+    return [];
+  }
 }
 
 export default function CreatureDetail({
-  creature: {
-    className,
-    card: {
-      cardName,
-      manaCost,
-    },
-    attack,
-    hp,
-    range,
-    speed,
-    element,
-  }
+  creature,
+  card,
 }: Props): JSX.Element {
-  const cardType = className.split('.').pop() as CardType;
+  const realCard = {
+    ...card,
+    manaCost: creature.card.manaCost,
+  };
   const styles = {
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      justifyContent: 'space-around',
-      width: 200,
-      height: 100,
-      border: '1px solid black',
-      margin: 2,
-      padding: 5,
     },
-    header: {
+    buttons: {
       display: 'flex',
-      flexDirection: 'row' as const,
+      flexDirection: 'column' as const,
     }
   };
   return (
     <div style={styles.container}>
-      <CardHeader
-        element={element??undefined}
-        range={range}
-        speed={speed}
-        name={cardName}
-        manaCost={manaCost}
-      />
-      <CardMid
-        attack={attack}
-        hp={hp}
-        cardType={cardType}
-      />
+      <CardDetail card={realCard} />
+      <div style={styles.buttons}>
+        {availableActions(creature.activationState)}
+      </div>
     </div>
   );
 }
