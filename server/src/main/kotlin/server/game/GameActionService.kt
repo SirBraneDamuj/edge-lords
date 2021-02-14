@@ -58,6 +58,11 @@ class GameActionService @Inject constructor(
                     targetTokens = actionDto.spell.targetTokens
                 )
             }
+            actionDto.end != null -> {
+                EndTurnAction(
+                    playerLabel = gameState.activePlayerLabel
+                )
+            }
             else -> throw InvalidRequestError()
         }
         ActionExecutor.performAction(gameState, action)

@@ -6,6 +6,7 @@ import { ActivationState, Creature } from '../../types';
 
 interface Props {
   creature: Creature
+  selected: boolean
   onClick: (c: Creature) => void
 }
 
@@ -15,10 +16,6 @@ function activationStateStyles(activationState: ActivationState): CSSProperties 
     return {
       backgroundColor: '#aaa',
     };
-  case ActivationState.MOVED:
-    return {
-      border: '2px solid black',
-    };
   default:
     return {};
   }
@@ -26,6 +23,7 @@ function activationStateStyles(activationState: ActivationState): CSSProperties 
 
 export default function CreatureGridCell({
   creature,
+  selected = false,
   onClick,
 }: Props): JSX.Element {
   const {
@@ -47,7 +45,7 @@ export default function CreatureGridCell({
       justifyContent: 'space-around',
       width: 125,
       height: 100,
-      border: '1px solid black',
+      border: selected ? '3px solid black' : '1px solid black',
       margin: 2,
       padding: 5,
       ...activationStateStyles(activationState)

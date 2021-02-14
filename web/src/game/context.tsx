@@ -14,35 +14,71 @@ export interface GameState {
   mode: GameMode 
   selectedCreature: { side: CreatureSide, position: CreaturePosition } | null
   selectedCard: { handPosition: number } | null
+  loading: boolean
 }
 
 export type CreatureSide = 'self' | 'opponent';
 
+export type CommandSentAction = { type: 'command_sent' }
+export type CommandResponseAction = { type: 'command_response', newGameState: GamePerspective }
+
+export type SelectCreatureAction = { type: 'select_creature', side: CreatureSide, position: CreaturePosition }
+export type BeginMoveAction = { type: 'begin_move' }
+export type BeginAttackAction = { type: 'begin_attack' }
+
 export type Action =
-  | { type: 'select_grid_cell', side: CreatureSide, position: CreaturePosition }
-  | { type: 'begin_move' }
+  | SelectCreatureAction
+  | BeginMoveAction
+  | BeginAttackAction
+  | CommandSentAction
+  | CommandResponseAction
+
 
 const reducer = (state: GameState, action: Action) => {
   switch (action.type) {
-  case 'select_grid_cell': {
+  case 'select_creature': {
     const { side, position } = action;
-    const creatures = state.game[side].creatures;
-    const it = creatures.find((c) => c.position === position);
+    const it = state.game[side].creatures.find((c) => c.position === position);
     if (it) {
       return {
         ...state,
         selectedCreature: { side, position }
       };
-    } else {
-      return state;
     }
+    break;
+  }
+  case 'command_sent': {
+    return {
+      ...state,
+      mode: GameMode.VIEW,
+      loading: true,
+    };
+  }
+  case 'command_response': {
+    const { newGameState } = action;
+    return {
+      ...state,
+      selectedCard: null,
+      selectedCreature: null,
+      game: newGameState,
+    };
   }
   case 'begin_move': {
-    return state;
+    return {
+      ...state,
+      mode: GameMode.MOVING,
+    };
+  }
+  case 'begin_attack': {
+    return {
+      ...state,
+      mode: GameMode.ATTACKING,
+    };
   }
   default:
     return state;
   }
+  return state;
 };
 
 export type GameContextStore = { state: GameState, dispatch: React.Dispatch<Action>}
@@ -62,6 +98,7 @@ export function GameContextProvider({
     mode: GameMode.VIEW,
     selectedCreature: null,
     selectedCard: null,
+    loading: false,
   });
   const store = {
     state,

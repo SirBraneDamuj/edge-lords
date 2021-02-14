@@ -1,32 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CardDetail from '../../../card/components/CardDetail';
 import { Card } from '../../../card/types';
+import { GameContext } from '../../context';
 import { ActivationState, Creature } from '../../types';
 
 interface Props {
   creature: Creature
   card: Card
-}
-
-function availableActions(activationState: ActivationState): JSX.Element[] {
-  if (activationState === ActivationState.MOVED) {
-    return [
-      <button key={0}>Attack</button>,
-    ];
-  } else if (activationState === ActivationState.READY || ActivationState.READY_AGAIN) {
-    return [
-      <button key={0}>Move</button>,
-      <button key={1}>Attack</button>,
-    ];
-  } else {
-    return [];
-  }
+  showActions: boolean
 }
 
 export default function CreatureDetail({
   creature,
   card,
-}: Props): JSX.Element {
+  showActions,
+}: Props): JSX.Element | null {
+  const context = useContext(GameContext);
+  if (!context) return null;
+  const { dispatch } = context;
   const realCard = {
     ...card,
     manaCost: creature.card.manaCost,
@@ -41,12 +32,34 @@ export default function CreatureDetail({
       flexDirection: 'column' as const,
     }
   };
+
+  const onMoveClick = () => dispatch({ type: 'begin_move' });
+  const onAttackClick = () => dispatch({ type: 'begin_attack' });
+
+  function availableActions(): JSX.Element[] {
+    const activationState = creature.activationState;
+    if (activationState === ActivationState.MOVED) {
+      return [
+        <button onClick={onAttackClick} key={0}>Attack</button>,
+      ];
+    } else if (activationState === ActivationState.READY || ActivationState.READY_AGAIN) {
+      return [
+        <button onClick={onMoveClick} key={0}>Move</button>,
+        <button onClick={onAttackClick} key={1}>Attack</button>,
+      ];
+    } else {
+      return [];
+    }
+  }
   return (
     <div style={styles.container}>
       <CardDetail card={realCard} />
-      <div style={styles.buttons}>
-        {availableActions(creature.activationState)}
-      </div>
+      {
+        showActions &&
+        <div style={styles.buttons}>
+          {availableActions()}
+        </div>
+      }
     </div>
   );
 }

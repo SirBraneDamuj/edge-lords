@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { selectGridCell } from '../../action';
 import { CreatureSide, GameContext } from '../../context';
 import { CreaturePosition } from '../../types';
 import CreatureGridCell from './CreatureGridCell';
@@ -30,13 +31,15 @@ export default function CreaturesGrid({
 }: Props): JSX.Element | null {
   const context = useContext(GameContext);
   if (!context) return null;
-  const { state: { game }, dispatch } = context;
+  const { state, dispatch } = context;
+  const { game, selectedCreature } = state;
 
-  const onCellClick = (position: CreaturePosition) => () => dispatch({
-    type: 'select_grid_cell',
+  const onCellClick = (position: CreaturePosition) => () => selectGridCell(
     side,
     position,
-  });
+    state,
+    dispatch
+  );
 
   const flip = side === 'opponent';
   const styles = {
@@ -52,7 +55,15 @@ export default function CreaturesGrid({
     }
   };
   const positions = game[side].creatures.reduce<Record<CreaturePosition, (JSX.Element | null)>>((p, creature) => {
-    p[creature.position] = <CreatureGridCell key={creature.position} onClick={onCellClick(creature.position)} creature={creature} />;
+    const selected = !!(selectedCreature?.side === side && selectedCreature?.position === creature.position);
+    p[creature.position] = (
+      <CreatureGridCell
+        key={creature.position}
+        onClick={onCellClick(creature.position)}
+        creature={creature}
+        selected={selected}
+      />
+    );
     return p;
   }, {
     [CreaturePosition.BACK_ONE]: null,

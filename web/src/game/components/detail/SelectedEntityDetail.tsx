@@ -30,7 +30,7 @@ export default function SelectedEntityDetail(): JSX.Element | null {
     const card = natials[creature.card.cardName] ?? spells[creature.card.cardName] ?? masters[creature.card.cardName];
     if (!card) return null;
     return (
-      <CreatureDetail creature={creature} card={card} />
+      <CreatureDetail creature={creature} card={card} showActions={side === 'self'} />
     );
   } else if (selectedCard !== null) {
     const { handPosition } = selectedCard;

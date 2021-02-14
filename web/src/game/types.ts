@@ -15,7 +15,7 @@ export interface GameListEntry {
 }
 
 export interface GamePerspective {
-  id: string
+  gameId: string
   self: SelfPerspective
   opponent: OpponentPerspective
 }
