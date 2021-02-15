@@ -26,10 +26,17 @@ export type SelectCreatureAction = { type: 'select_creature', side: CreatureSide
 export type BeginMoveAction = { type: 'begin_move' }
 export type BeginAttackAction = { type: 'begin_attack' }
 
+export type SelectHandCardAction = { type: 'select_hand_card', handPosition: number }
+export type BeginSummonAction = { type: 'begin_summon' }
+export type BeginCastAction = { type: 'begin_cast' }
+
 export type Action =
   | SelectCreatureAction
   | BeginMoveAction
   | BeginAttackAction
+  | SelectHandCardAction
+  | BeginSummonAction
+  | BeginCastAction
   | CommandSentAction
   | CommandResponseAction
 
@@ -42,7 +49,8 @@ const reducer = (state: GameState, action: Action) => {
     if (it) {
       return {
         ...state,
-        selectedCreature: { side, position }
+        selectedCard: null,
+        selectedCreature: { side, position },
       };
     }
     break;
@@ -73,6 +81,20 @@ const reducer = (state: GameState, action: Action) => {
     return {
       ...state,
       mode: GameMode.ATTACKING,
+    };
+  }
+  case 'select_hand_card': {
+    const { handPosition } = action;
+    return {
+      ...state,
+      selectedCreature: null,
+      selectedCard: { handPosition }
+    };
+  }
+  case 'begin_summon': {
+    return {
+      ...state,
+      mode: GameMode.SUMMONING,
     };
   }
   default:

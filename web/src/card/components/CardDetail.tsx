@@ -5,14 +5,18 @@ import CardHeader from './CardHeader';
 import CardMid from './CardMid';
 
 interface Props {
-  card: Card;
+  card: Card
+  highlighted?: boolean
 }
 
-export default function CardDetail({ card }: Props): JSX.Element {
+export default function CardDetail({
+  card,
+  highlighted = false,
+}: Props): JSX.Element {
   const styles = {
     display: 'flex',
     flexDirection: 'column' as const,
-    border: '1px black solid',
+    border: highlighted ? '3px black solid' : '1px black solid',
     width: 300,
     padding: '1rem',
   };

@@ -4,6 +4,7 @@ import { endTurn } from '../../action';
 import { GameContext, GameContextProvider, GameMode } from '../../context';
 import { GamePerspective } from '../../types';
 import CreaturesGrid from './CreaturesGrid';
+import PlayerHand from './PlayerHand';
 import SelectedEntityDetail from './SelectedEntityDetail';
 
 function GameDetail(): JSX.Element | null {
@@ -46,6 +47,26 @@ function GameDetail(): JSX.Element | null {
       </div>
     );
   }
+  
+  // TODO: keep showing the card detail here
+  function renderSummonPrompt() {
+    return (
+      <div>
+        <h3>Summoning</h3>
+        <p>Select where you&apos;d like to summon this Natial.</p>
+      </div>
+    );
+  }
+
+  // TODO: keep showing the card detail here
+  function renderCastPrompt() {
+    return (
+      <div>
+        <h3>Casting</h3>
+        <p>Select the target(s) for this spell.</p>
+      </div>
+    );
+  }
 
   function renderRightSide() {
     switch (mode) {
@@ -58,23 +79,36 @@ function GameDetail(): JSX.Element | null {
     case GameMode.ATTACKING: {
       return renderAttackPrompt();
     }
+    case GameMode.SUMMONING: {
+      return renderSummonPrompt();
+    }
+    case GameMode.PLAYING_SPELL: {
+      return renderCastPrompt();
+    }
     }
   }
 
   return (
-    <div style={styles.container}>
-      <div>
-        <h2>Game</h2>
-        <h3 style={{ textAlign: 'center' }}>{game.opponent.name}</h3>
-        <CreaturesGrid side={'opponent'} />
-        <hr />
-        <CreaturesGrid side={'self'} />
-        <div style={{ textAlign: 'center' }}>
-          <h3>{game.self.name}</h3>
-          <button onClick={() => endTurn(state, dispatch)}>End Turn</button>
+    <div>
+      <div style={styles.container}>
+        <div>
+          <h2>Game</h2>
+          <h3 style={{ textAlign: 'center' }}>
+            {game.opponent.name} - {game.opponent.mana}/{game.opponent.maxMana} 💎 - {game.opponent.handCount} ✋ / {game.opponent.deckCount} 🎴
+          </h3>
+          <CreaturesGrid side={'opponent'} />
+          <hr />
+          <CreaturesGrid side={'self'} />
+          <div style={{ textAlign: 'center' }}>
+            <h3 style={{ textAlign: 'center' }}>
+              {game.self.name} - {game.self.mana}/{game.self.maxMana} 💎 - {game.self.deckCount} 🎴
+            </h3>
+            <button onClick={() => endTurn(state, dispatch)}>End Turn</button>
+          </div>
         </div>
+        {renderRightSide()}
       </div>
-      {renderRightSide()}
+      <PlayerHand />
     </div>
   );
 }

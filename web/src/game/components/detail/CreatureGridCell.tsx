@@ -13,6 +13,7 @@ interface Props {
 function activationStateStyles(activationState: ActivationState): CSSProperties {
   switch (activationState) {
   case ActivationState.ACTIVATED:
+  case ActivationState.NOT_READY:
     return {
       backgroundColor: '#aaa',
     };

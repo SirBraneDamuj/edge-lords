@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import CardDetail from '../../../card/components/CardDetail';
 import { CardsContext } from '../../../card/context';
 import { GameContext } from '../../context';
 import CreatureDetail from './CreatureDetail';
+import HandCardDetail from './HandCardDetail';
 
 export default function SelectedEntityDetail(): JSX.Element | null {
   const {
@@ -18,10 +18,6 @@ export default function SelectedEntityDetail(): JSX.Element | null {
       game, selectedCreature, selectedCard
     },
   } = gameContext;
-
-  const styles = {
-    container: {}
-  };
 
   if (selectedCreature !== null) {
     const { side, position } = selectedCreature;
@@ -40,9 +36,7 @@ export default function SelectedEntityDetail(): JSX.Element | null {
     if (!card) return null;
 
     return (
-      <div style={styles.container}>
-        <CardDetail card={card} />
-      </div>
+      <HandCardDetail card={card} />
     );
   } else {
     return null;

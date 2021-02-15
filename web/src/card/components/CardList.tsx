@@ -4,9 +4,10 @@ import CardDetail from './CardDetail';
 
 interface Props {
   cards: Array<Card>
-  onCardSelect?: (c: Card) => void
+  onCardSelect?: (c: Card, i: number) => void
   selectable?: boolean
   wrap?: boolean
+  highlightPosition?: number
 }
 
 export default function CardList({
@@ -14,6 +15,7 @@ export default function CardList({
   onCardSelect,
   wrap = true,
   selectable = false,
+  highlightPosition = -1,
 }: Props): JSX.Element {
   const styles = {
     list: {
@@ -29,8 +31,8 @@ export default function CardList({
   };
   const cardDetails = cards.map((card, index) => {
     return (
-      <div onClick={() => !!onCardSelect && onCardSelect(card)} key={index} style={styles.card}>
-        <CardDetail card={card} />
+      <div onClick={() => !!onCardSelect && onCardSelect(card, index)} key={index} style={styles.card}>
+        <CardDetail card={card} highlighted={highlightPosition === index} />
       </div>
     );
   });

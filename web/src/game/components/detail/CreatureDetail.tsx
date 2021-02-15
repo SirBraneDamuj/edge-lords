@@ -38,16 +38,20 @@ export default function CreatureDetail({
 
   function availableActions(): JSX.Element[] {
     const activationState = creature.activationState;
-    if (activationState === ActivationState.MOVED) {
+    switch (activationState) {
+    case ActivationState.MOVED: {
       return [
         <button onClick={onAttackClick} key={0}>Attack</button>,
       ];
-    } else if (activationState === ActivationState.READY || ActivationState.READY_AGAIN) {
+    }
+    case ActivationState.READY_AGAIN:
+    case ActivationState.READY: {
       return [
         <button onClick={onMoveClick} key={0}>Move</button>,
         <button onClick={onAttackClick} key={1}>Attack</button>,
       ];
-    } else {
+    }
+    default:
       return [];
     }
   }
