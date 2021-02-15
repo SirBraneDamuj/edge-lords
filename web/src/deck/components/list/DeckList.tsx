@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../user/hooks';
+import { useDecks } from '../../hooks';
 import { Deck } from '../../types';
 import DeckSummary from './DeckSummary';
 
-export default function DeckList(): JSX.Element {
-  const [decks, setDecks] = useState<Array<Deck>>([]);
+export enum DeckListMode {
+  DRILL_DOWN = 'DRILL_DOWN',
+  SELECTION = 'SELECTION',
+}
+
+interface Props {
+  decks: Deck[]
+  mode: DeckListMode
+  onSelect?: (deck: Deck) => void
+}
+
+export function DeckList({
+  decks,
+  mode,
+  onSelect = () => {return;},
+}: Props): JSX.Element {
   const history = useHistory();
-  useAuth();
-  useEffect(() => {
-    const request = new Request('/api/users/me');
-    fetch(request)
-      .then(response => response.json())
-      .then(({ decks }) => setDecks(decks));
-  }, [setDecks]);
   const styles = {
     newDeck: {
       textAlign: 'center' as const,
@@ -24,22 +32,39 @@ export default function DeckList(): JSX.Element {
     },
     item: {
       margin: '1rem',
+      cursor: mode === DeckListMode.SELECTION ? 'pointer' : 'arrow',
     }
   };
+  const onDeckClick = (deck: Deck) => () => onSelect(deck);
   const deckSummaries = decks.map((deck) => (
-    <div key={deck.id} style={styles.item}>
-      <DeckSummary  deck={deck} />
+    <div key={deck.id} style={styles.item} onClick={onDeckClick(deck)}>
+      <DeckSummary mode={mode} deck={deck} />
     </div>
   ));
   return (
     <>
-      <h2>Decks</h2>
-      <div style={styles.newDeck} onClick={() => history.push('/decks/new')}>
-        New Deck
-      </div>
+      {
+        mode === DeckListMode.DRILL_DOWN && (
+          <div style={styles.newDeck} onClick={() => history.push('/decks/new')}>
+            New Deck
+          </div>
+        )
+      }
       <div className={'deck-list'}>
         {deckSummaries}
       </div>
     </>
+  );
+}
+
+export function DeckListPage(): JSX.Element {
+  const decks = useDecks();
+  useAuth();
+
+  return (
+    <div>
+      <h2>Decks</h2>
+      <DeckList mode={DeckListMode.DRILL_DOWN} decks={decks} />
+    </div>
   );
 }

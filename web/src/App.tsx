@@ -8,7 +8,7 @@ import AllCardsList from './card/components/AllCardsList';
 import { CardsContextProvider } from './card/context';
 import { EditDeckBuilder, NewDeckBuilder } from './deck/components/builder/DeckBuilder';
 import DeckDetailForId from './deck/components/detail/DeckDetail';
-import DeckList from './deck/components/list/DeckList';
+import { DeckListPage } from './deck/components/list/DeckList';
 import GameDetailForGameIdParam from './game/components/detail/GameDetail';
 import GameList from './game/components/list/GameList';
 import NewGame from './game/components/new/NewGame';
@@ -38,7 +38,7 @@ function App(): JSX.Element {
               <DeckDetailForId />
             </Route>
             <Route path={'/decks'}>
-              <DeckList />
+              <DeckListPage />
             </Route>
             <Route path={'/games/new'}>
               <NewGame />

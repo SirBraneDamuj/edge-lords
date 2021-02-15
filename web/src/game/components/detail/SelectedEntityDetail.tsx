@@ -31,7 +31,10 @@ export default function SelectedEntityDetail(): JSX.Element | null {
     const card = natials[creature.card.cardName] ?? spells[creature.card.cardName] ?? masters[creature.card.cardName];
     if (!card) return null;
     return (
-      <CreatureDetail creature={creature} card={card} showActions={side === 'self' && activePlayer} />
+      <div>
+        <h3>Details</h3>
+        <CreatureDetail creature={creature} card={card} showActions={side === 'self' && activePlayer} />
+      </div>
     );
   } else if (selectedCard !== null) {
     const { handPosition } = selectedCard;
@@ -41,7 +44,10 @@ export default function SelectedEntityDetail(): JSX.Element | null {
     if (!card) return null;
 
     return (
-      <HandCardDetail showActions={activePlayer} card={card} />
+      <div>
+        <h3>Details</h3>
+        <HandCardDetail showActions={activePlayer} card={card} />
+      </div>
     );
   } else {
     return null;

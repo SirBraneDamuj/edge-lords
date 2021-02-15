@@ -14,6 +14,10 @@ function EmptyGridSpace({
   onClick,
 }: EmptyProps) {
   const styles = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    justifyContent: 'space-around',
+    alignItems: 'center',
     width: 125,
     height: 105,
     border: '1px black solid',
@@ -21,7 +25,7 @@ function EmptyGridSpace({
   };
   return (
     <div onClick={onClick} style={styles}>
-      {magicCrystal ? 'Magic Crystal' : ''}
+      {magicCrystal ? '💎' : ''}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { endTurn } from '../../action';
+import CardDetail from '../../../card/components/CardDetail';
+import { CardsContext } from '../../../card/context';
+import { endTurn, submitMulligans } from '../../action';
 import { GameContext, GameContextProvider, GameMode } from '../../context';
 import { GamePerspective } from '../../types';
 import CreaturesGrid from './CreaturesGrid';
@@ -9,7 +11,8 @@ import SelectedEntityDetail from './SelectedEntityDetail';
 
 function GameDetail(): JSX.Element | null {
   const context = useContext(GameContext);
-  if (!context) return null;
+  const { cardsReady, natials, spells } = useContext(CardsContext);
+  if (!context || !cardsReady) return null;
 
   const { state, dispatch } = context;
   const { game, mode } = state;
@@ -19,14 +22,38 @@ function GameDetail(): JSX.Element | null {
       flexDirection: 'row' as const,
       justifyContent: 'space-between',
     },
+    mulligans: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+    }
   };
+
+  function onMulliganSubmitClick() {
+    submitMulligans(state, dispatch);
+  }
+
+  function renderMulliganDetail() {
+    return (
+      <div>
+        <h3>Mulligan</h3>
+        <p>Select cards from your hand to redraw.</p>
+        <h4>Selected:</h4>
+        <div style={styles.mulligans}>
+          {state.mulliganCards.map((i) => {
+            const gameCard = state.game.self.hand[i];
+            const card = natials[gameCard.cardName] ?? spells[gameCard.cardName];
+            if (card === null) return null;
+            return <CardDetail key={i} card={card} />;
+          })}
+        </div>
+        <button onClick={onMulliganSubmitClick}>Redraw</button>
+      </div>
+    );
+  }
 
   function renderSelectedDetail() {
     return (
-      <div>
-        <h3>Details</h3>
-        <SelectedEntityDetail />
-      </div>
+      <SelectedEntityDetail />
     );
   }
 
@@ -70,6 +97,9 @@ function GameDetail(): JSX.Element | null {
 
   function renderRightSide() {
     switch (mode) {
+    case GameMode.MULLIGAN: {
+      return renderMulliganDetail();
+    }
     case GameMode.VIEW: {
       return renderSelectedDetail();
     }

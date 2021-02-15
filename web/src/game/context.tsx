@@ -7,6 +7,7 @@ export enum GameMode {
   ATTACKING = 'ATTACKING',
   SUMMONING = 'SUMMONING',
   PLAYING_SPELL = 'PLAYING_SPELL',
+  MULLIGAN = 'MULLIGAN',
 }
 
 export interface GameState {
@@ -14,6 +15,7 @@ export interface GameState {
   mode: GameMode 
   selectedCreature: { side: CreatureSide, position: CreaturePosition } | null
   selectedCard: { handPosition: number } | null
+  mulliganCards: number[],
   loading: boolean
 }
 
@@ -30,6 +32,8 @@ export type SelectHandCardAction = { type: 'select_hand_card', handPosition: num
 export type BeginSummonAction = { type: 'begin_summon' }
 export type BeginCastAction = { type: 'begin_cast' }
 
+export type SelectMulliganCardAction = { type: 'select_mulligan_card', handPosition: number }
+
 export type Action =
   | SelectCreatureAction
   | BeginMoveAction
@@ -39,6 +43,7 @@ export type Action =
   | BeginCastAction
   | CommandSentAction
   | CommandResponseAction
+  | SelectMulliganCardAction
 
 
 const reducer = (state: GameState, action: Action) => {
@@ -91,6 +96,20 @@ const reducer = (state: GameState, action: Action) => {
       selectedCard: { handPosition }
     };
   }
+  case 'select_mulligan_card': {
+    const { handPosition } = action;
+    const { mulliganCards } = state;
+    if (!mulliganCards.includes(handPosition)) {
+      return {
+        ...state,
+        mulliganCards: [
+          ...mulliganCards,
+          handPosition,
+        ],
+      };
+    }
+    return state;
+  }
   case 'begin_summon': {
     return {
       ...state,
@@ -115,12 +134,16 @@ export function GameContextProvider({
   initialState,
   children,
 }: Props): JSX.Element {
+  const mode = (initialState.self.activePlayer && !initialState.self.mulliganed) ?
+    GameMode.MULLIGAN :
+    GameMode.VIEW;
   const [state, dispatch] = useReducer(reducer, {
     game: initialState,
-    mode: GameMode.VIEW,
+    mode,
     selectedCreature: null,
     selectedCard: null,
     loading: false,
+    mulliganCards: [],
   });
   const store = {
     state,

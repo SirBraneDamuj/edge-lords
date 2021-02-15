@@ -81,6 +81,29 @@ export function selectGridCell(
   }
 }
 
+export function selectHandCard(
+  handPosition: number,
+  state: GameState,
+  dispatch: React.Dispatch<Action>
+): void {
+  switch(state.mode) {
+  case GameMode.MULLIGAN: {
+    dispatch({
+      type: 'select_mulligan_card',
+      handPosition,
+    });
+    break;
+  }
+  default: {
+    dispatch({
+      type: 'select_hand_card',
+      handPosition,
+    });
+    break;
+  }
+  }
+}
+
 export function endTurn(
   state: GameState,
   dispatch: React.Dispatch<Action>
@@ -90,6 +113,26 @@ export function endTurn(
     method: 'PUT',
     body: JSON.stringify({
       end: true,
+    }),
+  }))
+    .then((response) => response.json())
+    .then((body) => dispatch({
+      type: 'command_response',
+      newGameState: body,
+    }));
+}
+
+export function submitMulligans(
+  state: GameState,
+  dispatch: React.Dispatch<Action>
+): void {
+  dispatch({ type: 'command_sent' });
+  fetch(new Request(`/api/games/${state.game.gameId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      mulligan: {
+        handIndices: state.mulliganCards,
+      },
     }),
   }))
     .then((response) => response.json())

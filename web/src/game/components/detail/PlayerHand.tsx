@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import CardList from '../../../card/components/CardList';
 import { CardsContext } from '../../../card/context';
 import { Card } from '../../../card/types';
+import { selectHandCard } from '../../action';
 import { GameContext } from '../../context';
 
 export default function PlayerHand(): JSX.Element | null {
@@ -15,10 +16,7 @@ export default function PlayerHand(): JSX.Element | null {
     selectedCard,
   } = state;
 
-  const onCardSelect = (c: Card, i: number) => dispatch({
-    type: 'select_hand_card',
-    handPosition: i,
-  });
+  const onCardSelect = (c: Card, i: number) => selectHandCard(i, state, dispatch);
 
   const handItems = hand.map((handCard) => {
     const cardDetails = natials[handCard.cardName] ?? spells[handCard.cardName];
