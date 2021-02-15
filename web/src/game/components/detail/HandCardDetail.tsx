@@ -5,10 +5,12 @@ import { GameContext } from '../../context';
 
 interface Props {
   card: Card
+  showActions: boolean
 }
 
 export default function HandCardDetail({
-  card
+  card,
+  showActions,
 }: Props): JSX.Element | null {
   const context = useContext(GameContext);
   if (!context) return null;
@@ -34,6 +36,7 @@ export default function HandCardDetail({
   };
 
   function cardActions(): JSX.Element[] {
+    if (!showActions) return [];
     switch (card.cardType) {
     case (CardType.NATIAL): {
       return [

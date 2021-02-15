@@ -5,10 +5,12 @@ import { CreaturePosition } from '../../types';
 import CreatureGridCell from './CreatureGridCell';
 
 interface EmptyProps {
+  magicCrystal: boolean
   onClick: () => void
 }
 
 function EmptyGridSpace({
+  magicCrystal,
   onClick,
 }: EmptyProps) {
   const styles = {
@@ -18,7 +20,9 @@ function EmptyGridSpace({
     margin: 2,
   };
   return (
-    <div onClick={onClick} style={styles}></div>
+    <div onClick={onClick} style={styles}>
+      {magicCrystal ? 'Magic Crystal' : ''}
+    </div>
   );
 }
 
@@ -42,6 +46,7 @@ export default function CreaturesGrid({
   );
 
   const flip = side === 'opponent';
+  const magicCrystals = game[side].magicCrystals;
   const styles = {
     container: {
       display: 'flex',
@@ -79,13 +84,19 @@ export default function CreaturesGrid({
     CreaturePosition.FRONT_TWO,
     CreaturePosition.FRONT_THREE,
     CreaturePosition.FRONT_FOUR,
-  ].map((p) => positions[p] ?? <EmptyGridSpace key={p} onClick={onCellClick(p)} />);
+  ].map((p) => {
+    return positions[p] ??
+      <EmptyGridSpace key={p} onClick={onCellClick(p)} magicCrystal={magicCrystals.includes(p)} />;
+  });
   const frontRow = <div style={styles.row}>{frontCells}</div>;
   const backCells = [
     CreaturePosition.BACK_ONE,
     CreaturePosition.BACK_TWO,
     CreaturePosition.BACK_THREE,
-  ].map((p) => positions[p] ?? <EmptyGridSpace key={p} onClick={onCellClick(p)} />);
+  ].map((p) => {
+    return positions[p] ??
+      <EmptyGridSpace key={p} onClick={onCellClick(p)} magicCrystal={magicCrystals.includes(p)} />;
+  });
   const backRow = <div style={styles.row}>{backCells}</div>;
   return (
     <div style={styles.container}>

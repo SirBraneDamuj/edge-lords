@@ -18,7 +18,10 @@ class GamePerspectiveService @Inject constructor() {
                 deckCount = opponent.deck.size,
                 mana = opponent.mana,
                 maxMana = opponent.maxMana,
-                creatures = opponent.creatures
+                creatures = opponent.creatures,
+                magicCrystals = opponent.magicCrystals.toList(),
+                mulliganed = opponent.mulliganed,
+                activePlayer = gameState.activePlayerLabel == opponent.playerLabel
             ),
             self = SelfPerspective(
                 name = me.name,
@@ -26,7 +29,10 @@ class GamePerspectiveService @Inject constructor() {
                 hand = me.hand,
                 mana = me.mana,
                 maxMana = me.maxMana,
-                creatures = me.creatures
+                creatures = me.creatures,
+                magicCrystals = me.magicCrystals.toList(),
+                mulliganed = me.mulliganed,
+                activePlayer = gameState.activePlayerLabel == me.playerLabel
             )
         )
     }

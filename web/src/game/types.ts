@@ -27,6 +27,9 @@ export interface SelfPerspective {
   mana: number
   maxMana: number
   creatures: Creature[]
+  magicCrystals: CreaturePosition[]
+  mulliganed: boolean
+  activePlayer: boolean
 }
 
 export interface OpponentPerspective {
@@ -36,6 +39,9 @@ export interface OpponentPerspective {
   mana: number
   maxMana: number
   creatures: Creature[]
+  magicCrystals: CreaturePosition[]
+  mulliganed: boolean
+  activePlayer: boolean
 }
 
 export enum CreaturePosition {

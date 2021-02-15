@@ -1,6 +1,7 @@
 package model.game
 
 import model.DEFENDER_STRENGTH_PENALTY
+import kotlin.math.max
 
 object DamageCalculator {
     fun calculateCombatDamage(
@@ -11,6 +12,6 @@ object DamageCalculator {
         attackerStrength += attacker.element?.strengthModifierAgainst(defender.element) ?: 0
         var defenderStrength = defender.attack - DEFENDER_STRENGTH_PENALTY
         defenderStrength += defender.element?.strengthModifierAgainst(attacker.element) ?: 0
-        return attackerStrength to defenderStrength
+        return max(attackerStrength, 0) to max(defenderStrength, 0)
     }
 }

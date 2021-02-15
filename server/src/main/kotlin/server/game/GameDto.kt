@@ -2,6 +2,7 @@ package server.game
 
 import model.game.Creature
 import model.game.GameCard
+import model.game.Position
 
 data class StartGameRequest(
     val deckIds: List<Int>
@@ -46,7 +47,10 @@ data class OpponentPerspective(
     val deckCount: Int,
     val mana: Int,
     val maxMana: Int,
-    val creatures: List<Creature>
+    val creatures: List<Creature>,
+    val magicCrystals: List<Position>,
+    val mulliganed: Boolean,
+    val activePlayer: Boolean
 )
 
 data class SelfPerspective(
@@ -55,7 +59,10 @@ data class SelfPerspective(
     val hand: List<GameCard>,
     val mana: Int,
     val maxMana: Int,
-    val creatures: List<Creature>
+    val creatures: List<Creature>,
+    val magicCrystals: List<Position>,
+    val mulliganed: Boolean,
+    val activePlayer: Boolean
 )
 
 data class GamePerspective(

@@ -94,16 +94,16 @@ function GameDetail(): JSX.Element | null {
         <div>
           <h2>Game</h2>
           <h3 style={{ textAlign: 'center' }}>
-            {game.opponent.name} - {game.opponent.mana}/{game.opponent.maxMana} 💎 - {game.opponent.handCount} ✋ / {game.opponent.deckCount} 🎴
+            {game.opponent.activePlayer ? '⭐ ' : ''}{game.opponent.name} | {game.opponent.mana}/{game.opponent.maxMana} 💎 | {game.opponent.handCount} ✋ / {game.opponent.deckCount} 🎴
           </h3>
           <CreaturesGrid side={'opponent'} />
           <hr />
           <CreaturesGrid side={'self'} />
           <div style={{ textAlign: 'center' }}>
             <h3 style={{ textAlign: 'center' }}>
-              {game.self.name} - {game.self.mana}/{game.self.maxMana} 💎 - {game.self.deckCount} 🎴
+              {game.self.activePlayer ? '⭐ ' : ''}{game.self.name} | {game.self.mana}/{game.self.maxMana} 💎 | {game.self.deckCount} 🎴
             </h3>
-            <button onClick={() => endTurn(state, dispatch)}>End Turn</button>
+            {game.self.activePlayer && <button onClick={() => endTurn(state, dispatch)}>End Turn</button>}
           </div>
         </div>
         {renderRightSide()}
