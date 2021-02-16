@@ -110,7 +110,11 @@ enum class Position(
         val allPositions = values().toSet()
 
         // TODO: make this return null and throw the error elsewhere
+        // TODO: NO NO NO NO NO NO NO
         fun stringToPosition(s: String): Position {
+            try {
+                return valueOf(s)
+            } catch (e: IllegalArgumentException) {}
             return when (s[0].toUpperCase()) {
                 'B' -> {
                     when (s[1]) {

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CardDetail from '../../../card/components/CardDetail';
 import { CardsContext } from '../../../card/context';
+import { EffectTargetingMode } from '../../../card/types';
 import { endTurn, submitMulligans } from '../../action';
 import { GameContext, GameContextProvider, GameMode } from '../../context';
 import { GamePerspective } from '../../types';
@@ -87,10 +88,36 @@ function GameDetail(): JSX.Element | null {
 
   // TODO: keep showing the card detail here
   function renderCastPrompt() {
+    const handPosition = state.selectedCard?.handPosition;
+    let targetPrompt = 'Select the target(s) for this spell.';
+    if (handPosition) {
+      const cardName = game.self.hand[handPosition].cardName;
+      const spell = spells[cardName];
+      if (spell) {
+        switch (spell.targetingMode) {
+        case EffectTargetingMode.ALL: {
+          targetPrompt = 'This will affect all creatures. Click any cell to confirm.';
+          break;
+        }
+        case EffectTargetingMode.HAND: {
+          targetPrompt = 'Select a card from your hand.';
+          break;
+        }
+        case EffectTargetingMode.ROW: {
+          targetPrompt = 'Select any cell in the row you\'d like to target';
+          break;
+        }
+        case EffectTargetingMode.SINGLE: {
+          targetPrompt = 'Select a creature to target.';
+          break;
+        }
+        }
+      }
+    }
     return (
       <div>
         <h3>Casting</h3>
-        <p>Select the target(s) for this spell.</p>
+        <p>{targetPrompt}</p>
       </div>
     );
   }

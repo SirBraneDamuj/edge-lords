@@ -1,16 +1,17 @@
 export interface Card {
-  name: string;
-  manaCost: number;
-  attack: number;
-  hp: number;
-  range: AttackRange;
-  speed: ActionSpeed;
-  element?: Element;
-  skillText: string;
-  skillManaCost?: number;
-  abilityText: string;
-  effectText: string;
-  cardType: CardType;
+  name: string
+  manaCost: number
+  attack: number
+  hp: number
+  range: AttackRange
+  speed: ActionSpeed
+  element?: Element
+  skillText: string
+  skillManaCost?: number
+  abilityText: string
+  effectText: string
+  cardType: CardType
+  targetingMode?: EffectTargetingMode
 }
 
 export enum AttackRange {
@@ -34,6 +35,14 @@ export enum CardType {
   NATIAL = 'NATIAL',
   MASTER = 'MASTER',
   SPELL = 'SPELL',
+}
+
+export enum EffectTargetingMode {
+  NONE = 'NONE',
+  HAND = 'HAND',
+  SINGLE = 'SINGLE',
+  ROW = 'ROW',
+  ALL = 'ALL',
 }
 
 /*

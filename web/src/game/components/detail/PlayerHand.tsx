@@ -16,7 +16,13 @@ export default function PlayerHand(): JSX.Element | null {
     selectedCard,
   } = state;
 
-  const onCardSelect = (c: Card, i: number) => selectHandCard(i, state, dispatch);
+  const onCardSelect = (c: Card, i: number) => selectHandCard(
+    i,
+    hand[i],
+    c,
+    state,
+    dispatch,
+  );
 
   const handItems = hand.map((handCard) => {
     const cardDetails = natials[handCard.cardName] ?? spells[handCard.cardName];

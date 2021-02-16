@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import { CreaturePosition, GamePerspective } from './types';
+import { Card } from '../card/types';
+import { CreaturePosition, GameCard, GamePerspective } from './types';
 
 export enum GameMode {
   VIEW = 'VIEW',
@@ -14,7 +15,7 @@ export interface GameState {
   game: GamePerspective
   mode: GameMode 
   selectedCreature: { side: CreatureSide, position: CreaturePosition } | null
-  selectedCard: { handPosition: number } | null
+  selectedCard: { handPosition: number, gameCard: GameCard, card: Card } | null
   mulliganCards: number[],
   loading: boolean
 }
@@ -28,7 +29,7 @@ export type SelectCreatureAction = { type: 'select_creature', side: CreatureSide
 export type BeginMoveAction = { type: 'begin_move' }
 export type BeginAttackAction = { type: 'begin_attack' }
 
-export type SelectHandCardAction = { type: 'select_hand_card', handPosition: number }
+export type SelectHandCardAction = { type: 'select_hand_card', handPosition: number, gameCard: GameCard, card: Card }
 export type BeginSummonAction = { type: 'begin_summon' }
 export type BeginCastAction = { type: 'begin_cast' }
 
@@ -89,11 +90,11 @@ const reducer = (state: GameState, action: Action) => {
     };
   }
   case 'select_hand_card': {
-    const { handPosition } = action;
+    const { handPosition, gameCard, card } = action;
     return {
       ...state,
       selectedCreature: null,
-      selectedCard: { handPosition }
+      selectedCard: { handPosition, gameCard, card }
     };
   }
   case 'select_mulligan_card': {
@@ -114,6 +115,12 @@ const reducer = (state: GameState, action: Action) => {
     return {
       ...state,
       mode: GameMode.SUMMONING,
+    };
+  }
+  case 'begin_cast': {
+    return {
+      ...state,
+      mode: GameMode.PLAYING_SPELL,
     };
   }
   default:
