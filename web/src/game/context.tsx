@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { Card } from '../card/types';
-import { CreaturePosition, GameCard, GamePerspective } from './types';
+import { Creature, CreaturePosition, GameCard, GamePerspective } from './types';
 
 export enum GameMode {
   VIEW = 'VIEW',
@@ -8,13 +8,14 @@ export enum GameMode {
   ATTACKING = 'ATTACKING',
   SUMMONING = 'SUMMONING',
   PLAYING_SPELL = 'PLAYING_SPELL',
+  USING_SKILL = 'USING_SKILL',
   MULLIGAN = 'MULLIGAN',
 }
 
 export interface GameState {
   game: GamePerspective
   mode: GameMode 
-  selectedCreature: { side: CreatureSide, position: CreaturePosition } | null
+  selectedCreature: { side: CreatureSide, position: CreaturePosition, creature: Creature, card: Card } | null
   selectedCard: { handPosition: number, gameCard: GameCard, card: Card } | null
   mulliganCards: number[],
   loading: boolean
@@ -25,9 +26,10 @@ export type CreatureSide = 'self' | 'opponent';
 export type CommandSentAction = { type: 'command_sent' }
 export type CommandResponseAction = { type: 'command_response', newGameState: GamePerspective }
 
-export type SelectCreatureAction = { type: 'select_creature', side: CreatureSide, position: CreaturePosition }
+export type SelectCreatureAction = { type: 'select_creature', side: CreatureSide, position: CreaturePosition, creature: Creature, card: Card }
 export type BeginMoveAction = { type: 'begin_move' }
 export type BeginAttackAction = { type: 'begin_attack' }
+export type BeginSkillAction = { type: 'begin_skill' }
 
 export type SelectHandCardAction = { type: 'select_hand_card', handPosition: number, gameCard: GameCard, card: Card }
 export type BeginSummonAction = { type: 'begin_summon' }
@@ -39,6 +41,7 @@ export type Action =
   | SelectCreatureAction
   | BeginMoveAction
   | BeginAttackAction
+  | BeginSkillAction
   | SelectHandCardAction
   | BeginSummonAction
   | BeginCastAction
@@ -50,15 +53,12 @@ export type Action =
 const reducer = (state: GameState, action: Action) => {
   switch (action.type) {
   case 'select_creature': {
-    const { side, position } = action;
-    const it = state.game[side].creatures.find((c) => c.position === position);
-    if (it) {
-      return {
-        ...state,
-        selectedCard: null,
-        selectedCreature: { side, position },
-      };
-    }
+    const { side, position, creature, card } = action;
+    return {
+      ...state,
+      selectedCard: null,
+      selectedCreature: { side, position, creature, card },
+    };
     break;
   }
   case 'command_sent': {
@@ -87,6 +87,12 @@ const reducer = (state: GameState, action: Action) => {
     return {
       ...state,
       mode: GameMode.ATTACKING,
+    };
+  }
+  case 'begin_skill': {
+    return {
+      ...state,
+      mode: GameMode.USING_SKILL,
     };
   }
   case 'select_hand_card': {

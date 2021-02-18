@@ -11,7 +11,7 @@ export interface Card {
   abilityText: string
   effectText: string
   cardType: CardType
-  targetingMode?: EffectTargetingMode
+  targetingMode: EffectTargetingMode
 }
 
 export enum AttackRange {
@@ -39,11 +39,35 @@ export enum CardType {
 
 export enum EffectTargetingMode {
   NONE = 'NONE',
-  HAND = 'HAND',
-  SINGLE = 'SINGLE',
-  ROW = 'ROW',
+  DECK_SELF = 'DECK_SELF',
+  GRAVEYARD_SELF = 'GRAVEYARD_SELF',
+  EMPTY_ALLY = 'EMPTY_ALLY',
+  HAND_ENEMY = 'HAND_ENEMY',
+  HAND_SELF = 'HAND_SELF',
+  SINGLE_ENEMY = 'SINGLE_ENEMY',
+  SINGLE_ALLY = 'SINGLE_ALLY',
+  ROW_ENEMY = 'ROW_ENEMY',
+  ROW_ALLY = 'ROW_ALLY',
+  ALL_ENEMY = 'ALL_ENEMY',
+  ALL_ALLY = 'ALL_ALLY',
   ALL = 'ALL',
 }
+
+export const TargetingModePrompts = {
+  [EffectTargetingMode.NONE]: 'You shouldn\'t have been able to cast this... refresh the page I guess.',
+  [EffectTargetingMode.DECK_SELF]: 'Draw a card.',
+  [EffectTargetingMode.GRAVEYARD_SELF]: 'A random card will be selected from your discard.',
+  [EffectTargetingMode.EMPTY_ALLY]: 'Select an empty ally space.',
+  [EffectTargetingMode.HAND_ENEMY]: 'A random enemy card will be chosen.',
+  [EffectTargetingMode.HAND_SELF]: 'Select a card in your hand.',
+  [EffectTargetingMode.SINGLE_ENEMY]: 'Select an enemy creature.',
+  [EffectTargetingMode.SINGLE_ALLY]: 'Select an ally creature.',
+  [EffectTargetingMode.ROW_ENEMY]: 'Select an enemy row.',
+  [EffectTargetingMode.ROW_ALLY]: 'Select an ally row.',
+  [EffectTargetingMode.ALL_ENEMY]: 'This will affect all enemy creatures.',
+  [EffectTargetingMode.ALL_ALLY]: 'This will affect all ally creatures.',
+  [EffectTargetingMode.ALL]: 'This will affect all creatures.',
+};
 
 /*
 "Tarbyss": {

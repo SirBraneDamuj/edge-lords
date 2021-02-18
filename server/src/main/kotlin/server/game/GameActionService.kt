@@ -58,6 +58,13 @@ class GameActionService @Inject constructor(
                     targetTokens = actionDto.spell.targetTokens
                 )
             }
+            actionDto.skill != null -> {
+                SkillAction(
+                    playerLabel = gameState.activePlayerLabel,
+                    creaturePosition = actionDto.skill.position,
+                    targetTokens = actionDto.skill.targetTokens
+                )
+            }
             actionDto.end != null -> {
                 EndTurnAction(
                     playerLabel = gameState.activePlayerLabel

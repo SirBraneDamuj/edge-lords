@@ -4,6 +4,7 @@ import model.MAX_MAX_MANA
 import model.card.Deck
 import model.card.NatialCard
 import model.card.SpellCard
+import java.lang.IllegalArgumentException
 import java.util.*
 
 data class Player(
@@ -33,6 +34,13 @@ data class Player(
     fun incrementManaAndRestore(amountRestored: Int = MAX_MAX_MANA) {
         maxMana = (maxMana + 1).coerceAtMost(MAX_MAX_MANA)
         mana = (mana + amountRestored).coerceAtMost(maxMana)
+    }
+
+    fun spendMana(amount: Int) {
+        if (mana < amount) {
+            throw IllegalArgumentException("I can't spend more mana than I have...")
+        }
+        mana -= amount
     }
 }
 
@@ -82,7 +90,7 @@ object Players {
             attack = deck.master.attack,
             hp = deck.master.hp,
             maxHp = deck.master.hp,
-            range = deck.master.range
+            range = deck.master.range,
         )
         return Player(
             id = id,

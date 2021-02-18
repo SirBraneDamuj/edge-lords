@@ -6,6 +6,7 @@
   skillText: ""
   skillManaCost: 0
   abilityText: "+1 counterattack damage when attacked"
+  targetingMode: "NONE"
 
 - name: "Ranger"
   mana: 2
@@ -15,6 +16,7 @@
   skillText: ""
   skillManaCost: 0
   abilityText: ""
+  targetingMode: "NONE"
 
 - name: "Sister"
   mana: 3
@@ -24,6 +26,7 @@
   skillText: "Increase target Attack by 2"
   skillManaCost: 2
   abilityText: ""
+  targetingMode: "SINGLE_ALLY"
 
 - name: "Knight"
   mana: 2
@@ -33,6 +36,8 @@
   skillText: "Increase all allies Attack by 1"
   skillManaCost: 3
   abilityText: ""
+  targetingMode: "ALL_ALLY"
+
 - name: "Thief"
   mana: 2
   attack: 1
@@ -41,6 +46,7 @@
   skillText: "Draw a card from the deck"
   skillManaCost: 2
   abilityText: "Can act twice in a row"
+  targetingMode: "DECK_SELF"
 
 - name: "Witch"
   mana: 5
@@ -50,6 +56,7 @@
   skillText: "Deal 4 damage to the target"
   skillManaCost: 3
   abilityText: ""
+  targetingMode: "SINGLE_ENEMY"
 
 - name: "Paladin"
   mana: 4
@@ -59,6 +66,7 @@
   skillText: "Revive 1 destroyed card at random"
   skillManaCost: 4
   abilityText: "Recovers 1 HP per turn"
+  targetingMode: "GRAVEYARD_SELF"
 
 - name: "Beast"
   mana: 4
@@ -68,6 +76,7 @@
   skillText: "Draw a card from the deck"
   skillManaCost: 1
   abilityText: "+2 counterattack damage when attacked"
+  targetingMode: "DECK_SELF"
 
 - name: "Swordsman"
   mana: 4
@@ -77,6 +86,7 @@
   skillText: "Deal 1 damage to a row of enemies"
   skillManaCost: 2
   abilityText: "Increase Attack by 1 each time Swordsman defeats an enemy"
+  targetingMode: "ROW_ENEMY"
 
 - name: "Sorcerer"
   mana: 4
@@ -86,6 +96,7 @@
   skillText: "Generate one Magic Crystal on the field."
   skillManaCost: 3
   abilityText: ""
+  targetingMode: "EMPTY_ALLY"
 
 - name: "Shadow"
   mana: 2
@@ -95,6 +106,7 @@
   skillText: "Destroy 1 enemy card"
   skillManaCost: 4
   abilityText: "Can counterattack against ranged attacks"
+  targetingMode: "HAND_ENEMY"
 
 - name: "Spirit"
   mana: 3
@@ -104,15 +116,17 @@
   skillText: "Target can act again"
   skillManaCost: 3
   abilityText: "When HP is 10 or less, allies gain +1 Attack and +1 Max HP"
+  targetingMode: "SINGLE_ALLY"
 
-- name: "Bird"
+- name: "Bard"
   mana: 3
   attack: 2
   hp: 22
   range: "MELEE"
-  skillText: "Target can act again"
+  skillText: "Seals an enemy's action for one turn"
   skillManaCost: 3
-  abilityText: "When HP is 10 or less, allies gain +1 Attack and +1 Max HP"
+  abilityText: ""
+  targetingMode: "SINGLE_ENEMY"
 
 - name: "Tyrant"
   mana: 4
@@ -122,3 +136,4 @@
   skillText: "Deal 3 damage to all enemies"
   skillManaCost: 3
   abilityText: "Neighbor cards gain +2 Attack and +2 Max HP"
+  targetingMode: "ALL_ENEMY"

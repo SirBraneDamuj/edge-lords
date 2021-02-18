@@ -8,6 +8,7 @@ import model.game.EffectTargetingMode
 interface Card {
     val name: String
     val cardType: CardType
+    val targetingMode: EffectTargetingMode
 }
 
 enum class CardType {
@@ -18,6 +19,7 @@ enum class CardType {
 
 data class MasterCard(
     override val name: String,
+    override val targetingMode: EffectTargetingMode,
     val mana: Int,
     val attack: Int,
     val hp: Int,
@@ -31,6 +33,7 @@ data class MasterCard(
 
 data class NatialCard(
     override val name: String,
+    override val targetingMode: EffectTargetingMode,
     val manaCost: Int,
     val attack: Int,
     val hp: Int,
@@ -45,9 +48,9 @@ data class NatialCard(
 
 data class SpellCard(
     override val name: String,
+    override val targetingMode: EffectTargetingMode,
     val manaCost: Int,
     val effectText: String,
-    val targetingMode: EffectTargetingMode
 ) : Card {
     override val cardType = CardType.SPELL
 }

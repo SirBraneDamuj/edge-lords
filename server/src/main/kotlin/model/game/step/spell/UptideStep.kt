@@ -1,10 +1,9 @@
 package model.game.step.spell
 
 import model.Element
-import model.game.EffectTarget
 import model.game.Game
-import model.game.step.core.DetectDeadCreaturesStep
 import model.game.step.GameStep
+import model.game.step.core.DetectDeadCreaturesStep
 import util.toSingletonList
 
 const val UPTIDE_NON_WATER_DAMAGE = 2
@@ -19,7 +18,8 @@ class UptideStep : GameStep {
                         creature.increaseMaxHp(UPTIDE_WATER_RESTORATION)
                         creature.attack += UPTIDE_WATER_RESTORATION
                     }
-                    null -> {}
+                    null -> {
+                    }
                     else -> {
                         creature.hp -= UPTIDE_NON_WATER_DAMAGE
                     }

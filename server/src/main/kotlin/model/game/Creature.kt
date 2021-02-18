@@ -3,13 +3,11 @@ package model.game
 import client.ActionInputException
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import model.Cards
 import model.Element
 import model.Range
 import model.Speed
-import java.lang.reflect.Parameter
 import java.util.*
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
@@ -114,7 +112,8 @@ enum class Position(
         fun stringToPosition(s: String): Position {
             try {
                 return valueOf(s)
-            } catch (e: IllegalArgumentException) {}
+            } catch (e: IllegalArgumentException) {
+            }
             return when (s[0].toUpperCase()) {
                 'B' -> {
                     when (s[1]) {
@@ -160,7 +159,7 @@ data class Master(
     override var maxHp: Int,
     override val range: Range,
     override var guardCount: Int = 0,
-    override var sealCount: Int = 0
+    override var sealCount: Int = 0,
 ) : Creature() {
     override val element: Element? = null
     override val speed = Speed.NORMAL
@@ -178,11 +177,11 @@ data class Natial(
     override val speed: Speed,
     override val element: Element,
     override var guardCount: Int = 0,
-    override var sealCount: Int = 0
+    override var sealCount: Int = 0,
 ) : Creature()
 
 object Natials {
-    fun summonFromCardToPosition(gameCard: GameNatialCard, position: Position, magicCrystal: Boolean): Natial {
+    fun summonFromCardToPosition(gameCard: GameNatialCard, position: Position): Natial {
         val card = Cards.getNatialByName(gameCard.cardName)
             ?: error("I don't know what this Natial is ${gameCard.cardName}")
         return Natial(
@@ -193,9 +192,9 @@ object Natials {
                 Speed.NORMAL -> ActivationState.NOT_READY
                 Speed.FAST -> ActivationState.READY
             },
-            attack = card.attack.let { if (magicCrystal) it + 1 else it },
-            hp = card.hp.let { if (magicCrystal) it + 1 else it },
-            maxHp = card.hp.let { if (magicCrystal) it + 1 else it },
+            attack = card.attack,
+            hp = card.hp,
+            maxHp = card.hp,
             range = card.range,
             speed = card.speed,
             element = card.element

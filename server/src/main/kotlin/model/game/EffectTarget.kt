@@ -2,32 +2,16 @@ package model.game
 
 enum class EffectTargetingMode {
     NONE,
-    HAND,
-    SINGLE,
-    ROW,
+    DECK_SELF,
+    GRAVEYARD_SELF,
+    EMPTY_ALLY,
+    HAND_ENEMY,
+    HAND_SELF,
+    SINGLE_ENEMY,
+    SINGLE_ALLY,
+    ROW_ENEMY,
+    ROW_ALLY,
+    ALL_ENEMY,
+    ALL_ALLY,
     ALL;
-}
-
-sealed class EffectTarget<T> {
-    abstract val target: T
-
-    class NoTarget : EffectTarget<Unit>() {
-        override val target: Unit = Unit
-    }
-
-    class HandTarget(
-        override val target: Int
-    ) : EffectTarget<Int>()
-
-    class SingleTarget(
-        override val target: Position
-    ) : EffectTarget<Position>()
-
-    class RowTarget(
-        override val target: Row
-    ) : EffectTarget<Row>()
-
-    class AllTarget : EffectTarget<Set<Position>>() {
-        override val target = Position.values().toSet()
-    }
 }

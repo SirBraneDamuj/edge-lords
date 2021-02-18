@@ -16,7 +16,7 @@ class SummonNatialStep(
             else -> error("this card isn't a natial... did the action get validated?")
         }
         val magicCrystal = player.magicCrystals.contains(position)
-        val natial = Natials.summonFromCardToPosition(natialCard, position, magicCrystal)
+        val natial = Natials.summonFromCardToPosition(natialCard, position)
         player.creatures += natial
         return mutableListOf<GameStep>().apply {
             this.add(PlayCardFromHandStep(playerLabel, handPosition))

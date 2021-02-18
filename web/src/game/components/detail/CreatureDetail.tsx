@@ -35,13 +35,16 @@ export default function CreatureDetail({
 
   const onMoveClick = () => dispatch({ type: 'begin_move' });
   const onAttackClick = () => dispatch({ type: 'begin_attack' });
+  const onSkillClick = () => dispatch({ type: 'begin_skill' });
 
-  function availableActions(): JSX.Element[] {
+  function availableActions(): (JSX.Element | null)[] {
     const activationState = creature.activationState;
+    const canUseSkill = !!card.targetingMode;
     switch (activationState) {
     case ActivationState.MOVED: {
       return [
         <button onClick={onAttackClick} key={0}>Attack</button>,
+        canUseSkill ? <button onClick={onSkillClick} key={1}>Skill</button> : null,
       ];
     }
     case ActivationState.READY_AGAIN:
@@ -49,6 +52,7 @@ export default function CreatureDetail({
       return [
         <button onClick={onMoveClick} key={0}>Move</button>,
         <button onClick={onAttackClick} key={1}>Attack</button>,
+        canUseSkill ? <button onClick={onSkillClick} key={2}>Skill</button> : null,
       ];
     }
     default:

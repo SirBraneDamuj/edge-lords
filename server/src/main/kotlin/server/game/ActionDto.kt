@@ -9,6 +9,7 @@ data class ActionDto(
     val summon: SummonDto? = null,
     val attack: AttackDto? = null,
     val spell: SpellDto? = null,
+    val skill: SkillDto? = null,
     val end: Boolean? = null
 )
 
@@ -33,5 +34,10 @@ data class AttackDto(
 
 data class SpellDto(
     val handIndex: Int,
+    val targetTokens: List<String>
+)
+
+data class SkillDto(
+    val position: Position,
     val targetTokens: List<String>
 )

@@ -1,20 +1,79 @@
 import { Card, EffectTargetingMode } from '../card/types';
 import { Action, CreatureSide, GameMode, GameState } from './context';
-import { CreaturePosition, GameCard } from './types';
+import { Creature, CreaturePosition, GameCard } from './types';
+
+function targetTokensForTargetMode(
+  position: CreaturePosition,
+  side: CreatureSide,
+  creature: Creature | null,
+  targetingMode: EffectTargetingMode
+) {
+  switch (targetingMode) {
+  // TODO: enforce a non-empty cell
+  case EffectTargetingMode.SINGLE_ALLY: {
+    if (side !== 'self') return null;
+    if (creature === null) return null;
+    return [position];
+  }
+  case EffectTargetingMode.SINGLE_ENEMY: {
+    if (side !== 'opponent') return null;
+    if (creature === null) return null;
+    return [position];
+  }
+  case EffectTargetingMode.EMPTY_ALLY: {
+    if (side !== 'self') return null;
+    if (creature !== null) return null;
+    return [position];
+  }
+  case EffectTargetingMode.ROW_ALLY: {
+    if (side !== 'self') return null;
+    if (position.startsWith('FRONT')) {
+      return ['FRONT'];
+    } else {
+      return ['BACK'];
+    }
+  }
+  case EffectTargetingMode.ROW_ENEMY: {
+    if (side !== 'opponent') return null;
+    if (position.startsWith('FRONT')) {
+      return ['FRONT'];
+    } else {
+      return ['BACK'];
+    }
+  }
+  case EffectTargetingMode.ALL_ALLY: {
+    if (side !== 'self') return null;
+    return [];
+  }
+  case EffectTargetingMode.ALL_ENEMY: {
+    if (side !== 'opponent') return null;
+    return [];
+  }
+  case EffectTargetingMode.ALL: {
+    return [];
+  }
+  }
+}
 
 export function selectGridCell(
   side: CreatureSide,
   position: CreaturePosition,
+  creature: Creature | null,
+  card: Card | null,
   state: GameState,
   dispatch: React.Dispatch<Action>,
 ): void {
   switch (state.mode) {
   case GameMode.VIEW: {
-    dispatch({
-      type: 'select_creature',
-      side,
-      position,
-    });
+    if (creature !== null && card !== null) {
+      dispatch({
+        type: 'select_creature',
+        side,
+        position,
+        creature,
+        card,
+      });
+    }
     break;
   }
   case GameMode.MOVING: {
@@ -70,25 +129,7 @@ export function selectGridCell(
     const { selectedCard } = state;
     if (selectedCard) {
       const { handPosition: spellHandPosition, card: spellBeingCast } = selectedCard;
-      let targetTokens: string[] | null = null;
-      switch (spellBeingCast.targetingMode) {
-      case EffectTargetingMode.SINGLE: {
-        targetTokens = [position];
-        break;
-      }
-      case EffectTargetingMode.ROW: {
-        if (position.startsWith('FRONT')) {
-          targetTokens = ['FRONT'];
-        } else {
-          targetTokens = ['BACK'];
-        }
-        break;
-      }
-      case EffectTargetingMode.ALL: {
-        targetTokens = [];
-        break;
-      }
-      }
+      const targetTokens = targetTokensForTargetMode( position, side, creature, spellBeingCast.targetingMode,);
       if (targetTokens !== null) {
         sendCommand(
           state.game.gameId,
@@ -103,6 +144,28 @@ export function selectGridCell(
       }
     }
     break;
+  }
+  case GameMode.USING_SKILL: {
+    const { selectedCreature } = state;
+    if (selectedCreature) {
+      const { position: selectedPosition, side: selectedSide, creature: creatureUsingSkill, card } = selectedCreature;
+      if (selectedSide !== 'self') {
+        console.log('oh dear I\'ve somehow started using an enemy\'s skill.');
+      }
+      const targetTokens = targetTokensForTargetMode(position, side, creature, card?.targetingMode);
+      if (targetTokens !== null) {
+        sendCommand(
+          state.game.gameId,
+          JSON.stringify({
+            skill: {
+              position: selectedPosition,
+              targetTokens,
+            }
+          }),
+          dispatch,
+        );
+      }
+    }
   }
   }
 }
@@ -126,13 +189,13 @@ export function selectHandCard(
     const { selectedCard } = state;
     if (selectedCard) {
       const { handPosition: spellHandPosition, card: spellBeingCast } = selectedCard;
-      if (spellBeingCast.targetingMode === EffectTargetingMode.HAND) {
+      if (spellBeingCast.targetingMode === EffectTargetingMode.HAND_SELF) {
         sendCommand(
           state.game.gameId,
           JSON.stringify({
             spell: {
-              handIndex: handPosition,
-              targetTokens: [spellHandPosition],
+              handIndex: spellHandPosition,
+              targetTokens: [handPosition],
             }
           }),
           dispatch,

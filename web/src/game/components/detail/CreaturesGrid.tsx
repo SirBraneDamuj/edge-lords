@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { CardsContext } from '../../../card/context';
 import { selectGridCell } from '../../action';
 import { CreatureSide, GameContext } from '../../context';
 import { CreaturePosition } from '../../types';
@@ -38,16 +39,22 @@ export default function CreaturesGrid({
   side
 }: Props): JSX.Element | null {
   const context = useContext(GameContext);
-  if (!context) return null;
+  const { cardsReady, natials, masters } = useContext(CardsContext);
+  if (!cardsReady || !context) return null;
   const { state, dispatch } = context;
   const { game, selectedCreature } = state;
 
-  const onCellClick = (position: CreaturePosition) => () => selectGridCell(
-    side,
-    position,
-    state,
-    dispatch
-  );
+  const onCellClick = (position: CreaturePosition) => {
+    const creature = game[side].creatures.find((c) => c.position === position);
+    return () => selectGridCell(
+      side,
+      position,
+      creature ?? null,
+      creature ? natials[creature.card.cardName] ?? masters[creature.card.cardName] : null,
+      state,
+      dispatch
+    );
+  };
 
   const flip = side === 'opponent';
   const magicCrystals = game[side].magicCrystals;

@@ -29,7 +29,7 @@ export default function LoginForm({
     });
     const response = await fetch(request);
     if (response.ok) {
-      history.push('/cards');
+      history.push('/games');
     } else {
       setError('Failed to login');
       setLoading(false);

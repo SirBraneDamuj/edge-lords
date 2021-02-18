@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CardDetail from '../../../card/components/CardDetail';
 import { CardsContext } from '../../../card/context';
-import { EffectTargetingMode } from '../../../card/types';
+import { TargetingModePrompts } from '../../../card/types';
 import { endTurn, submitMulligans } from '../../action';
 import { GameContext, GameContextProvider, GameMode } from '../../context';
 import { GamePerspective } from '../../types';
@@ -12,7 +12,7 @@ import SelectedEntityDetail from './SelectedEntityDetail';
 
 function GameDetail(): JSX.Element | null {
   const context = useContext(GameContext);
-  const { cardsReady, natials, spells } = useContext(CardsContext);
+  const { cardsReady, natials, masters, spells } = useContext(CardsContext);
   if (!context || !cardsReady) return null;
 
   const { state, dispatch } = context;
@@ -93,30 +93,31 @@ function GameDetail(): JSX.Element | null {
     if (handPosition) {
       const cardName = game.self.hand[handPosition].cardName;
       const spell = spells[cardName];
-      if (spell) {
-        switch (spell.targetingMode) {
-        case EffectTargetingMode.ALL: {
-          targetPrompt = 'This will affect all creatures. Click any cell to confirm.';
-          break;
-        }
-        case EffectTargetingMode.HAND: {
-          targetPrompt = 'Select a card from your hand.';
-          break;
-        }
-        case EffectTargetingMode.ROW: {
-          targetPrompt = 'Select any cell in the row you\'d like to target';
-          break;
-        }
-        case EffectTargetingMode.SINGLE: {
-          targetPrompt = 'Select a creature to target.';
-          break;
-        }
-        }
+      if (spell && spell.targetingMode) {
+        targetPrompt = TargetingModePrompts[spell.targetingMode];
       }
     }
     return (
       <div>
         <h3>Casting</h3>
+        <p>{targetPrompt}</p>
+      </div>
+    );
+  }
+
+  function renderSkillPrompt() {
+    const selectedCreaturePosition = state.selectedCreature;
+    const creature = game.self.creatures.find((c) => c.position === selectedCreaturePosition?.position);
+    let targetPrompt = 'Select the target(s) for this creature skill.';
+    if (creature) {
+      const card = masters[creature.card.cardName] ?? natials[creature.card.cardName];
+      if (card?.targetingMode) {
+        targetPrompt = TargetingModePrompts[card.targetingMode];
+      }
+    }
+    return (
+      <div>
+        <h3>Creature Skill</h3>
         <p>{targetPrompt}</p>
       </div>
     );
@@ -141,6 +142,9 @@ function GameDetail(): JSX.Element | null {
     }
     case GameMode.PLAYING_SPELL: {
       return renderCastPrompt();
+    }
+    case GameMode.USING_SKILL: {
+      return renderSkillPrompt();
     }
     }
   }
