@@ -5,6 +5,7 @@ import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
+import model.game.step.effects.CureSealStep
 import model.game.step.effects.HealCreatureStep
 import util.toSingletonList
 
@@ -19,14 +20,19 @@ class MedicStep(
         val player = game.player(playerLabel)
         val creature = player.creatureAtPosition(position)
             ?: error("no creature found... was this action validated?")
-        creature.sealCount = 0
         if (creature.element == Element.HEAVEN) {
             creature.attack += MEDIC_HEAVEN_ATTACK_INCREASE
         }
-        return HealCreatureStep(
-            playerLabel,
-            position,
-            MEDIC_HP_RESTORATION
-        ).toSingletonList()
+        return listOf(
+            HealCreatureStep(
+                playerLabel = playerLabel,
+                position = position,
+                amount = MEDIC_HP_RESTORATION
+            ),
+            CureSealStep(
+                playerLabel = playerLabel,
+                position = position
+            )
+        )
     }
 }

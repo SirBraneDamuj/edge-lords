@@ -8,7 +8,20 @@ import model.game.PlayerLabel
 import model.game.Position
 import model.game.Row
 import model.game.step.core.CreatureSkillStep
+import model.game.step.skill.BaMadoStep
 import model.game.step.skill.DarmaSkillStep
+import model.game.step.skill.DullmdallaStep
+import model.game.step.skill.FifeNallStep
+import model.game.step.skill.GiaBroStep
+import model.game.step.skill.GueneFossStep
+import model.game.step.skill.KyriaBellStep
+import model.game.step.skill.MarmeStep
+import model.game.step.skill.NeptjunoStep
+import model.game.step.skill.PelittStep
+import model.game.step.skill.RegnaCroxeStep
+import model.game.step.skill.TentarchStep
+import model.game.step.skill.ZamilpenStep
+import model.game.step.skill.ZenosbleadStep
 
 private const val TARGET_ERROR = "Something was wrong with the target"
 private fun targetError() = invalidAction(TARGET_ERROR)
@@ -30,6 +43,43 @@ class SkillAction(
             "D-Arma" -> DarmaSkillStep(
                 playerLabel,
                 singleAllyTarget(game) ?: return targetError()
+            )
+            "Gia-Bro" -> GiaBroStep(
+                rowTarget() ?: return targetError()
+            )
+            "Ba-Mado" -> BaMadoStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Marme" -> MarmeStep(
+                singleAllyTarget(game) ?: return targetError()
+            )
+            "Zamilpen" -> ZamilpenStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Neptjuno" -> NeptjunoStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Tentarch" -> TentarchStep()
+            "Dullmdalla" -> DullmdallaStep(
+                rowTarget() ?: return targetError()
+            )
+            "Zenosblead" -> ZenosbleadStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Pelitt" -> PelittStep(
+                singleAllyTarget(game) ?: return targetError()
+            )
+            "Guene-Foss" -> GueneFossStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Kyria-Bell" -> KyriaBellStep(
+                rowTarget() ?: return targetError()
+            )
+            "Fifenall" -> FifeNallStep(
+                singleAllyTarget(game) ?: return targetError()
+            )
+            "Regna-Croxe" -> RegnaCroxeStep(
+                rowTarget() ?: return targetError()
             )
             else -> return invalidAction("I don't know how to use this creature's skill")
         }
