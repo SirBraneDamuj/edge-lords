@@ -13,7 +13,7 @@ class MoveAction(
     override fun validate(game: Game): ActionResult {
         val player = game.player(playerLabel)
         val creature = player.creatureAtPosition(from) ?: return invalidAction("There is no creature at $from")
-        if (!creature.activationState.canMove) {
+        if (!creature.activationState.canMove || creature.sealed) {
             return invalidAction("The creature can't move right now.")
         }
         return ValidAction(

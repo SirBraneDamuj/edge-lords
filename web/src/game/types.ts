@@ -74,6 +74,7 @@ export interface Creature {
   range: AttackRange
   speed: ActionSpeed
   element: Element | null
+  sealCount: number
 }
 
 export interface GameCard {

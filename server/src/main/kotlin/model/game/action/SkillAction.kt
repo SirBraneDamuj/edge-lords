@@ -23,6 +23,9 @@ class SkillAction(
         val player = game.player(playerLabel)
         val creature = player.creatureAtPosition(creaturePosition)
             ?: return invalidAction("ain't no creature at that position")
+        if (!creature.activationState.canAct || creature.sealed) {
+            return invalidAction("This creature can't act right now.")
+        }
         val gameCard = creature.card
         val card: Card = Cards.getMasterByName(gameCard.cardName)
             ?: Cards.getNatialByName(gameCard.cardName)

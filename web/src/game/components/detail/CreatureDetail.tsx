@@ -21,6 +21,8 @@ export default function CreatureDetail({
   const realCard = {
     ...card,
     manaCost: creature.card.manaCost,
+    attack: creature.attack,
+    hp: creature.hp,
   };
   const styles = {
     container: {
@@ -38,6 +40,7 @@ export default function CreatureDetail({
   const onSkillClick = () => dispatch({ type: 'begin_skill' });
 
   function availableActions(): (JSX.Element | null)[] {
+    if (creature.sealCount > 0) return [];
     const activationState = creature.activationState;
     const canUseSkill = !!card.targetingMode;
     switch (activationState) {

@@ -19,13 +19,3 @@ typealias InvalidAction = Either.Right<ActionErrors>
 data class ActionErrors(
     val error: String
 )
-
-enum class ActionType {
-    MULLIGAN,
-    END_TURN,
-    SUMMON_NATIAL,
-    MOVE_CREATURE,
-    ACTIVATE_CREATURE,
-    ATTACK_CREATURE,
-    PLAY_SPELL,
-}

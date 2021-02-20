@@ -3,6 +3,7 @@ import CardCombatStat from '../../../card/components/detail/CardCombatStat';
 import CardIcons from '../../../card/components/detail/CardIcons';
 import CardManaCost from '../../../card/components/detail/CardManaCost';
 import { ActivationState, Creature } from '../../types';
+import CreatureSealCount from './CreatureSealCount';
 
 interface Props {
   creature: Creature
@@ -10,7 +11,12 @@ interface Props {
   onClick: (c: Creature) => void
 }
 
-function activationStateStyles(activationState: ActivationState): CSSProperties {
+function activationStateStyles(activationState: ActivationState, sealCount: number): CSSProperties {
+  if (sealCount > 0) {
+    return {
+      backgroundColor: '#aaa',
+    };
+  }
   switch (activationState) {
   case ActivationState.ACTIVATED:
   case ActivationState.NOT_READY:
@@ -38,6 +44,7 @@ export default function CreatureGridCell({
     range,
     speed,
     element,
+    sealCount,
   } = creature;
   const styles = {
     container: {
@@ -49,7 +56,7 @@ export default function CreatureGridCell({
       border: selected ? '3px solid black' : '1px solid black',
       margin: 2,
       padding: 5,
-      ...activationStateStyles(activationState)
+      ...activationStateStyles(activationState, sealCount)
     },
     header: {
       display: 'flex',
@@ -74,6 +81,7 @@ export default function CreatureGridCell({
       <div style={styles.mid}>{cardName}</div>
       <div style={styles.footer}>
         <CardCombatStat stat={attack} label={'ATK'} />
+        <CreatureSealCount count={sealCount} /> 
         <CardCombatStat stat={hp} label={'HP'} />
       </div>
     </div>
