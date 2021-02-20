@@ -1,5 +1,6 @@
 package model.game.step.core
 
+import model.RANGED_COUNTERATTACKERS
 import model.game.DamageCalculator
 import model.game.Game
 import model.game.PlayerLabel
@@ -22,7 +23,7 @@ class CombatStep(
         val (attackerStrength, defenderStrength) = DamageCalculator.calculateCombatDamage(attacker, defender)
 
         // TODO: this might be more complicated than this
-        if (!attacker.position.backRow) {
+        if (!attacker.position.backRow || defender.card.cardName in RANGED_COUNTERATTACKERS) {
             attacker.receiveDamage(defenderStrength)
         }
         defender.receiveDamage(attackerStrength)
