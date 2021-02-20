@@ -1,4 +1,4 @@
-package model.game.step.skill
+package model.game.step.skill.masters
 
 import model.game.Game
 import model.game.Position
@@ -6,16 +6,16 @@ import model.game.step.GameStep
 import model.game.step.effects.SealCreatureStep
 import util.toSingletonList
 
-const val ZAMILPEN_SEAL_COUNT = 1
+const val BARD_SEAL_AMOUNT = 1
 
-class ZamilpenStep(
-    private val position: Position
+class BardSkillStep(
+    private val targetPosition: Position
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         return SealCreatureStep(
             game.inactivePlayer.playerLabel,
-            position,
-            ZAMILPEN_SEAL_COUNT
+            targetPosition,
+            BARD_SEAL_AMOUNT
         ).toSingletonList()
     }
 }

@@ -1,4 +1,4 @@
-package model.game.step.skill
+package model.game.step.skill.masters
 
 import model.game.Game
 import model.game.Row
@@ -6,12 +6,16 @@ import model.game.step.GameStep
 import model.game.step.effects.DamageRowOfEnemiesStep
 import util.toSingletonList
 
-const val GIABRO_ROW_DAMAGE = 2
+const val SWORDSMAN_DAMAGE = 1
 
-class GiaBroStep(
+class SwordsmanSkillStep(
     private val row: Row
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
-        return DamageRowOfEnemiesStep(game.inactivePlayer.playerLabel, row, GIABRO_ROW_DAMAGE).toSingletonList()
+        return DamageRowOfEnemiesStep(
+            game.inactivePlayer.playerLabel,
+            row,
+            SWORDSMAN_DAMAGE
+        ).toSingletonList()
     }
 }

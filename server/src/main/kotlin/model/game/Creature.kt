@@ -145,6 +145,7 @@ enum class ActivationState(
     NOT_READY(false, false),
     READY(true, true),
     MOVED(false, true),
+    MOVED_AGAIN(false, true),
     READY_AGAIN(true, true),
     ACTIVATED(false, false);
 }

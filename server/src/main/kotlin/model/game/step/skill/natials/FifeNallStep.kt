@@ -1,23 +1,21 @@
-package model.game.step.skill
+package model.game.step.skill.natials
 
 import model.game.Game
-import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
 import model.game.step.effects.HealCreatureStep
 import util.toSingletonList
 
-const val DARMA_RESTORATION = 2
+const val FIFENALL_HEAL = 6
 
-class DarmaSkillStep(
-    private val playerLabel: PlayerLabel,
+class FifeNallStep(
     private val position: Position
-) : GameStep {
+) : GameStep{
     override fun perform(game: Game): List<GameStep> {
         return HealCreatureStep(
-            playerLabel,
+            game.activePlayerLabel,
             position,
-            DARMA_RESTORATION
+            FIFENALL_HEAL
         ).toSingletonList()
     }
 }

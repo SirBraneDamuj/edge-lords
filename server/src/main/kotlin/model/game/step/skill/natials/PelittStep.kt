@@ -1,4 +1,4 @@
-package model.game.step.skill
+package model.game.step.skill.natials
 
 import model.game.Game
 import model.game.Position

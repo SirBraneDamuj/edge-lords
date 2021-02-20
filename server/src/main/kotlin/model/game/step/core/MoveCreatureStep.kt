@@ -18,7 +18,11 @@ class MoveCreatureStep(
         val creature = player.creatureAtPosition(from) ?: error("There is no creature at $from")
         val destinationCreature = player.creatureAtPosition(to)
         creature.position = to
-        creature.activationState = ActivationState.MOVED
+        if (creature.activationState == ActivationState.READY) {
+            creature.activationState = ActivationState.MOVED
+        } else if (creature.activationState == ActivationState.READY_AGAIN) {
+            creature.activationState = ActivationState.MOVED_AGAIN
+        }
         destinationCreature?.position = from
         return if (player.magicCrystals.contains(to)) {
             MagicCrystalStep(

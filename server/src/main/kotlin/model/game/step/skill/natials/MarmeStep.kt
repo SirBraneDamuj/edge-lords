@@ -1,7 +1,6 @@
-package model.game.step.skill
+package model.game.step.skill.natials
 
 import model.game.Game
-import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
 import model.game.step.effects.HealCreatureStep

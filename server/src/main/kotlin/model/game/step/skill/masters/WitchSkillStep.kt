@@ -1,4 +1,4 @@
-package model.game.step.skill
+package model.game.step.skill.masters
 
 import model.game.Game
 import model.game.Position
@@ -6,16 +6,16 @@ import model.game.step.GameStep
 import model.game.step.effects.DamageSingleCreatureStep
 import util.toSingletonList
 
-const val ZENOSBLEAD_DAMAGE = 5
+const val WITCH_DAMAGE_AMOUNT = 4
 
-class ZenosbleadStep(
-    private val position: Position
+class WitchSkillStep(
+    private val targetPosition: Position
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         return DamageSingleCreatureStep(
-            targetPlayerLabel = game.inactivePlayer.playerLabel,
-            position = position,
-            damage = ZENOSBLEAD_DAMAGE
+            game.inactivePlayer.playerLabel,
+            targetPosition,
+            WITCH_DAMAGE_AMOUNT
         ).toSingletonList()
     }
 }

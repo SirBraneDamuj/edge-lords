@@ -8,20 +8,8 @@ import model.game.PlayerLabel
 import model.game.Position
 import model.game.Row
 import model.game.step.core.CreatureSkillStep
-import model.game.step.skill.BaMadoStep
-import model.game.step.skill.DarmaSkillStep
-import model.game.step.skill.DullmdallaStep
-import model.game.step.skill.FifeNallStep
-import model.game.step.skill.GiaBroStep
-import model.game.step.skill.GueneFossStep
-import model.game.step.skill.KyriaBellStep
-import model.game.step.skill.MarmeStep
-import model.game.step.skill.NeptjunoStep
-import model.game.step.skill.PelittStep
-import model.game.step.skill.RegnaCroxeStep
-import model.game.step.skill.TentarchStep
-import model.game.step.skill.ZamilpenStep
-import model.game.step.skill.ZenosbleadStep
+import model.game.step.skill.masters.*
+import model.game.step.skill.natials.*
 
 private const val TARGET_ERROR = "Something was wrong with the target"
 private fun targetError() = invalidAction(TARGET_ERROR)
@@ -40,6 +28,7 @@ class SkillAction(
             ?: Cards.getNatialByName(gameCard.cardName)
             ?: error("Somehow you have a creature that isn't real!")
         val skillStep = when (card.name) {
+            /* NATIALS */
             "D-Arma" -> DarmaSkillStep(
                 playerLabel,
                 singleAllyTarget(game) ?: return targetError()
@@ -81,6 +70,33 @@ class SkillAction(
             "Regna-Croxe" -> RegnaCroxeStep(
                 rowTarget() ?: return targetError()
             )
+            /* MASTERS */
+            "Bard" -> BardSkillStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
+            "Beast" -> BeastSkillStep()
+            "Knight" -> KnightSkillStep()
+            "Paladin" -> PaladinSkillStep(
+                singleEmptyTarget(game) ?: return targetError()
+            )
+            "Shadow" -> ShadowSkillStep()
+            "Sister" -> SisterSkillStep(
+                singleAllyTarget(game) ?: return targetError()
+            )
+            "Sorcerer" -> SorcererSkillStep(
+                singleEmptyTarget(game) ?: return targetError()
+            )
+            "Spirit" -> SpiritSkillStep(
+                singleAllyTarget(game) ?: return targetError()
+            )
+            "Swordsman" -> SwordsmanSkillStep(
+                rowTarget() ?: return targetError()
+            )
+            "Thief" -> ThiefSkillStep()
+            "Tyrant" -> TyrantSkillStep()
+            "Witch" -> WitchSkillStep(
+                singleEnemyTarget(game) ?: return targetError()
+            )
             else -> return invalidAction("I don't know how to use this creature's skill")
         }
         return ValidAction(
@@ -104,6 +120,12 @@ class SkillAction(
             .singleOrNull()
             ?.let(Position.Companion::stringToPosition)
             ?.takeIf { game.activePlayer.creatureAtPosition(it) != null }
+
+    private fun singleEmptyTarget(game: Game) =
+        targetTokens
+            .singleOrNull()
+            ?.let(Position.Companion::stringToPosition)
+            ?.takeIf { game.activePlayer.creatureAtPosition(it) == null }
 
     private fun rowTarget() =
         targetTokens
