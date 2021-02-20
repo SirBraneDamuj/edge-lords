@@ -1,10 +1,12 @@
 package model.game.step.core
 
+import model.CARD_DRAWERS
 import model.game.Game
 import model.game.Master
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
+import util.toSingletonList
 
 class DestroyCreatureStep(
     val playerLabel: PlayerLabel,
@@ -19,7 +21,10 @@ class DestroyCreatureStep(
             player.creatures = player.creatures - creature
             player.discard = player.discard + creature.card
             // TODO: abilities which trigger on natial death should happen here
-            emptyList()
+            if (creature.card.cardName in CARD_DRAWERS) {
+                return DrawCardStep(playerLabel).toSingletonList()
+            }
+            return emptyList()
         }
     }
 }
