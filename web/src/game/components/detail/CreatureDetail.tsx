@@ -42,7 +42,7 @@ export default function CreatureDetail({
   function availableActions(): (JSX.Element | null)[] {
     if (creature.sealCount > 0) return [];
     const activationState = creature.activationState;
-    const canUseSkill = !!card.targetingMode;
+    const canUseSkill = !!card.targetingMode && creature.canUseSkill;
     switch (activationState) {
     case ActivationState.MOVED: {
       return [

@@ -91,6 +91,7 @@ object Players {
             hp = deck.master.hp,
             maxHp = deck.master.hp,
             range = deck.master.range,
+            canUseSkill = if (deck.master.targetingMode == EffectTargetingMode.NONE) null else true
         )
         return Player(
             id = id,

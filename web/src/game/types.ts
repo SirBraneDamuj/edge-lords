@@ -75,6 +75,7 @@ export interface Creature {
   speed: ActionSpeed
   element: Element | null
   sealCount: number
+  canUseSkill: boolean | null
 }
 
 export interface GameCard {

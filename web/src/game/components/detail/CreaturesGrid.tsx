@@ -23,6 +23,7 @@ function EmptyGridSpace({
     height: 105,
     border: '1px black solid',
     margin: 2,
+    cursor: 'pointer',
   };
   return (
     <div onClick={onClick} style={styles}>

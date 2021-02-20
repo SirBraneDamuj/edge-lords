@@ -4,10 +4,7 @@ import client.ActionInputException
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import model.Cards
-import model.Element
-import model.Range
-import model.Speed
+import model.*
 import java.util.*
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
@@ -24,6 +21,8 @@ sealed class Creature {
     abstract val element: Element?
     abstract var sealCount: Int
     abstract var guardCount: Int
+    abstract var guardedByNeighbor: Boolean
+    abstract var canUseSkill: Boolean?
 
     val sealed: Boolean
         @JsonIgnore get() = sealCount > 0
@@ -148,6 +147,22 @@ enum class ActivationState(
     MOVED_AGAIN(false, true),
     READY_AGAIN(true, true),
     ACTIVATED(false, false);
+
+    fun stateAfterActing(creatureName: String) = when (this) {
+        READY, MOVED -> {
+            if (creatureName in DOUBLE_ACTORS) {
+                READY_AGAIN
+            } else {
+                ACTIVATED
+            }
+        }
+        else -> ACTIVATED
+    }
+
+    fun stateAfterMoving() = when (this) {
+        READY_AGAIN -> MOVED_AGAIN
+        else -> MOVED
+    }
 }
 
 data class Master(
@@ -159,8 +174,10 @@ data class Master(
     override var hp: Int,
     override var maxHp: Int,
     override val range: Range,
+    override var canUseSkill: Boolean?,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0,
+    override var guardedByNeighbor: Boolean = false,
 ) : Creature() {
     override val element: Element? = null
     override val speed = Speed.NORMAL
@@ -177,8 +194,10 @@ data class Natial(
     override val range: Range,
     override val speed: Speed,
     override val element: Element,
+    override var canUseSkill: Boolean?,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0,
+    override var guardedByNeighbor: Boolean = false
 ) : Creature()
 
 object Natials {
@@ -198,7 +217,8 @@ object Natials {
             maxHp = card.hp,
             range = card.range,
             speed = card.speed,
-            element = card.element
+            element = card.element,
+            canUseSkill = if (card.targetingMode == EffectTargetingMode.NONE) null else true
         )
     }
 }
@@ -215,7 +235,8 @@ object Masters {
             attack = card.attack,
             hp = card.hp,
             maxHp = card.hp,
-            range = card.range
+            range = card.range,
+            canUseSkill = if (card.targetingMode == EffectTargetingMode.NONE) null else true
         )
     }
 }

@@ -45,7 +45,14 @@ export default function CreatureGridCell({
     speed,
     element,
     sealCount,
+    canUseSkill,
   } = creature;
+  let creatureSkillIndicator = '';
+  if (canUseSkill) {
+    creatureSkillIndicator = ' ✅';
+  } else if (canUseSkill === false) {
+    creatureSkillIndicator = ' ❎';
+  }
   const styles = {
     container: {
       display: 'flex',
@@ -56,6 +63,7 @@ export default function CreatureGridCell({
       border: selected ? '3px solid black' : '1px solid black',
       margin: 2,
       padding: 5,
+      cursor: 'pointer',
       ...activationStateStyles(activationState, sealCount)
     },
     header: {
@@ -78,7 +86,7 @@ export default function CreatureGridCell({
         <CardIcons range={range} speed={speed} element={element??undefined} />
         <CardManaCost manaCost={manaCost} />
       </div>
-      <div style={styles.mid}>{cardName}</div>
+      <div style={styles.mid}>{cardName}{creatureSkillIndicator}</div>
       <div style={styles.footer}>
         <CardCombatStat stat={attack} label={'ATK'} />
         <CreatureSealCount count={sealCount} /> 

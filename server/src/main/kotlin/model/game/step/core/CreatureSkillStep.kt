@@ -1,9 +1,6 @@
 package model.game.step.core
 
-import model.game.ActivationState
-import model.game.Game
-import model.game.PlayerLabel
-import model.game.Position
+import model.game.*
 import model.game.step.GameStep
 import util.toSingletonList
 
@@ -18,7 +15,10 @@ class CreatureSkillStep(
         val creature = player.creatureAtPosition(position)
             ?: error("There was no creature at this position... was this action validated?")
         player.mana -= skillCost
-        creature.activationState = ActivationState.ACTIVATED
+        creature.activationState = creature.activationState.stateAfterActing(creature.card.cardName)
+        if (creature is Natial) {
+            creature.canUseSkill = false
+        }
         return skillStep.toSingletonList()
     }
 }

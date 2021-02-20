@@ -1,6 +1,5 @@
 package model.game.step.core
 
-import model.game.ActivationState
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
@@ -18,11 +17,7 @@ class MoveCreatureStep(
         val creature = player.creatureAtPosition(from) ?: error("There is no creature at $from")
         val destinationCreature = player.creatureAtPosition(to)
         creature.position = to
-        if (creature.activationState == ActivationState.READY) {
-            creature.activationState = ActivationState.MOVED
-        } else if (creature.activationState == ActivationState.READY_AGAIN) {
-            creature.activationState = ActivationState.MOVED_AGAIN
-        }
+        creature.activationState = creature.activationState.stateAfterMoving()
         destinationCreature?.position = from
         return if (player.magicCrystals.contains(to)) {
             MagicCrystalStep(

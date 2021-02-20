@@ -1,6 +1,9 @@
 package model.game.step.core
 
-import model.game.*
+import model.game.DamageCalculator
+import model.game.Game
+import model.game.PlayerLabel
+import model.game.Position
 import model.game.step.GameStep
 
 class CombatStep(
@@ -24,7 +27,7 @@ class CombatStep(
         }
         defender.receiveDamage(attackerStrength)
 
-        attacker.activationState = ActivationState.ACTIVATED
+        attacker.activationState = attacker.activationState.stateAfterActing(attacker.card.cardName)
 
         // TODO: abilities which trigger when one Natial kills another should trigger here
         return mutableListOf<GameStep>().apply {
