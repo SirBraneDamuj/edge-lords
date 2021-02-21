@@ -2,6 +2,7 @@ package model.game.step.core
 
 import model.game.Game
 import model.game.step.GameStep
+import util.toSingletonList
 import kotlin.math.max
 
 class EndTurnStep : GameStep {
@@ -11,9 +12,7 @@ class EndTurnStep : GameStep {
         }
         game.turn++
         return if (game.players.values.all { it.mulliganed }) {
-            listOf(
-                StartTurnStep(playerLabel = game.activePlayerLabel)
-            )
+            StartTurnStep(playerLabel = game.activePlayerLabel).toSingletonList()
         } else {
             emptyList()
         }

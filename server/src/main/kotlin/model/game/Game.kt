@@ -21,6 +21,16 @@ data class Game(
             odd = { PlayerLabel.FIRST },
             even = { PlayerLabel.SECOND }
         )
+    val startOfRound: Int?
+        @JsonIgnore get() {
+            if (turn < 3) return null
+            val realTurn = turn - 3
+            return if (realTurn % 2 == 0) {
+                (realTurn / 2) + 1
+            } else {
+                null
+            }
+        }
 
     fun player(playerLabel: PlayerLabel) =
         players.getValue(playerLabel)

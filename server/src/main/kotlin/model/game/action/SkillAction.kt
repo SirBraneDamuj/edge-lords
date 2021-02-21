@@ -93,7 +93,7 @@ class SkillAction(
                 singleAllyTarget(game) ?: return targetError()
             )
             "Sorcerer" -> SorcererSkillStep(
-                singleEmptyTarget(game) ?: return targetError()
+                singleEmptyNoMagicCrystalTarget(game) ?: return targetError()
             )
             "Spirit" -> SpiritSkillStep(
                 singleAllyTarget(game) ?: return targetError()
@@ -137,6 +137,10 @@ class SkillAction(
             .singleOrNull()
             ?.let(Position.Companion::stringToPosition)
             ?.takeIf { game.activePlayer.creatureAtPosition(it) == null }
+
+    private fun singleEmptyNoMagicCrystalTarget(game: Game) =
+        singleEmptyTarget(game)
+            ?.takeIf { game.activePlayer.magicCrystals.contains(it) }
 
     private fun rowTarget() =
         targetTokens

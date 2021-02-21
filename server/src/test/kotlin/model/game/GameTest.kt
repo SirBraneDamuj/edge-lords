@@ -1,6 +1,7 @@
 package model.game
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
 internal class GameTest {
@@ -45,4 +46,37 @@ internal class GameTest {
         game.turn = 17
         assertEquals(game.players.getValue(PlayerLabel.SECOND), game.inactivePlayer)
     }
+
+    @Test
+    fun `startOfRound returns null during mulligans`() {
+        val game = Games.createFakeGame()
+        game.turn = 1
+        assertNull(game.startOfRound)
+        game.turn = 2
+        assertNull(game.startOfRound)
+    }
+
+    @Test
+    fun `startOfRound returns 1 on the first player first turn`() {
+        val game = Games.createFakeGame()
+        game.turn = 3
+        assertEquals(1, game.startOfRound)
+    }
+
+    @Test
+    fun `startOfRound returns 3 on the first player third turn`() {
+        val game = Games.createFakeGame()
+        game.turn = 7
+        assertEquals(3, game.startOfRound)
+    }
+
+    @Test
+    fun `startOfRound always returns null on the second player's turn`() {
+        val game = Games.createFakeGame()
+        listOf(4, 6, 8, 10, 12, 14, 16).forEach {
+            game.turn = it
+            assertNull(game.startOfRound)
+        }
+    }
+
 }
