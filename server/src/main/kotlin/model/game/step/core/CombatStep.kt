@@ -6,6 +6,7 @@ import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
+import model.game.step.effects.InterCreatureDamageStep
 
 class CombatStep(
     private val attackingPlayerLabel: PlayerLabel,
@@ -21,19 +22,24 @@ class CombatStep(
             ?: error("no creature found at defender position... was the action validated?")
 
         val (attackerStrength, defenderStrength) = DamageCalculator.calculateCombatDamage(attacker, defender)
-
-        // TODO: this might be more complicated than this
-        if (!attacker.position.backRow || defender.card.cardName in RANGED_COUNTERATTACKERS) {
-            attacker.receiveDamage(defenderStrength)
-        }
-        defender.receiveDamage(attackerStrength)
-
         attacker.activationState = attacker.activationState.stateAfterActing(attacker.card.cardName)
 
         // TODO: abilities which trigger when one Natial kills another should trigger here
         return mutableListOf<GameStep>().apply {
-            if (attacker.hp <= 0) add(DestroyCreatureStep(attackingPlayer.playerLabel, attackerPosition))
-            if (defender.hp <= 0) add(DestroyCreatureStep(defendingPlayer.playerLabel, defenderPosition))
+            if (!attacker.position.backRow || defender.card.cardName in RANGED_COUNTERATTACKERS) {
+                this.add(InterCreatureDamageStep(
+                    dealerPlayerLabel = defendingPlayer.playerLabel,
+                    dealerPosition = defenderPosition,
+                    receiverPosition = attackerPosition,
+                    damageAmount = defenderStrength
+                ))
+            }
+            this.add(InterCreatureDamageStep(
+                dealerPlayerLabel = attackingPlayerLabel,
+                dealerPosition = attackerPosition,
+                receiverPosition = defenderPosition,
+                damageAmount = attackerStrength
+            ))
         }
     }
 }

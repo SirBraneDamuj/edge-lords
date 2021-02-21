@@ -33,11 +33,11 @@ class SkillAction(
         val skillStep = when (card.name) {
             /* NATIALS */
             "D-Arma" -> DarmaSkillStep(
-                playerLabel,
                 singleAllyTarget(game) ?: return targetError()
             )
             "Gia-Bro" -> GiaBroStep(
-                rowTarget() ?: return targetError()
+                myPosition = creaturePosition,
+                row = rowTarget() ?: return targetError()
             )
             "Ba-Mado" -> BaMadoStep(
                 singleEnemyTarget(game) ?: return targetError()
@@ -49,29 +49,35 @@ class SkillAction(
                 singleEnemyTarget(game) ?: return targetError()
             )
             "Neptjuno" -> NeptjunoStep(
-                singleEnemyTarget(game) ?: return targetError()
+                myPosition = creaturePosition,
+                position = singleEnemyTarget(game) ?: return targetError()
             )
-            "Tentarch" -> TentarchStep()
+            "Tentarch" -> TentarchStep(creaturePosition)
             "Dullmdalla" -> DullmdallaStep(
-                rowTarget() ?: return targetError()
+                myPosition = creaturePosition,
+                row = rowTarget() ?: return targetError()
             )
             "Zenosblead" -> ZenosbleadStep(
-                singleEnemyTarget(game) ?: return targetError()
+                myPosition = creaturePosition,
+                position = singleEnemyTarget(game) ?: return targetError()
             )
             "Pelitt" -> PelittStep(
                 singleAllyTarget(game) ?: return targetError()
             )
             "Guene-Foss" -> GueneFossStep(
-                singleEnemyTarget(game) ?: return targetError()
+                myPosition = creaturePosition,
+                position = singleEnemyTarget(game) ?: return targetError()
             )
             "Kyria-Bell" -> KyriaBellStep(
-                rowTarget() ?: return targetError()
+                myPosition = creaturePosition,
+                row = rowTarget() ?: return targetError()
             )
             "Fifenall" -> FifeNallStep(
                 singleAllyTarget(game) ?: return targetError()
             )
             "Regna-Croxe" -> RegnaCroxeStep(
-                rowTarget() ?: return targetError()
+                myPosition = creaturePosition,
+                row = rowTarget() ?: return targetError()
             )
             /* MASTERS */
             "Bard" -> BardSkillStep(
@@ -93,12 +99,14 @@ class SkillAction(
                 singleAllyTarget(game) ?: return targetError()
             )
             "Swordsman" -> SwordsmanSkillStep(
-                rowTarget() ?: return targetError()
+                myPosition = creaturePosition,
+                row = rowTarget() ?: return targetError()
             )
             "Thief" -> ThiefSkillStep()
-            "Tyrant" -> TyrantSkillStep()
+            "Tyrant" -> TyrantSkillStep(creaturePosition)
             "Witch" -> WitchSkillStep(
-                singleEnemyTarget(game) ?: return targetError()
+                myPosition = creaturePosition,
+                targetPosition = singleEnemyTarget(game) ?: return targetError()
             )
             else -> return invalidAction("I don't know how to use this creature's skill")
         }

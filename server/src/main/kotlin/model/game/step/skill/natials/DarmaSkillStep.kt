@@ -10,12 +10,11 @@ import util.toSingletonList
 const val DARMA_RESTORATION = 2
 
 class DarmaSkillStep(
-    private val playerLabel: PlayerLabel,
     private val position: Position
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         return HealCreatureStep(
-            playerLabel,
+            game.activePlayerLabel,
             position,
             DARMA_RESTORATION
         ).toSingletonList()

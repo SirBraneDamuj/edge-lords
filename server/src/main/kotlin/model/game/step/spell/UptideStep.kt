@@ -21,7 +21,9 @@ class UptideStep : GameStep {
                     null -> {
                     }
                     else -> {
-                        creature.hp -= UPTIDE_NON_WATER_DAMAGE
+                        if (player.playerLabel != game.activePlayerLabel) {
+                            creature.hp -= UPTIDE_NON_WATER_DAMAGE
+                        }
                     }
                 }
             }
