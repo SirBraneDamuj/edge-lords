@@ -7,7 +7,7 @@ interface Props {
 
 const mapping = {
   'ATK': '⚔️',
-  'HP': '🛡️',
+  'HP': '❤️',
 };
 
 export default function CardCombatStat({

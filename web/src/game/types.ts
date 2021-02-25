@@ -76,6 +76,8 @@ export interface Creature {
   element: Element | null
   sealCount: number
   canUseSkill: boolean | null
+  guardCount: number
+  neighborGuardCount: number
 }
 
 export interface GameCard {

@@ -1,10 +1,6 @@
 package model.game.step.core
 
-import model.Cards
-import model.game.Game
-import model.game.PlayerLabel
-import model.game.Position
-import model.game.Row
+import model.game.*
 import model.game.step.GameStep
 import model.game.step.effects.ChangeGuardSemaphoreStep
 import model.game.step.effects.ChangeStatsStep
@@ -19,7 +15,7 @@ class CreatureEnterPositionStep(
         val player = game.player(playerLabel)
         val creature = player.creatureAtPosition(position)
             ?: error("you know the deal by now. where's this dang ol creature")
-        val creatureSpecificSteps =  when (creature.card.cardName) {
+        return when (creature.card.cardName) {
             "Da-Colm" -> {
                 if (fromPosition?.row != position.row) {
                     player.creatures.map { other ->
@@ -60,16 +56,18 @@ class CreatureEnterPositionStep(
                 ).toSingletonList()
             }
             "Tyrant" -> {
-                val previousNeighborSteps = fromPosition!!.neighbors.map { neighbor ->
-                    ChangeStatsStep(
+                val previousNeighborSteps = fromPosition!!.neighbors.mapNotNull { neighbor ->
+                    if (player.creatureAtPosition(neighbor) == null) null
+                    else ChangeStatsStep(
                         playerLabel = playerLabel,
                         position = neighbor,
                         attackChange = -2,
                         hpChange = -2
                     )
                 }
-                val newNeighborSteps = position.neighbors.map { neighbor ->
-                    ChangeStatsStep(
+                val newNeighborSteps = position.neighbors.mapNotNull { neighbor ->
+                    if (player.creatureAtPosition(neighbor) == null) null
+                    else ChangeStatsStep(
                         playerLabel = playerLabel,
                         position = neighbor,
                         attackChange = 2,
@@ -78,34 +76,51 @@ class CreatureEnterPositionStep(
                 }
                 previousNeighborSteps + newNeighborSteps
             }
-            else -> {
-                val neighbors = creature.position.neighbors.mapNotNull(player::creatureAtPosition)
-                val neighborSteps = neighbors.map {
-                    when (it.card.cardName) {
-                        "Tyrant" ->
+            "Neptjuno", "Pa-Rancell" -> {
+                val previousNeighborSteps = fromPosition?.neighbors?.mapNotNull { neighbor ->
+                    player.creatureAtPosition(neighbor)?.let {
+                        ChangeGuardSemaphoreStep(
+                            playerLabel = playerLabel,
+                            position = neighbor,
+                            changeAmount = -1
+                        )
+                    }
+                } ?: emptyList()
+                val currentNeighborSteps = position.neighbors.mapNotNull { neighbor ->
+                    player.creatureAtPosition(neighbor)?.let {
+                        ChangeGuardSemaphoreStep(
+                            playerLabel = playerLabel,
+                            position = neighbor,
+                            changeAmount = 1
+                        )
                     }
                 }
-                emptyList()
+                previousNeighborSteps + currentNeighborSteps
+            }
+            else -> {
+                val previousNeighbors = fromPosition?.neighbors?.mapNotNull(player::creatureAtPosition) ?: emptyList()
+                val neighbors = creature.position.neighbors.mapNotNull(player::creatureAtPosition)
+                val previousNeighborSteps = previousNeighbors.mapNotNull { neighborBuffs(it, -1) }
+                val neighborSteps = neighbors.mapNotNull { neighborBuffs(it, 1) }
+                previousNeighborSteps + neighborSteps
             }
         }
-        val guardsNeighbors = Cards.getNatialByName(creature.card.cardName)?.guardsNeighbors ?: false
-        val neighborGuardSteps = if (guardsNeighbors) {
-            val fromCreatures = fromPosition?.neighbors?.mapNotNull { neighborPosition ->
-                val neighbor = player.creatureAtPosition(neighborPosition)
-                neighbor?.let {
-                    ChangeGuardSemaphoreStep(playerLabel, neighborPosition, -1)
-                }
-            } ?: emptyList()
-            val toCreatures = position.neighbors.mapNotNull { neighborPosition ->
-                val neighbor = player.creatureAtPosition(neighborPosition)
-                neighbor?.let {
-                    ChangeGuardSemaphoreStep(playerLabel, neighborPosition, -1)
-                }
-            }
-            fromCreatures + toCreatures
-        } else {
-            emptyList()
+    }
+
+    private fun neighborBuffs(neighbor: Creature, direction: Int): GameStep? {
+        return when (neighbor.card.cardName) {
+            "Tyrant" -> ChangeStatsStep(
+                playerLabel = playerLabel,
+                position = position,
+                attackChange = 2 * direction,
+                hpChange = 2 * direction
+            )
+            "Neptjuno", "Pa-Rancell" -> ChangeGuardSemaphoreStep(
+                playerLabel = playerLabel,
+                position = position,
+                changeAmount = 1 * direction
+            )
+            else -> null
         }
-        return creatureSpecificSteps + neighborGuardSteps
     }
 }

@@ -3,6 +3,7 @@ import CardCombatStat from '../../../card/components/detail/CardCombatStat';
 import CardIcons from '../../../card/components/detail/CardIcons';
 import CardManaCost from '../../../card/components/detail/CardManaCost';
 import { ActivationState, Creature } from '../../types';
+import CreatureGuard from './CreatureGuard';
 import CreatureSealCount from './CreatureSealCount';
 
 interface Props {
@@ -46,6 +47,8 @@ export default function CreatureGridCell({
     element,
     sealCount,
     canUseSkill,
+    guardCount,
+    neighborGuardCount,
   } = creature;
   let creatureSkillIndicator = '';
   if (canUseSkill) {
@@ -90,6 +93,7 @@ export default function CreatureGridCell({
       <div style={styles.footer}>
         <CardCombatStat stat={attack} label={'ATK'} />
         <CreatureSealCount count={sealCount} /> 
+        <CreatureGuard guardCount={guardCount} neighborGuard={neighborGuardCount > 0} />
         <CardCombatStat stat={hp} label={'HP'} />
       </div>
     </div>

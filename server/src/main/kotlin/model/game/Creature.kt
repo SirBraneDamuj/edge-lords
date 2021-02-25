@@ -55,7 +55,7 @@ sealed class Creature {
     }
 
     fun receiveDamage(damage: Int) {
-        if (neighborGuardCount >= 0) return
+        if (neighborGuardCount > 0) return
         if (guarded) {
             guardCount--
         } else {

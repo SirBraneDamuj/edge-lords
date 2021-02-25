@@ -18,8 +18,6 @@ class UptideStep : GameStep {
                         creature.increaseMaxHp(UPTIDE_WATER_RESTORATION)
                         creature.attack += UPTIDE_WATER_RESTORATION
                     }
-                    null -> {
-                    }
                     else -> {
                         if (player.playerLabel != game.activePlayerLabel) {
                             damageSteps.add(DealDamageStep(
