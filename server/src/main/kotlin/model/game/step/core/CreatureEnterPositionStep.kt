@@ -1,5 +1,6 @@
 package model.game.step.core
 
+import model.Element
 import model.game.*
 import model.game.step.GameStep
 import model.game.step.effects.ChangeGuardSemaphoreStep
@@ -97,12 +98,64 @@ class CreatureEnterPositionStep(
                 }
                 previousNeighborSteps + currentNeighborSteps
             }
+            "Regna-Croxe" -> {
+                if (fromPosition != null) emptyList()
+                else {
+                    player.creatures.mapNotNull { ally ->
+                        ally.takeIf { it.element == Element.HEAVEN }
+                            ?.let { heavenAlly ->
+                                ChangeStatsStep(
+                                    playerLabel = playerLabel,
+                                    position = heavenAlly.position,
+                                    attackChange = 1,
+                                    hpChange = 0
+                                )
+                            }
+                    }
+                }
+            }
             else -> {
                 val previousNeighbors = fromPosition?.neighbors?.mapNotNull(player::creatureAtPosition) ?: emptyList()
                 val neighbors = creature.position.neighbors.mapNotNull(player::creatureAtPosition)
                 val previousNeighborSteps = previousNeighbors.mapNotNull { neighborBuffs(it, -1) }
                 val neighborSteps = neighbors.mapNotNull { neighborBuffs(it, 1) }
-                previousNeighborSteps + neighborSteps
+                val regnaCroxeSteps = if (fromPosition != null) {
+                    emptyList()
+                } else {
+                    val regnaCroxes = player.creatures.filter { it.card.cardName == "Regna-Croxe" }
+                    regnaCroxes.map {
+                        ChangeStatsStep(
+                            playerLabel = playerLabel,
+                            position = position,
+                            attackChange = 1,
+                            hpChange = 0
+                        )
+                    }
+                }
+                val previousDaColms = fromPosition?.row?.positions()
+                    ?.mapNotNull(player::creatureAtPosition)
+                    ?.filter { it.card.cardName == "Da-Colm" }
+                    ?.map {
+                        ChangeStatsStep(
+                            playerLabel = playerLabel,
+                            position = position,
+                            attackChange = 0,
+                            hpChange = -1
+                        )
+                    }
+                    ?: emptyList()
+                val newDaColms = position.row.positions()
+                    .mapNotNull(player::creatureAtPosition)
+                    .filter { it.card.cardName == "Da-Colm" }
+                    .map {
+                        ChangeStatsStep(
+                            playerLabel = playerLabel,
+                            position = position,
+                            attackChange = 0,
+                            hpChange = 1
+                        )
+                    }
+                previousNeighborSteps + neighborSteps + regnaCroxeSteps + previousDaColms + newDaColms
             }
         }
     }
