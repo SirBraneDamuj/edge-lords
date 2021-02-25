@@ -6,7 +6,7 @@ import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
-import model.game.step.effects.InterCreatureDamageStep
+import model.game.step.effects.DealDamageStep
 
 class CombatStep(
     private val attackingPlayerLabel: PlayerLabel,
@@ -27,14 +27,14 @@ class CombatStep(
         // TODO: abilities which trigger when one Natial kills another should trigger here
         return mutableListOf<GameStep>().apply {
             if (!attacker.position.backRow || defender.card.cardName in RANGED_COUNTERATTACKERS) {
-                this.add(InterCreatureDamageStep(
+                this.add(DealDamageStep(
                     dealerPlayerLabel = defendingPlayer.playerLabel,
                     dealerPosition = defenderPosition,
                     receiverPosition = attackerPosition,
                     damageAmount = defenderStrength
                 ))
             }
-            this.add(InterCreatureDamageStep(
+            this.add(DealDamageStep(
                 dealerPlayerLabel = attackingPlayerLabel,
                 dealerPosition = attackerPosition,
                 receiverPosition = defenderPosition,

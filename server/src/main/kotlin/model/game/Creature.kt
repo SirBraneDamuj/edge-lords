@@ -4,8 +4,13 @@ import client.ActionInputException
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import model.*
+import model.Cards
+import model.DOUBLE_ACTORS
+import model.Element
+import model.Range
+import model.Speed
 import java.util.*
+import kotlin.math.max
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
 sealed class Creature {
@@ -21,7 +26,7 @@ sealed class Creature {
     abstract val element: Element?
     abstract var sealCount: Int
     abstract var guardCount: Int
-    abstract var guardedByNeighbor: Boolean
+    abstract var neighborGuardCount: Int
     abstract var canUseSkill: Boolean?
 
     val sealed: Boolean
@@ -30,8 +35,19 @@ sealed class Creature {
         @JsonIgnore get() = guardCount > 0
 
     fun increaseMaxHp(amount: Int) {
+        if (amount <= 0) throw IllegalArgumentException()
         maxHp += amount
         heal(amount)
+    }
+
+    fun decreaseMaxHp(amount: Int) {
+        if (amount >= 0) throw IllegalArgumentException()
+        maxHp = max(1, maxHp - amount)
+        if (hp > maxHp) hp = maxHp
+    }
+
+    fun changeAttack(amount: Int) {
+        attack = max(0, attack + amount)
     }
 
     fun heal(amount: Int) {
@@ -39,6 +55,7 @@ sealed class Creature {
     }
 
     fun receiveDamage(damage: Int) {
+        if (neighborGuardCount >= 0) return
         if (guarded) {
             guardCount--
         } else {
@@ -78,7 +95,6 @@ enum class Row {
             BACK -> Position.backPositions
             FRONT -> Position.frontPositions
         }
-
 }
 
 enum class Position(
@@ -93,6 +109,18 @@ enum class Position(
     BACK_THREE(Row.BACK);
 
     val backRow: Boolean = row == Row.BACK
+    val neighbors: Set<Position>
+        get() {
+            return when (this) {
+                FRONT_ONE -> setOf(FRONT_TWO)
+                FRONT_TWO -> setOf(FRONT_ONE, FRONT_THREE)
+                FRONT_THREE -> setOf(FRONT_TWO, FRONT_FOUR)
+                FRONT_FOUR -> setOf(FRONT_THREE)
+                BACK_ONE -> setOf(BACK_TWO)
+                BACK_TWO -> setOf(BACK_ONE, BACK_THREE)
+                BACK_THREE -> setOf(BACK_TWO)
+            }
+        }
 
     companion object {
         private val startingMagicCrystalLocations = arrayOf(
@@ -177,7 +205,7 @@ data class Master(
     override var canUseSkill: Boolean?,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0,
-    override var guardedByNeighbor: Boolean = false,
+    override var neighborGuardCount: Int = 0
 ) : Creature() {
     override val element: Element? = null
     override val speed = Speed.NORMAL
@@ -197,7 +225,7 @@ data class Natial(
     override var canUseSkill: Boolean?,
     override var guardCount: Int = 0,
     override var sealCount: Int = 0,
-    override var guardedByNeighbor: Boolean = false
+    override var neighborGuardCount: Int = 0
 ) : Creature()
 
 object Natials {
@@ -240,4 +268,3 @@ object Masters {
         )
     }
 }
-

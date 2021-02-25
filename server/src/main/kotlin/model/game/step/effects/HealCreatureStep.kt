@@ -14,7 +14,19 @@ class HealCreatureStep(
         val player = game.player(playerLabel)
         val targetCreature = player.creatureAtPosition(position)
             ?: error("no creature found... was this action validated?")
+        val previousHp = targetCreature.hp
         targetCreature.heal(amount)
-        return emptyList()
+        return if (targetCreature.card.cardName == "Spirit" && previousHp <= 10 && targetCreature.hp > 10) {
+            player.creatures
+                .filter { it.card.cardName != "Spirit" }
+                .map {
+                    ChangeStatsStep(
+                        playerLabel = playerLabel,
+                        position = it.position,
+                        attackChange = -1,
+                        hpChange = -1
+                    )
+                }
+        } else emptyList()
     }
 }

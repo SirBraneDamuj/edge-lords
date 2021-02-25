@@ -3,10 +3,8 @@ package model.game.step.spell
 import model.game.Game
 import model.game.PlayerLabel
 import model.game.Row
-import model.game.step.effects.DamageRowOfEnemiesStep
 import model.game.step.GameStep
-import model.game.step.core.DetectDeadCreaturesStep
-import util.toSingletonList
+import model.game.step.effects.DealDamageStep
 
 const val DISASTER_DAMAGE = 4
 
@@ -16,11 +14,17 @@ class DisasterStep(
 ) : GameStep {
     override fun perform(game: Game): List<GameStep> {
         val targetPlayer = game.player(playerLabel.other)
+        val damageSteps = mutableListOf<GameStep>()
         targetPlayer.creatures.forEach {
             if (it.position.row == row) {
-                it.receiveDamage(DISASTER_DAMAGE)
+                damageSteps.add(DealDamageStep(
+                    dealerPlayerLabel = game.activePlayerLabel,
+                    dealerPosition = null,
+                    receiverPosition = it.position,
+                    damageAmount = DISASTER_DAMAGE
+                ))
             }
         }
-        return DetectDeadCreaturesStep().toSingletonList()
+        return damageSteps
     }
 }

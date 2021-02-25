@@ -8,7 +8,7 @@ import model.game.step.GameStep
 import model.game.step.core.DestroyCreatureStep
 import util.toSingletonList
 
-class InterCreatureDamageStep(
+class DealDamageStep(
     private val dealerPlayerLabel: PlayerLabel,
     private val dealerPosition: Position?,
     private val receiverPosition: Position,

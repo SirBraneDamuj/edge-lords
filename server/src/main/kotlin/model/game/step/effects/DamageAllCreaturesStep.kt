@@ -13,7 +13,7 @@ class DamageAllCreaturesStep(
     override fun perform(game: Game): List<GameStep> {
         val player = game.player(receiverPlayerLabel)
         return player.creatures.map {
-            InterCreatureDamageStep(
+            DealDamageStep(
                 dealerPlayerLabel = receiverPlayerLabel.other,
                 dealerPosition = dealerPosition,
                 receiverPosition = it.position,

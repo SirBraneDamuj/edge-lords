@@ -18,7 +18,7 @@ class DamageRowOfEnemiesStep(
             .creatures
             .filter { it.position.row == row }
             .map {
-                InterCreatureDamageStep(
+                DealDamageStep(
                     dealerPlayerLabel = targetPlayerLabel.other,
                     dealerPosition = dealerPosition,
                     receiverPosition = it.position,

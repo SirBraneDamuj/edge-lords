@@ -3,14 +3,14 @@ package model.game.step.spell
 import model.Element
 import model.game.Game
 import model.game.step.GameStep
-import model.game.step.core.DetectDeadCreaturesStep
-import util.toSingletonList
+import model.game.step.effects.DealDamageStep
 
 const val UPTIDE_NON_WATER_DAMAGE = 2
 const val UPTIDE_WATER_RESTORATION = 1
 
 class UptideStep : GameStep {
     override fun perform(game: Game): List<GameStep> {
+        val damageSteps = mutableListOf<GameStep>()
         game.players.values.forEach { player ->
             player.creatures.forEach { creature ->
                 when (creature.element) {
@@ -22,12 +22,17 @@ class UptideStep : GameStep {
                     }
                     else -> {
                         if (player.playerLabel != game.activePlayerLabel) {
-                            creature.hp -= UPTIDE_NON_WATER_DAMAGE
+                            damageSteps.add(DealDamageStep(
+                                dealerPlayerLabel = game.activePlayerLabel,
+                                dealerPosition = null,
+                                receiverPosition = creature.position,
+                                damageAmount = UPTIDE_NON_WATER_DAMAGE
+                            ))
                         }
                     }
                 }
             }
         }
-        return DetectDeadCreaturesStep().toSingletonList()
+        return damageSteps
     }
 }

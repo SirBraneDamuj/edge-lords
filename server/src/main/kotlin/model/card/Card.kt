@@ -42,6 +42,7 @@ data class NatialCard(
     val element: Element,
     val skillText: String,
     val abilityText: String,
+    val guardsNeighbors: Boolean
 ) : Card {
     override val cardType = CardType.NATIAL
 }

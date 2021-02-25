@@ -21,6 +21,11 @@ class SummonNatialStep(
         return mutableListOf<GameStep>().apply {
             this.add(PlayCardFromHandStep(playerLabel, handPosition))
             if (magicCrystal) this.add(MagicCrystalStep(playerLabel, position))
+            this.add(CreatureEnterPositionStep(
+                playerLabel = playerLabel,
+                fromPosition = null,
+                position = position
+            ))
         }
     }
 }

@@ -19,13 +19,23 @@ class MoveCreatureStep(
         creature.position = to
         creature.activationState = creature.activationState.stateAfterMoving()
         destinationCreature?.position = from
-        return if (player.magicCrystals.contains(to)) {
-            MagicCrystalStep(
+        return mutableListOf<GameStep>().apply {
+            if (player.magicCrystals.contains(to)) {
+                this.add(MagicCrystalStep(playerLabel, to))
+            }
+            if (destinationCreature != null) {
+                // the swapped creature is moving from "to" to "from" :S
+                this.add(CreatureEnterPositionStep(
+                    playerLabel = playerLabel,
+                    fromPosition = to,
+                    position = from
+                ))
+            }
+            this.add(CreatureEnterPositionStep(
                 playerLabel = playerLabel,
+                fromPosition = from,
                 position = to
-            ).toSingletonList()
-        } else {
-            return emptyList()
+            ))
         }
     }
 }

@@ -8,6 +8,7 @@
   skillText: ""
   abilityText: "Defends adjacent Natials"
   targetingMode: "NONE"
+  guardsNeighbors: true
 
 - name: "D-Arma"
   manaCost: 2
@@ -19,6 +20,7 @@
   skillText: "Restore 2 HP to ally Natial"
   abilityText: "Can act twice per turn"
   targetingMode: "SINGLE_ALLY"
+  guardsNeighbors: false
 
 - name: "Ae-Ferrion"
   manaCost: 3
@@ -30,6 +32,7 @@
   skillText: ""
   abilityText: ""
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Gia-Bro"
   manaCost: 4
@@ -41,6 +44,7 @@
   skillText: "Deal 2 damage to a row of enemies"
   abilityText: ""
   targetingMode: "ROW_ENEMY"
+  guardsNeighbors: false
 
 - name: "Da-Colm"
   manaCost: 6
@@ -52,6 +56,7 @@
   skillText: ""
   abilityText: "Allies in the same row gain +1 Max HP"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Ba-Mado"
   manaCost: 7
@@ -63,6 +68,7 @@
   skillText: "Seal target's actions for 2 turns"
   abilityText: "Gain +1 Attack each time Ba-Mado defeats an enemy Natial"
   targetingMode: "SINGLE_ENEMY"
+  guardsNeighbors: false
 
 - name: "Requ"
   manaCost: 1
@@ -74,6 +80,7 @@
   skillText: ""
   abilityText: "When destroyed, draw a card"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Marme"
   manaCost: 3
@@ -85,6 +92,7 @@
   skillText: "Restore 3 HP to ally Natial"
   abilityText: ""
   targetingMode: "SINGLE_ALLY"
+  guardsNeighbors: false
 
 - name: "Zamilpen"
   manaCost: 4
@@ -96,6 +104,7 @@
   skillText: "Seal target Natial for 1 turn"
   abilityText: ""
   targetingMode: "SINGLE_ENEMY"
+  guardsNeighbors: false
 
 - name: "Tarbyss"
   manaCost: 5
@@ -107,6 +116,7 @@
   skillText: ""
   abilityText: "Draw a card when Tarbyss is destroyed"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Neptjuno"
   manaCost: 7
@@ -118,6 +128,7 @@
   skillText: "Deal 2 damage to one enemy"
   abilityText: "Defends adjacent Natials"
   targetingMode: "SINGLE_ENEMY"
+  guardsNeighbors: true
 
 - name: "Tentarch"
   manaCost: 8
@@ -129,6 +140,7 @@
   skillText: "Deal 4 damage to all enemies"
   abilityText: ""
   targetingMode: "ALL_ENEMY"
+  guardsNeighbors: false
 
 - name: "Hepetus"
   manaCost: 2
@@ -140,6 +152,7 @@
   skillText: ""
   abilityText: ""
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Dullmdalla"
   manaCost: 3
@@ -151,6 +164,7 @@
   skillText: "Deal 1 damage to a row of enemies"
   abilityText: "Increase Attack by 1 each time Dullmdalla defeats an enemy"
   targetingMode: "ROW_ENEMY"
+  guardsNeighbors: false
 
 - name: "Blyx"
   manaCost: 4
@@ -162,6 +176,7 @@
   skillText: ""
   abilityText: ""
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Oonvievle"
   manaCost: 6
@@ -173,6 +188,7 @@
   skillText: ""
   abilityText: "Increase Attack by 1 each time Oonvievle defeats an enemy"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Greon"
   manaCost: 7
@@ -184,6 +200,7 @@
   skillText: ""
   abilityText: "Can act twice in each turn"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Zenosblead"
   manaCost: 7
@@ -195,6 +212,7 @@
   skillText: "Deal 5 damage to one enemy"
   abilityText: "Increase Attack by 2 each time Zenosblead defeats an enemy"
   targetingMode: "SINGLE_ENEMY"
+  guardsNeighbors: false
 
 - name: "Pelitt"
   manaCost: 1
@@ -206,6 +224,7 @@
   skillText: "Cancel seal on an ally Natial"
   abilityText: ""
   targetingMode: "SINGLE_ALLY"
+  guardsNeighbors: false
 
 - name: "Guene-Foss"
   manaCost: 3
@@ -217,6 +236,7 @@
   skillText: "Deal 2 damage to an enemy"
   abilityText: ""
   targetingMode: "SINGLE_ENEMY"
+  guardsNeighbors: false
 
 - name: "Kyria-Bell"
   manaCost: 4
@@ -228,6 +248,7 @@
   skillText: "Deal 2 damage to a row of enemies"
   abilityText: ""
   targetingMode: "ROW_ENEMY"
+  guardsNeighbors: false
 
 - name: "Fifenall"
   manaCost: 4
@@ -239,6 +260,7 @@
   skillText: "Restore 6 HP to ally Natial"
   abilityText: "Draw a card when Fifenall is destroyed"
   targetingMode: "SINGLE_ALLY"
+  guardsNeighbors: false
 
 - name: "Amoltamiss"
   manaCost: 6
@@ -250,6 +272,7 @@
   skillText: ""
   abilityText: "Gain 2 Attack when Amoltamiss is in the front row"
   targetingMode: "NONE"
+  guardsNeighbors: false
 
 - name: "Regna-Croxe"
   manaCost: 8
@@ -261,3 +284,4 @@
   skillText: "Deal 3 damage to a row of enemies"
   abilityText: "Increase Attack of ally Heaven Natials by 1"
   targetingMode: "ROW_ENEMY"
+  guardsNeighbors: false

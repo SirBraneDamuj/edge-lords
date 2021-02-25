@@ -5,6 +5,7 @@ import model.game.GameNatialCard
 import model.game.Natials
 import model.game.Position
 import model.game.step.GameStep
+import model.game.step.core.CreatureEnterPositionStep
 import model.game.step.spell.MagicCrystalStep
 
 // TODO: refactor this to work with summon natial step
@@ -24,6 +25,11 @@ class PaladinSkillStep(
         player.creatures += natial
         return mutableListOf<GameStep>().apply {
             if (magicCrystal) this.add(MagicCrystalStep(game.activePlayerLabel, position))
+            this.add(CreatureEnterPositionStep(
+                playerLabel = game.activePlayerLabel,
+                fromPosition = null,
+                position = position
+            ))
         }
     }
 }

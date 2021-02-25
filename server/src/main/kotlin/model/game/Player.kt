@@ -31,6 +31,9 @@ data class Player(
             .takeUnless { it.isEmpty() }
             ?.single()
 
+    fun creaturesInRow(row: Row) =
+        creatures.filter { it.position.row == row }
+
     fun incrementManaAndRestore(amountRestored: Int = MAX_MAX_MANA) {
         maxMana = (maxMana + 1).coerceAtMost(MAX_MAX_MANA)
         mana = (mana + amountRestored).coerceAtMost(maxMana)
