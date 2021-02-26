@@ -5,7 +5,6 @@ import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
 import model.game.step.spell.MagicCrystalStep
-import util.toSingletonList
 
 class MoveCreatureStep(
     private val playerLabel: PlayerLabel,
@@ -25,16 +24,16 @@ class MoveCreatureStep(
             }
             if (destinationCreature != null) {
                 // the swapped creature is moving from "to" to "from" :S
-                this.add(CreatureEnterPositionStep(
+                this.add(CreatureChangePositionStep(
                     playerLabel = playerLabel,
                     fromPosition = to,
-                    position = from
+                    toPosition = from
                 ))
             }
-            this.add(CreatureEnterPositionStep(
+            this.add(CreatureChangePositionStep(
                 playerLabel = playerLabel,
                 fromPosition = from,
-                position = to
+                toPosition = to
             ))
         }
     }

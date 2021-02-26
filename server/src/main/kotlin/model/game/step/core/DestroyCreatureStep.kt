@@ -2,12 +2,14 @@ package model.game.step.core
 
 import model.CARD_DRAWERS
 import model.Cards
+import model.Element
 import model.game.Game
 import model.game.Master
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
 import model.game.step.effects.ChangeGuardSemaphoreStep
+import model.game.step.effects.ChangeStatsStep
 import util.toSingletonList
 
 class DestroyCreatureStep(
@@ -20,22 +22,19 @@ class DestroyCreatureStep(
         return if (creature is Master) {
             listOf(VictoryStep(playerLabel.other))
         } else {
-            player.creatures = player.creatures - creature
             player.discard = player.discard + creature.card
             // TODO: abilities which trigger on natial death should happen here
-            val drawCardStep = if (creature.card.cardName in CARD_DRAWERS) {
-                DrawCardStep(playerLabel).toSingletonList()
-            } else emptyList()
-            val guardsNeighbors = Cards.getNatialByName(creature.card.cardName)?.guardsNeighbors ?: false
-            val guardSemaphoreSteps = if (guardsNeighbors) {
-                position.neighbors.mapNotNull { neighbor ->
-                    val neighborCreature = player.creatureAtPosition(neighbor)
-                    neighborCreature?.let {
-                        ChangeGuardSemaphoreStep(playerLabel, neighbor, -1)
-                    }
+            mutableListOf<GameStep>().apply {
+                if (creature.card.cardName in CARD_DRAWERS) {
+                    this.add(DrawCardStep(playerLabel))
                 }
-            } else emptyList()
-            drawCardStep + guardSemaphoreSteps
+                this.add(CreatureChangePositionStep(
+                    playerLabel = playerLabel,
+                    fromPosition = position,
+                    toPosition = null
+                ))
+                this.add(RemoveCreatureStep(playerLabel, position))
+            }
         }
     }
 }

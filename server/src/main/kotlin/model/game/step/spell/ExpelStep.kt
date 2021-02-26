@@ -4,8 +4,9 @@ import model.game.Game
 import model.game.PlayerLabel
 import model.game.Position
 import model.game.step.GameStep
-import model.game.step.effects.ReturnCardToDeck
-import util.toSingletonList
+import model.game.step.core.CreatureChangePositionStep
+import model.game.step.core.RemoveCreatureStep
+import model.game.step.effects.ReturnCardToHand
 
 class ExpelStep(
     val playerLabel: PlayerLabel,
@@ -15,7 +16,14 @@ class ExpelStep(
         val targetPlayer = game.player(playerLabel.other)
         val creature = targetPlayer.creatureAtPosition(targetPosition)
             ?: error("There is no creature there... was this action validated?")
-        targetPlayer.creatures = targetPlayer.creatures - creature
-        return ReturnCardToDeck(targetPlayer.playerLabel, creature.card).toSingletonList()
+        return listOf(
+            CreatureChangePositionStep(
+                playerLabel = playerLabel,
+                fromPosition = targetPosition,
+                toPosition = null
+            ),
+            ReturnCardToHand(targetPlayer.playerLabel, creature.card),
+            RemoveCreatureStep(targetPlayer.playerLabel, targetPosition)
+        )
     }
 }
