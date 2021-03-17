@@ -1,16 +1,15 @@
 package server.game
 
 import model.game.PlayerLabel
-import org.eclipse.jetty.server.Authentication
 import org.jetbrains.exposed.sql.transactions.transaction
 import server.deck.Deck
 import server.error.RecordNotFoundError
 import server.user.User
+import java.util.*
 import javax.inject.Inject
-import kotlin.reflect.jvm.internal.impl.metadata.jvm.JvmProtoBuf
 
 class GameRepository @Inject constructor() {
-    fun findGame(id: Int) = transaction {
+    fun findGame(id: UUID) = transaction {
         Game.findById(id)
             ?.let { game ->
                 val (deckOne, deckTwo) = game.gameDecks.map { gameDeck -> gameDeck.deck }
@@ -28,7 +27,7 @@ class GameRepository @Inject constructor() {
     }
 
     fun createGame(
-        deckIds: Pair<Int, Int>,
+        deckIds: Pair<UUID, UUID>,
         gameState: String
     ) = transaction {
         val game = Game.new {
@@ -53,7 +52,7 @@ class GameRepository @Inject constructor() {
     }
 
     fun saveGame(
-        gameId: Int,
+        gameId: UUID,
         gameState: String
     ) = transaction {
         val game = Game.findById(gameId)
@@ -62,7 +61,7 @@ class GameRepository @Inject constructor() {
     }
 
     fun listGamesByUserId(
-        userId: Int
+        userId: UUID
     ) = transaction {
         val user = User.findById(userId)
             ?: throw RecordNotFoundError()

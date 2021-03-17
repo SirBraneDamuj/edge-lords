@@ -25,7 +25,7 @@ class Db private constructor() {
     companion object {
         fun connect(): Db {
             val databaseUrl = System.getenv("DATABASE_URL")
-                ?: "sqlite:edge-lords.db"
+                ?: "postgresql://edgelords:erebonia@localhost:5432/edgelords"
             val jdbcUrl = if (databaseUrl.startsWith("postgres")) {
                 val uri = URI(databaseUrl)
                 val (username, password) = uri.userInfo.split(":")

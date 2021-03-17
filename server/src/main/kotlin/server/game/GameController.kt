@@ -1,10 +1,11 @@
 package server.game
 
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.Context
+import server.error.RecordNotFoundError
 import server.session.AuthHandler
+import java.util.*
 import javax.inject.Inject
 
 class GameController @Inject constructor(
@@ -38,24 +39,32 @@ class GameController @Inject constructor(
     }
 
     fun listGames(context: Context) {
-        val userId = context.attribute<Int>("userId")!!
+        val userId = context.attribute<UUID>("userId")!!
         context.json(gameListService.listGamesForUser(userId))
     }
 
     fun getGame(context: Context) {
-        val gameId = context.pathParam("gameId").toInt()
+        val gameId = try {
+            UUID.fromString(context.pathParam("gameId"))
+        } catch (e: IllegalArgumentException) {
+            throw RecordNotFoundError()
+        }
         val gamePerspective = fetchGameService.getGamePerspectiveForUser(
             id = gameId,
-            playerId = context.attribute<Int>("userId")!!
+            playerId = context.attribute<UUID>("userId")!!
         )
         context.json(gamePerspective)
     }
 
     fun doAction(context: Context) {
-        val gameId = context.pathParam("gameId").toInt()
+        val gameId = try {
+            UUID.fromString(context.pathParam("gameId"))
+        } catch (e: IllegalArgumentException) {
+            throw RecordNotFoundError()
+        }
         val actionDto = context.bodyAsClass(ActionDto::class.java)
         val gamePerspective = gameActionService.performAction(
-            gameId, context.attribute<Int>("userId")!!.toString(), actionDto
+            gameId, context.attribute<UUID>("userId")!!, actionDto
         )
         context.json(gamePerspective)
     }

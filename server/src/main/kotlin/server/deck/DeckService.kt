@@ -11,7 +11,7 @@ class DeckService @Inject constructor() {
     ): model.card.Deck =
         model.card.Deck(
             name = deck.name,
-            playerId = deck.playerId,
+            playerId = deck.playerId.toString(),
             playerName = deck.playerName,
             master = Cards.getMasterByName(deck.master)
                 ?: throw InvalidCardError(CardType.MASTER, deck.master),

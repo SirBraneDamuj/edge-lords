@@ -1,10 +1,12 @@
 package server.deck
 
+import java.util.*
+
 
 data class DeckDto(
-    val id: Int,
+    val id: UUID,
     val name: String,
-    val playerId: String,
+    val playerId: UUID,
     val playerName: String,
     val master: String,
     val cards: Map<String, Int>
@@ -14,7 +16,7 @@ data class DeckDto(
             DeckDto(
                 id = deck.id.value,
                 name = deck.name,
-                playerId = deck.user.id.toString(),
+                playerId = deck.user.id.value,
                 playerName = deck.user.name,
                 master = deck.master,
                 cards = deck.cards.map { it.name to it.count }.toMap()

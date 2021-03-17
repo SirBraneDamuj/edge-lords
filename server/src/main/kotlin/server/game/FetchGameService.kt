@@ -3,6 +3,7 @@ package server.game
 import com.fasterxml.jackson.databind.ObjectMapper
 import model.game.Game
 import server.error.RecordNotFoundError
+import java.util.*
 import javax.inject.Inject
 
 class FetchGameService @Inject constructor(
@@ -11,8 +12,8 @@ class FetchGameService @Inject constructor(
     private val objectMapper: ObjectMapper
 ) {
     fun getGamePerspectiveForUser(
-        id: Int,
-        playerId: Int
+        id: UUID,
+        playerId: UUID
     ): GamePerspective {
         val game = gameRepository.findGame(id)
             ?: throw RecordNotFoundError()

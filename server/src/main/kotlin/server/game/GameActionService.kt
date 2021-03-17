@@ -5,6 +5,7 @@ import model.game.ActionExecutor
 import model.game.action.*
 import server.error.InvalidRequestError
 import server.error.RecordNotFoundError
+import java.util.*
 import javax.inject.Inject
 
 class GameActionService @Inject constructor(
@@ -13,14 +14,14 @@ class GameActionService @Inject constructor(
     private val objectMapper: ObjectMapper
 ) {
     fun performAction(
-        gameId: Int,
-        playerId: String,
+        gameId: UUID,
+        playerId: UUID,
         actionDto: ActionDto
     ): GamePerspective {
         val game = gameRepository.findGame(gameId)
             ?: throw RecordNotFoundError()
         val gameState = objectMapper.readValue(game.state, model.game.Game::class.java)
-        if (gameState.activePlayer.id != playerId) {
+        if (gameState.activePlayer.id != playerId.toString()) {
             throw InvalidRequestError()
         }
         val action = when {
@@ -76,7 +77,7 @@ class GameActionService @Inject constructor(
         gameRepository.saveGame(gameId, objectMapper.writeValueAsString(gameState))
         return gamePerspectiveService.buildPerspective(
             gameId = gameId,
-            playerId = playerId.toInt(),
+            playerId = playerId,
             gameState = gameState
         )
     }

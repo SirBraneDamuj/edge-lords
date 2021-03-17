@@ -5,6 +5,7 @@ import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.Context
 import server.error.UnauthenticatedError
 import server.session.AuthHandler
+import java.util.*
 import javax.inject.Inject
 
 class UserController @Inject constructor(
@@ -29,7 +30,7 @@ class UserController @Inject constructor(
     }
 
     fun getUser(context: Context) {
-        val id = context.attribute<Int>("userId")!! // TODO: I don't like this.
+        val id = context.attribute<UUID>("userId")!! // TODO: I don't like this.
         val user = fetchUserService.findUser(id)
             ?: throw UnauthenticatedError()
         context.json(user)

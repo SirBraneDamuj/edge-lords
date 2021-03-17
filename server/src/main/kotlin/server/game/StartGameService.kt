@@ -6,6 +6,7 @@ import server.deck.Deck
 import server.deck.DeckRepository
 import server.deck.DeckService
 import server.error.RecordNotFoundError
+import java.util.*
 import javax.inject.Inject
 
 class StartGameService @Inject constructor(
@@ -15,7 +16,7 @@ class StartGameService @Inject constructor(
     private val deckService: DeckService,
 ) {
     fun startGame(
-        deckIds: Pair<Int, Int>
+        deckIds: Pair<UUID, UUID>
     ): CreatedGame {
         val deckOne = deckRepository.findById(deckIds.first)
             ?: throw RecordNotFoundError()

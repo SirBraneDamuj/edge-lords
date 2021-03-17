@@ -1,6 +1,8 @@
 package server.session
 
+import java.util.*
+
 data class Credentials(
-    val userId: Int,
+    val userId: UUID,
     val passwordHash: String
 )

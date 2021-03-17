@@ -3,13 +3,14 @@ package server.game
 import model.game.Creature
 import model.game.GameCard
 import model.game.Position
+import java.util.*
 
 data class StartGameRequest(
-    val deckIds: List<Int>
+    val deckIds: List<UUID>
 )
 
 data class CreatedGame(
-    val id: Int
+    val id: UUID
 )
 
 data class GameList(
@@ -23,20 +24,20 @@ enum class GameProgressState {
 }
 
 data class GameListEntry(
-    val id: Int,
-    val deckId: Int,
+    val id: UUID,
+    val deckId: UUID,
     val deckName: String,
     val opponentName: String,
     val state: GameProgressState
 )
 
 data class GameDto(
-    val id: Int,
-    val deckOneId: Int,
-    val deckTwoId: Int,
-    val playerOneId: Int,
+    val id: UUID,
+    val deckOneId: UUID,
+    val deckTwoId: UUID,
+    val playerOneId: UUID,
     val playerOneName: String,
-    val playerTwoId: Int,
+    val playerTwoId: UUID,
     val playerTwoName: String,
     val state: String
 )
@@ -66,7 +67,7 @@ data class SelfPerspective(
 )
 
 data class GamePerspective(
-    val gameId: Int,
+    val gameId: UUID,
     val opponent: OpponentPerspective,
     val self: SelfPerspective
 )

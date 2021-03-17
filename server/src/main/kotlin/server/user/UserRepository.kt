@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import server.config.Db
 import server.deck.Deck
 import server.session.Credentials
+import java.util.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -12,7 +13,7 @@ class UserRepository @Inject constructor(
     private val db: Db
 ) {
 
-    fun findUser(id: Int) = transaction {
+    fun findUser(id: UUID) = transaction {
         User.findById(id)
             ?.load(User::decks, Deck::cards)
             ?.let(UserDto.Companion::fromUser)

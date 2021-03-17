@@ -6,6 +6,7 @@ import server.error.InvalidSessionError
 import server.error.UnauthenticatedError
 import server.user.User
 import java.time.LocalDateTime
+import java.util.*
 import javax.inject.Inject
 
 class SessionRepository @Inject constructor(
@@ -30,7 +31,7 @@ class SessionRepository @Inject constructor(
 
     fun createSession(
         token: String,
-        userId: Int,
+        userId: UUID,
         expiresAt: LocalDateTime
     ): SessionDto = transaction {
         val user = User.findById(userId) ?: throw UnauthenticatedError()

@@ -1,34 +1,35 @@
 package server.game
 
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.UUIDEntity
+import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.dao.id.UUIDTable
 import server.deck.Deck
 import server.deck.Decks
 import server.user.User
 import server.user.Users
+import java.util.*
 
-object Games : IntIdTable() {
+object Games : UUIDTable() {
     val state = text("state")
 }
 
-class Game(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Game>(Games)
+class Game(id: EntityID<UUID>) : UUIDEntity(id) {
+    companion object : UUIDEntityClass<Game>(Games)
 
     val gameDecks by GameDeck referrersOn GameDecks.game
     var state by Games.state
 }
 
-object GameDecks : IntIdTable() {
+object GameDecks : UUIDTable() {
     val game = reference("game", Games)
     val user = reference("user", Users)
     val deck = reference("deck", Decks)
     val label = varchar("label", 10)
 }
 
-class GameDeck(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<GameDeck>(GameDecks)
+class GameDeck(id: EntityID<UUID>) : UUIDEntity(id) {
+    companion object : UUIDEntityClass<GameDeck>(GameDecks)
 
     var game by Game referencedOn (GameDecks.game)
     var user by User referencedOn (GameDecks.user)

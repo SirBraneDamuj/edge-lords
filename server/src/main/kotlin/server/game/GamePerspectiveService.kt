@@ -1,11 +1,12 @@
 package server.game
 
+import java.util.*
 import javax.inject.Inject
 
 class GamePerspectiveService @Inject constructor() {
     fun buildPerspective(
-        gameId: Int,
-        playerId: Int,
+        gameId: UUID,
+        playerId: UUID,
         gameState: model.game.Game,
     ): GamePerspective {
         val me = gameState.players.values.single { it.id == playerId.toString() }

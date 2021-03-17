@@ -6,6 +6,8 @@ import io.javalin.http.Context
 import server.error.InvalidRequestError
 import server.error.RecordNotFoundError
 import server.session.AuthHandler
+import java.lang.IllegalArgumentException
+import java.util.*
 import javax.inject.Inject
 
 class DeckController @Inject constructor(
@@ -38,9 +40,13 @@ class DeckController @Inject constructor(
 
     fun updateDeck(context: Context) {
         val body = context.bodyAsClass(CreateDeckRequest::class.java)
-        val deckId = context.pathParam("id")
+        val deckId = try {
+            UUID.fromString(context.pathParam("id"))
+        } catch (e: IllegalArgumentException) {
+            throw RecordNotFoundError()
+        }
         deckRepository.updateDeck(
-            id = deckId.toInt(),
+            id = deckId,
             name = body.name,
             master = body.master,
             cards = body.cards,
@@ -50,7 +56,12 @@ class DeckController @Inject constructor(
     }
 
     fun getDeck(context: Context) {
-        val deck = deckRepository.findById(context.pathParam("id").toInt())
+        val deckId = try {
+            UUID.fromString(context.pathParam("id"))
+        } catch (e: IllegalArgumentException) {
+            throw RecordNotFoundError()
+        }
+        val deck = deckRepository.findById(deckId)
             ?: throw RecordNotFoundError()
         context.json(deck)
     }

@@ -1,6 +1,7 @@
 package server.user
 
 import server.deck.DeckDto
+import java.util.*
 
 data class CreateUserRequest(
     val name: String,
@@ -8,7 +9,7 @@ data class CreateUserRequest(
 )
 
 data class UserDto(
-    val id: Int,
+    val id: UUID,
     val name: String,
     val decks: List<DeckDto>
 ) {
