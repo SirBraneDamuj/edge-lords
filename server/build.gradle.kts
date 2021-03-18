@@ -42,6 +42,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.34.0")
     implementation("org.postgresql:postgresql:42.2.16")
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("org.flywaydb:flyway-core:7.7.0")
     kapt("com.google.dagger:dagger-compiler:2.30.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
